@@ -1,0 +1,45 @@
+
+@import "tailwindcss";
+
+
+:root {
+  --quantum-black: #000000;
+  --quantum-dark: #1a1a1a;
+  --quantum-gray: #333333;
+  --quantum-light-gray: #666666;
+  --quantum-text: #ffffff;
+  --quantum-text-muted: #999999;
+  --quantum-accent: #cccccc;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--quantum-black);
+  color: var(--quantum-text);
+}
+.bg-quantum-dark { background-color: var(--quantum-dark); }
+.bg-quantum-gray { background-color: var(--quantum-gray); }
+.text-quantum-muted { color: var(--quantum-text-muted); }
+.text-quantum-accent { color: var(--quantum-accent); }
+.border-quantum { border-color: var(--quantum-gray); }
+.rounded { border-radius: 0.5rem; }
+.p-4 { padding: 1rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.flex { display: flex; }
+.justify-between { justify-content: space-between; }
+.items-center { align-items: center; }
+.space-x-4 > * + * { margin-left: 1rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+.hover\:bg-quantum-light-gray:hover { background-color: var(--quantum-light-gray); }
+
+.swal2-confirm{
+  border: 1px solid #252525;
+  border-radius: .5rem;
+  color: #252525;
+
+}
