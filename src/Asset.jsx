@@ -5,7 +5,7 @@ import { auth } from './firebase';
 import { fetchWithErrorHandling } from './fetchHelper';
 import { Eye, EyeOff, Copy, Wallet, Users } from 'lucide-react';
 
-function AssetsPage({ method }) {
+function AssetsPage({ updateBalance }) {
   const [showBalance, setShowBalance] = useState(true);
   const [accountBalance, setAccountBalance] = useState(0);
   const [referralCode, setReferralCode] = useState(null);
@@ -27,7 +27,7 @@ function AssetsPage({ method }) {
         setAccountBalance(userData.balance || 0);
         setReferralCode(userData.referralCode || null);
         setReferralCount(userData.referralCount || 0);
-        method(userData.balance || 0);
+        updateBalance();
       } catch (error) {
         let errorMessage = error.message;
         if (error.message.includes('User data not found')) {
@@ -57,7 +57,7 @@ function AssetsPage({ method }) {
       }
     };
     fetchUserData();
-  }, [navigate, method]);
+  }, [navigate, updateBalance]);
 
   const handleCopyReferralCode = () => {
     if (referralCode) {

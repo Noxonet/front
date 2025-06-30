@@ -3,7 +3,6 @@ import { DATABASE_URL, API_SECRET } from './firebase';
 export const fetchWithErrorHandling = async (method, path, data = null) => {
   const url = `${DATABASE_URL}/${path}.json?auth=${API_SECRET}`;
   try {
-    console.log(`Sending ${method} request to ${url}`, data || '');
     const options = {
       method,
       headers: { 'Content-Type': 'application/json' },
@@ -13,7 +12,6 @@ export const fetchWithErrorHandling = async (method, path, data = null) => {
     }
     const response = await fetch(url, options);
     const text = await response.text();
-    console.log(`Response from ${url}: status=${response.status}, body=${text || 'No response body'}`);
     if (!response.ok) {
       let errorMessage = `HTTP error ${response.status}: ${text || 'No response body'}`;
       if (response.status === 401) {
@@ -31,11 +29,9 @@ export const fetchWithErrorHandling = async (method, path, data = null) => {
     try {
       return JSON.parse(text);
     } catch (jsonError) {
-      console.error(`JSON parse error for ${url}:`, jsonError.message);
       throw new Error('Invalid JSON response');
     }
   } catch (error) {
-    console.error(`Error in ${method} on ${path}:`, error.message);
     throw error;
   }
 };

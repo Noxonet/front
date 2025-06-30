@@ -125,7 +125,7 @@ function LandingPage() {
 
   import { CheckCircle, Circle, DollarSign } from 'lucide-react';
   
-function TasksPage() {
+  function TasksPage({ updateBalance }) {
     const [tasks, setTasks] = useState([
       { id: 'signup', title: 'Sign Up Bonus', description: 'Sign up to receive a $5 bonus', reward: 5, status: 'pending' },
       { id: 'firstDeposit', title: 'First Deposit Bonus', description: 'Make your first deposit to receive a $10 bonus', reward: 10, status: 'pending' },
@@ -204,7 +204,7 @@ function TasksPage() {
       if (taskId === 'firstDeposit' && tasks.find((task) => task.id === 'firstDeposit').status === 'pending') {
         navigate('/deposit');
       } else if (taskId === 'invite' && tasks.find((task) => task.id === 'invite').status === 'pending') {
-        navigate('/assets'); // Redirect to assets to see referral code
+        navigate('/assets');
       }
     };
   
@@ -227,7 +227,7 @@ function TasksPage() {
         } else if (taskId === 'invite' && userData.referralCount > 0) {
           const rewardCount = userData.referralCount;
           newBalance += rewardCount * 2;
-          updateData = { balance: newBalance, referralCount: 0 }; // Reset referral count after claim
+          updateData = { balance: newBalance, referralCount: 0 };
         } else {
           throw new Error('Reward not available or already claimed');
         }
@@ -241,6 +241,7 @@ function TasksPage() {
               : task
           )
         );
+        updateBalance();
         Swal.fire({
           icon: 'success',
           title: 'Reward Claimed',
@@ -344,7 +345,8 @@ function TasksPage() {
         </div>
       </div>
     );
-}
+  }
+  
   
   
   
@@ -518,188 +520,160 @@ function TasksPage() {
     }
 
     import {   Wallet } from 'lucide-react';
-    export default function App() {
+    function App() {
       const [isLoggedIn, setIsLoggedIn] = useState(false);
       const [isDrawerOpen, setIsDrawerOpen] = useState(false);
       const [balance, setBalance] = useState(0);
-      const navigate = useNavigate();
-
-
-    useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        setIsLoggedIn(!!user);
-        if (!user) {
-          localStorage.removeItem('token');
-          setBalance(0);
-        } else {
-          try {
-            const token = await user.getIdToken(true);
-            localStorage.setItem('token', token);
-            // console.log('Fetching balance for user:', user.uid);
-            const userData = await fetchWithErrorHandling('GET', `users/${user.uid}`);
-            if (!userData) {
-              throw new Error('User data not found');
-            }
-            setBalance(userData.balance || 0);
-          } catch (error) {
-            let errorMessage = error.message;
-            if (error.message.includes('User data not found')) {
-              errorMessage = 'User data not found, please sign up';
-              navigate('/signup');
-            } else if (error.message.includes('Unauthorized')) {
-              errorMessage = 'Session expired, please log in again';
-              localStorage.removeItem('token');
-              navigate('/login');
-            }
-            Swal.fire({
-              icon: 'error',
-              title: 'Error Fetching Balance',
-              text: errorMessage,
-              confirmButtonColor: '#1f2937',
-              confirmButtonText: 'OK',
-              customClass: {
-                popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-                title: 'text-xl font-bold text-gray-900',
-                content: 'text-gray-700',
-                confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
-              },
-            });
+    
+      const updateBalance = async () => {
+        if (!auth.currentUser) return;
+        try {
+          const userData = await fetchWithErrorHandling('GET', `users/${auth.currentUser.uid}`);
+          if (userData && userData.balance !== undefined) {
+            setBalance(userData.balance);
           }
+        } catch (error) {
+          console.error('Error updating balance:', error.message);
         }
-      });
-      return () => unsubscribe();
-    }, [navigate]);
-
-
-    const handleLogout = async () => {
-      try {
-        await signOut(auth);
-        localStorage.removeItem('token');
-        setBalance(0);
-        Swal.fire({
-          icon: 'success',
-          title: 'Logout Successful',
-          timer: 1000,
-          customClass: {
-            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-            title: 'text-xl font-bold text-gray-900',
-            confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
-          },
+      };
+    
+      useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            setIsLoggedIn(true);
+            await updateBalance();
+          } else {
+            setIsLoggedIn(false);
+            setBalance(0);
+          }
         });
-        navigate('/');
-      } catch (error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Logout Error',
-          text: error.message,
-          confirmButtonColor: '#1f2937',
-          confirmButtonText: 'OK',
-          customClass: {
-            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-            title: 'text-xl font-bold text-gray-900',
-            content: 'text-gray-700',
-            confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
-          },
-        });
-      }
-    };
-
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <header className="bg-gradient-to-r from-gray-800 to-gray-900 text-white fixed top-0 left-0 right-0 z-50 shadow-lg">
-          <div className="mx-auto px-4 sm:px-6 max-w-7xl">
-            <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-4">
-                <button onClick={() => setIsDrawerOpen(true)} className="sm:hidden p-2 rounded-md hover:bg-gray-700 transition-colors">
-                  <Menu className="w-6 h-6" />
-                </button>
-                <Link to="/" className="flex items-center space-x-2">
-                  <img src="/assets/logo.png" className="h-10 w-10 rounded-full" alt="logo" />
-                  <span className="text-xl font-bold">Quantum</span>
-                </Link>
-              </div>
-              <nav className=" hidden md:!flex items-center space-x-6">
-                {[
-                  { to: '/support', label: 'Support' },
-                  { to: '/Earn', label: 'Earn' },
-                  { to: '/Futures', label: 'Futures' },
-                  { to: '/Spot', label: 'Spot' },
-                  { to: '/assets', label: 'Assets' },
-                  { to: '/tasks', label: 'Tasks' },
-                  { to: '/withdraw', label: 'Withdraw' },
-                ].map((item) => (
-                  <NavLink
-                    key={item.to}
-                    to={item.to}
-                    className={({ isActive }) =>
-                      `text-sm font-medium transition-colors ${
-                        isActive ? 'text-yellow-400 border-b-2 border-yellow-400' : 'text-gray-200 hover:text-yellow-400'
-                      }`
-                    }
-                  >
-                    {item.label}
-                  </NavLink>
-                ))}
-              </nav>
-              <div className="flex items-center space-x-4">
-                {isLoggedIn ? (
-                  <>
-                    <div className="flex items-center space-x-2 bg-gray-700 px-3 py-1 rounded-full">
-                      <Wallet className="w-5 h-5 text-yellow-400" />
-                      <span className="text-sm font-medium">{balance.toFixed(2)} USDT</span>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center space-x-1 text-sm font-medium text-gray-200 hover:text-yellow-400 transition-colors"
+        return () => unsubscribe();
+      }, []);
+    
+      const handleLogout = async () => {
+        try {
+          await signOut(auth);
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+          setBalance(0);
+          Swal.fire({
+            icon: 'success',
+            title: 'Logged Out',
+            timer: 1000,
+            customClass: {
+              popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
+              title: 'text-xl font-bold text-gray-900',
+              confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+            },
+          });
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Logout Error',
+            text: error.message,
+            confirmButtonColor: '#1f2937',
+            confirmButtonText: 'OK',
+            customClass: {
+              popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
+              title: 'text-xl font-bold text-gray-900',
+              content: 'text-gray-700',
+              confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+            },
+          });
+        }
+      };
+    
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+          <header className="bg-gradient-to-r from-gray-800 to-gray-900 text-white fixed top-0 left-0 right-0 z-50 shadow-lg">
+            <div className="mx-auto px-4 sm:px-6 max-w-7xl">
+              <div className="flex items-center justify-between h-16">
+                <div className="flex items-center space-x-4">
+                  <button onClick={() => setIsDrawerOpen(true)} className="sm:hidden p-2 rounded-md hover:bg-gray-700 transition-colors">
+                    <Menu className="w-6 h-6" />
+                  </button>
+                  <Link to="/" className="flex items-center space-x-2">
+                    <img src="/assets/logo.png" className="h-10 w-10 rounded-full" alt="logo" />
+                    <span className="text-xl font-bold">Quantum</span>
+                  </Link>
+                </div>
+                <nav className="hidden md:!flex items-center space-x-6">
+                  {[
+                    { to: '/support', label: 'Support' },
+                    { to: '/Earn', label: 'Earn' },
+                    { to: '/Futures', label: 'Futures' },
+                    { to: '/Spot', label: 'Spot' },
+                    { to: '/assets', label: 'Assets' },
+                    { to: '/tasks', label: 'Tasks' },
+                    { to: '/withdraw', label: 'Withdraw' },
+                  ].map((item) => (
+                    <NavLink
+                      key={item.to}
+                      to={item.to}
+                      className={({ isActive }) =>
+                        `text-sm font-medium transition-colors ${
+                          isActive ? 'text-yellow-400 border-b-2 border-yellow-400' : 'text-gray-200 hover:text-yellow-400'
+                        }`
+                      }
                     >
-                      <LogOut className="w-5 h-5" />
-                      <span>Logout</span>
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link to="/login" className="text-sm font-medium text-gray-200 hover:text-yellow-400 transition-colors">
-                      Login
-                    </Link>
-                    <Link
-                      to="/signup"
-                      className="px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-medium rounded-full hover:bg-yellow-500 transition-colors shadow-md"
-                    >
-                      Signup
-                    </Link>
-                  </>
-                )}
+                      {item.label}
+                    </NavLink>
+                  ))}
+                </nav>
+                <div className="flex items-center space-x-4">
+                  {isLoggedIn ? (
+                    <>
+                      <div className="flex items-center space-x-2 bg-gray-700 px-3 py-1 rounded-full">
+                        <Wallet className="w-5 h-5 text-yellow-400" />
+                        <span className="text-sm font-medium">{balance.toFixed(2)} USDT</span>
+                      </div>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center space-x-1 text-sm font-medium text-gray-200 hover:text-yellow-400 transition-colors"
+                      >
+                        <LogOut className="w-5 h-5" />
+                        <span>Logout</span>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login" className="text-sm font-medium text-gray-200 hover:text-yellow-400 transition-colors">
+                        Login
+                      </Link>
+                      <Link
+                        to="/signup"
+                        className="px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-medium rounded-full hover:bg-yellow-500 transition-colors shadow-md"
+                      >
+                        Signup
+                      </Link>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
+          </header>
+          <div className="mt-16">
+            <Routes>
+              <Route path="/" element={<AssetsPage updateBalance={updateBalance} />} />
+              <Route path="/assets" element={<AssetsPage updateBalance={updateBalance} />} />
+              <Route path="/deposit" element={<DepositPage updateBalance={updateBalance} />} />
+              <Route path="/withdraw" element={<WithdrawPage updateBalance={updateBalance} />} />
+              <Route path="/tasks" element={<TasksPage updateBalance={updateBalance} />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/support" element={<Support />} />
+              <Route path="/Earn" element={<NotAvalible />} />
+              <Route path="/Futures" element={<NotAvalible />} />
+              <Route path="/Spot" element={<NotAvalible />} />
+              <Route path="/transfer" element={<NotAvalible />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
           </div>
-        </header>
-
-        <Drawer
-        isOpen={isDrawerOpen}
-        toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
-        isLoggedIn={isLoggedIn}
-        handleLogout={handleLogout}
-      />
-      <main className="pt-20 pb-8">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/deposit" element={<DepositPage method={setBalance} />} />
-          <Route path="/assets" element={<AssetsPage method={setBalance} />} />
-          <Route path="/withdraw" element={<WithdrawPage method={setBalance} />} />
-          <Route path="/tasks" element={<TasksPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/Earn" element={<NotAvalible />} />
-          <Route path="/Futures" element={<NotAvalible />} />
-          <Route path="/Spot" element={<NotAvalible />} />
-          <Route path="/transfer" element={<NotAvalible />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
-      </main>
-    </div>
-  );
-}
+        </div>
+      );
+    }
+    
+    export default App;
 
 
 // import { BrowserRouter as Router, Routes, Route, Link, NavLink, useNavigate } from 'react-router-dom';

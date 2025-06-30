@@ -5,11 +5,32 @@ import { auth } from './firebase';
 import { fetchWithErrorHandling } from './fetchHelper';
 import { Send } from 'lucide-react';
 
-function WithdrawPage({ method }) {
-  const cryptoTokens = [
-    { symbol: 'USDT', icon: 'https://s3.ap-northeast-1.amazonaws.com/s3.toobit.com/bhop/image/3Kp0szXY2ARoY_7oX4hYXctF_3_RZgjsnSBXf6ImTao.png' },
-    { symbol: 'BTC', icon: 'https://s3.ap-northeast-1.amazonaws.com/s3.toobit.com/bhop/image/btc.png' },
-    { symbol: 'ETH', icon: 'https://s3.ap-northeast-1.amazonaws.com/s3.toobit.com/bhop/image/eth.png' },
+function WithdrawPage({ updateBalance }) {
+  const Channels = [
+    {
+      id: 1,
+      chanel: "BEP2",
+    },
+    {
+      id: 2,
+      chanel: "BEP20",
+    },
+    {
+      id: 3,
+      chanel: "OPBNB",
+    },
+    {
+      id: 4,
+      chanel: "ERC20",
+    },
+    {
+      id: 5,
+      chanel: "SPL",
+    },
+    { 
+      id: 6, 
+      chanel: "TRC20"
+    },
   ];
   const [selectValue, setSelectValue] = useState('BEP20');
   const [countUsd, setCountUsd] = useState(0);
@@ -30,9 +51,9 @@ function WithdrawPage({ method }) {
           throw new Error('User data not found');
         }
         let totalBonus = 0;
-        if (userData.hasSignupBonus) totalBonus += 5;
-        if (userData.hasFirstDepositBonus) totalBonus += 10;
-        setMinimumWithdrawal(totalBonus * 2 || 5); // Minimum is 2x total bonuses, or 5 if no bonuses
+        if (userData.hasSignupBonusClaimed) totalBonus += 5;
+        if (userData.hasFirstDepositBonusClaimed) totalBonus += 10;
+        setMinimumWithdrawal(totalBonus * 2 || 5); // Minimum is 2x claimed bonuses, or 5 if none claimed
       } catch (error) {
         console.error('Error fetching user data for minimum withdrawal:', error.message);
       }
@@ -100,7 +121,7 @@ function WithdrawPage({ method }) {
           balance: userData.balance - parseFloat(countUsd),
         });
         const updatedData = await fetchWithErrorHandling('GET', `users/${auth.currentUser.uid}`);
-        method(updatedData.balance || 0);
+        updateBalance();
         Swal.fire({
           icon: 'success',
           title: 'Withdrawal Successful',
@@ -163,12 +184,16 @@ function WithdrawPage({ method }) {
                 value={selectValue}
                 onChange={(e) => setSelectValue(e.target.value)}
               >
-                <option value="BEP20">BEP20</option>
-                <option value="ERC20">ERC20</option>
-                <option value="TRC20">TRC20</option>
+                {Channels.map((item) => (
+                  <option
+                    className="text-xs md:text-basess"
+                    value={item.chanel}
+                  >
+                    {item.chanel}
+                  </option>
+                ))}
               </select>
             </div>
-            <div className="my-4 p-3 border border-yellow-500 text-yellow-500 text-xs md:text-base bg-yellow-100 rounded-2xl">the below input value must be equal with amount you are withdrawing to accept that you are not a robot and understaning you are in full secure</div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Amount (USDT)</label>
               <input
