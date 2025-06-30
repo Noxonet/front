@@ -6,7 +6,7 @@ import { Menu, LogOut } from 'lucide-react';
 import { auth } from './firebase';
 import DepositPage from './Deposit';
 import AssetsPage from './Asset';
-import WithdrawPage from './withdraw';
+import WithdrawPage from './Withdraw'
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
 import { fetchWithErrorHandling } from './fetchHelper';
