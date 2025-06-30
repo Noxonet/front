@@ -14,7 +14,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: var(--quantum-black);
+  background-color: var(--quantum-text);
   color: var(--quantum-text);
 }
 .bg-quantum-dark { background-color: var(--quantum-dark); }
