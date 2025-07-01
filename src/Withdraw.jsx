@@ -54,6 +54,8 @@ function WithdrawPage({ updateBalance }) {
         let totalBonus = 0;
         if (userData.hasSignupBonusClaimed) totalBonus += 5;
         if (userData.hasFirstDepositBonusClaimed) totalBonus += 10;
+        // if (userData.hasFirstDepositBonusClaimed ) totalBonus += 10;
+
         setMinimumWithdrawal(totalBonus * 2 || 5); // Minimum is 2x claimed bonuses, or 5 if none claimed
       } catch (error) {
         console.error('Error fetching user data for minimum withdrawal:', error.message);

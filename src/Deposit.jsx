@@ -45,16 +45,16 @@ function DepositPage({ updateBalance }) {
   const [showBox, setShowBox] = useState(false);
   const [walletAddress] = useState("TQbxf1wEuhY3vH5Ku3bB4qX64PWk2CPvfL");
   const [isLoading, setIsLoading] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const navigate = useNavigate();
 
   const addressChangeHandler = (e) => {
-    setSelectValue(e.target.value)
-    let address = addresses.find(item => {
-        return (item.chanel == e.target.value)
-    })
-    setWalletAddress(address.addr)
-  
-  }
+    setSelectValue(e.target.value);
+    let address = addresses.find((item) => {
+      return item.chanel == e.target.value;
+    });
+    setWalletAddress(address.addr);
+  };
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(walletAddress);
@@ -189,38 +189,29 @@ function DepositPage({ updateBalance }) {
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
             Deposit
           </h1>
-          <NavLink
-            to="/assets"
-            className="text-sm text-yellow-500 hover:underline"
-          >
-            Back to Assets
-          </NavLink>
+          {isPending ? 
+            <NavLink
+              onClick={() => {setIsPending(false)}}
+              className="text-sm text-yellow-500 hover:underline"
+            >
+              Back to Assets
+            </NavLink>
+            :
+            <NavLink
+              to="/assets"
+              className="text-sm text-yellow-500 hover:underline"
+            >
+              Back to Assets
+            </NavLink>
+          }
         </div>
-        <div className="bg-white rounded-2xl p-6 shadow-xl animate-fade-in">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Select Currency
-              </label>
 
-              <select
-                className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors"
-                value={selectValue}
-                onChange={(e) => {
-                  addressChangeHandler(e);
-                }}
-              >
-                {addresses.map((item) => (
-                  <option
-                    className="text-xs md:text-basess"
-                    value={item.chanel}
-                  >
-                    {item.chanel}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
+        {isPending ? (
+          <div className="bg-white rounded-2xl p-6 shadow-xl animate-fade-in">
+            <p className="p-3 rounded-xl text-xs md:text-base text-yellow-500 bg-yellow-100 border border-yellow-500">
+              the count below must be exact match with your deposit price count which let us to recognize you from destructive bots and blackHat hackers 
+            </p>
+            <div className="my-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Amount (USDT)
               </label>
@@ -232,64 +223,122 @@ function DepositPage({ updateBalance }) {
                 className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors"
               />
             </div>
+            <button
+              onClick={handleDeposit}
+              className="w-full bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  />
+                </svg>
+              ) : (
+                <>
+                  <Send className="w-5 h-5 mr-2" />
+                  Confirm Deposit
+                </>
+              )}
+            </button>
           </div>
-          <button
-            onClick={() => setShowBox(true)}
-            className="w-full bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center mb-4"
-            disabled={isLoading}
-          >
-            <Send className="w-5 h-5 mr-2" />
-            Show Deposit Address
-          </button>
-          {showBox && (
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
-              <p className="text-sm font-medium text-gray-700 mb-2">
-                Deposit Address:
-              </p>
-              <p className="text-sm font-mono break-all mb-2">
-                {walletAddress}
-              </p>
-              <button
-                onClick={handleCopyAddress}
-                className="flex items-center gap-1 text-sm text-yellow-500 hover:underline"
-              >
-                <Copy className="w-4 h-4" />
-                Copy Address
-              </button>
+        ) : (
+          <div className="bg-white rounded-2xl p-6 shadow-xl animate-fade-in">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Select Currency
+                </label>
+
+                <select
+                  className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors"
+                  value={selectValue}
+                  onChange={(e) => {
+                    addressChangeHandler(e);
+                  }}
+                >
+                  {addresses.map((item) => (
+                    <option
+                      className="text-xs md:text-basess"
+                      value={item.chanel}
+                    >
+                      {item.chanel}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-          )}
-          <button
-            onClick={handleDeposit}
-            className="w-full bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <svg
-                className="animate-spin h-5 w-5 mr-2 text-white"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8H4z"
-                />
-              </svg>
-            ) : (
-              <>
-                <Send className="w-5 h-5 mr-2" />
-                Confirm Deposit
-              </>
+            <button
+              onClick={() => setShowBox(true)}
+              className="w-full bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center mb-4"
+              disabled={isLoading}
+            >
+              <Send className="w-5 h-5 mr-2" />
+              Show Deposit Address
+            </button>
+            {showBox && (
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
+                <p className="text-sm font-medium text-gray-700 mb-2">
+                  Deposit Address:
+                </p>
+                <p className="text-sm font-mono break-all mb-2">
+                  {walletAddress}
+                </p>
+                <button
+                  onClick={handleCopyAddress}
+                  className="flex items-center gap-1 text-sm text-yellow-500 hover:underline"
+                >
+                  <Copy className="w-4 h-4" />
+                  Copy Address
+                </button>
+              </div>
             )}
-          </button>
-        </div>
+            <button
+              onClick={() => {setIsPending(true)}}
+              className="w-full bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  />
+                </svg>
+              ) : (
+                <>
+                  <Send className="w-5 h-5 mr-2" />
+                  Confirm Deposit
+                </>
+              )}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
