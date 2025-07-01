@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, Link, NavLink, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import Swal from 'sweetalert2';
-import { Menu, LogOut } from 'lucide-react';
+import { Menu, LogOut, X } from 'lucide-react';
 import { auth } from './firebase';
 import DepositPage from './Deposit';
 import AssetsPage from './Asset';
@@ -123,6 +123,7 @@ function LandingPage() {
     );
   }
 
+
   import { CheckCircle, Circle, DollarSign } from 'lucide-react';
   
   function TasksPage({ updateBalance }) {
@@ -187,9 +188,9 @@ function LandingPage() {
             confirmButtonColor: '#1f2937',
             confirmButtonText: 'OK',
             customClass: {
-              popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-              title: 'text-xl font-bold text-gray-900',
-              content: 'text-gray-700',
+              popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+              title: 'text-lg sm:text-xl font-bold text-gray-900',
+              content: 'text-gray-700 text-sm sm:text-base',
               confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
             },
           });
@@ -249,9 +250,9 @@ function LandingPage() {
           confirmButtonColor: '#1f2937',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-            title: 'text-xl font-bold text-gray-900',
-            content: 'text-gray-700',
+            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-gray-900',
+            content: 'text-gray-700 text-sm sm:text-base',
             confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
           },
         });
@@ -273,9 +274,9 @@ function LandingPage() {
           confirmButtonColor: '#1f2937',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-            title: 'text-xl font-bold text-gray-900',
-            content: 'text-gray-700',
+            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-gray-900',
+            content: 'text-gray-700 text-sm sm:text-base',
             confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
           },
         });
@@ -288,52 +289,52 @@ function LandingPage() {
       return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
           <div className="flex items-center space-x-2">
-            <svg className="animate-spin h-8 w-8 text-gray-800" viewBox="0 0 24 24">
+            <svg className="animate-spin h-6 sm:h-8 w-6 sm:w-8 text-gray-800" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
             </svg>
-            <span className="text-lg font-medium text-gray-800">Loading...</span>
+            <span className="text-base sm:text-lg font-medium text-gray-800">Loading...</span>
           </div>
         </div>
       );
     }
   
     return (
-      <div className="min-h-screen py-8 bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900">
+      <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900">
         <div className="mx-auto px-4 sm:px-6 max-w-3xl">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Tasks</h1>
-          <div className="bg-white rounded-2xl p-6 shadow-xl animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Tasks</h1>
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-xl animate-fade-in">
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className={`flex items-center justify-between p-4 mb-4 bg-gray-50 rounded-lg ${
+                className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 mb-3 sm:mb-4 bg-gray-50 rounded-lg ${
                   task.status === 'pending' ? 'cursor-pointer hover:bg-gray-100 transition-all duration-300' : ''
                 }`}
                 onClick={() => task.status === 'pending' && handleTaskClick(task.id)}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                   {task.status === 'claimed' ? (
-                    <CheckCircle className="w-6 h-6 text-green-500" />
+                    <CheckCircle className="w-5 sm:w-6 h-5 sm:h-6 text-green-500" />
                   ) : task.status === 'completed' ? (
-                    <CheckCircle className="w-6 h-6 text-yellow-500" />
+                    <CheckCircle className="w-5 sm:w-6 h-5 sm:h-6 text-yellow-500" />
                   ) : (
-                    <Circle className="w-6 h-6 text-gray-400" />
+                    <Circle className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400" />
                   )}
                   <div>
-                    <p className="font-medium text-gray-900">{task.title}</p>
-                    <p className="text-sm text-gray-600">
+                    <p className="font-medium text-gray-900 text-sm sm:text-base">{task.title}</p>
+                    <p className="text-xs sm:text-sm text-gray-600">
                       {task.id === 'invite' ? `${task.description} (${task.count} referrals)` : task.description}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-medium text-yellow-500">
+                <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-0">
+                  <p className="text-xs sm:text-sm font-medium text-yellow-500">
                     {task.id === 'invite' ? `$${task.reward * task.count} USDT` : `$${task.reward} USDT`}
                   </p>
                   {task.status === 'completed' && (
                     <button
                       onClick={() => handleClaim(task.id)}
-                      className="bg-yellow-400 text-gray-900 px-3 py-1 rounded-md text-sm font-medium hover:bg-yellow-500 transition-colors"
+                      className="bg-yellow-400 text-gray-900 px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm font-medium hover:bg-yellow-500 transition-colors"
                     >
                       Claim
                     </button>
@@ -346,6 +347,8 @@ function LandingPage() {
       </div>
     );
   }
+  
+  
   
   
   
@@ -520,10 +523,12 @@ function LandingPage() {
     }
 
     import {   Wallet } from 'lucide-react';
+
     function App() {
       const [isLoggedIn, setIsLoggedIn] = useState(false);
       const [isDrawerOpen, setIsDrawerOpen] = useState(false);
       const [balance, setBalance] = useState(0);
+      const navigate = useNavigate();
     
       const updateBalance = async () => {
         if (!auth.currentUser) return;
@@ -531,24 +536,67 @@ function LandingPage() {
           const userData = await fetchWithErrorHandling('GET', `users/${auth.currentUser.uid}`);
           if (userData && userData.balance !== undefined) {
             setBalance(userData.balance);
+            setIsLoggedIn(true); // Ensure logged-in state is set
+          } else {
+            throw new Error('User data not found');
           }
         } catch (error) {
           console.error('Error updating balance:', error.message);
+          if (error.message.includes('User data not found') || error.message.includes('Unauthorized')) {
+            await signOut(auth);
+            localStorage.removeItem('token');
+            setIsLoggedIn(false);
+            setBalance(0);
+            navigate('/signup');
+          }
+        }
+      };
+    
+      const retryFetchUserData = async (uid, retries = 3, delay = 1000) => {
+        for (let i = 0; i < retries; i++) {
+          try {
+            const userData = await fetchWithErrorHandling('GET', `users/${uid}`);
+            if (userData) {
+              return userData;
+            }
+            throw new Error('User data not found');
+          } catch (error) {
+            if (i < retries - 1) {
+              await new Promise((resolve) => setTimeout(resolve, delay));
+              continue;
+            }
+            throw error;
+          }
         }
       };
     
       useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
           if (user) {
-            setIsLoggedIn(true);
-            await updateBalance();
+            try {
+              const userData = await retryFetchUserData(user.uid);
+              setIsLoggedIn(true);
+              setBalance(userData.balance || 0);
+            } catch (error) {
+              console.error('Auth state error:', error.message);
+              if (error.message.includes('User data not found')) {
+                navigate('/signup');
+              } else if (error.message.includes('Unauthorized')) {
+                await signOut(auth);
+                localStorage.removeItem('token');
+                setIsLoggedIn(false);
+                setBalance(0);
+                navigate('/login');
+              }
+            }
           } else {
             setIsLoggedIn(false);
             setBalance(0);
+            localStorage.removeItem('token');
           }
         });
         return () => unsubscribe();
-      }, []);
+      }, [navigate]);
     
       const handleLogout = async () => {
         try {
@@ -561,11 +609,12 @@ function LandingPage() {
             title: 'Logged Out',
             timer: 1000,
             customClass: {
-              popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-              title: 'text-xl font-bold text-gray-900',
+              popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+              title: 'text-lg sm:text-xl font-bold text-gray-900',
               confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
             },
           });
+          navigate('/login');
         } catch (error) {
           Swal.fire({
             icon: 'error',
@@ -574,9 +623,9 @@ function LandingPage() {
             confirmButtonColor: '#1f2937',
             confirmButtonText: 'OK',
             customClass: {
-              popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-              title: 'text-xl font-bold text-gray-900',
-              content: 'text-gray-700',
+              popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+              title: 'text-lg sm:text-xl font-bold text-gray-900',
+              content: 'text-gray-700 text-sm sm:text-base',
               confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
             },
           });
@@ -589,15 +638,18 @@ function LandingPage() {
             <div className="mx-auto px-4 sm:px-6 max-w-7xl">
               <div className="flex items-center justify-between h-16">
                 <div className="flex items-center space-x-4">
-                  <button onClick={() => setIsDrawerOpen(true)} className="sm:hidden p-2 rounded-md hover:bg-gray-700 transition-colors">
+                  <button
+                    onClick={() => setIsDrawerOpen(true)}
+                    className="sm:hidden p-2 rounded-md hover:bg-gray-700 transition-colors"
+                  >
                     <Menu className="w-6 h-6" />
                   </button>
                   <Link to="/" className="flex items-center space-x-2">
-                    <img src="/assets/logo.png" className="h-10 w-10 rounded-full" alt="logo" />
-                    <span className="text-xl font-bold">Quantum</span>
+                    <img src="/assets/logo.png" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full" alt="logo" />
+                    <span className="text-lg sm:text-xl font-bold">Quantum</span>
                   </Link>
                 </div>
-                <nav className="hidden md:!flex items-center space-x-6">
+                <nav className="hidden md:!flex items-center space-x-4 lg:space-x-6">
                   {[
                     { to: '/support', label: 'Support' },
                     { to: '/Earn', label: 'Earn' },
@@ -620,29 +672,29 @@ function LandingPage() {
                     </NavLink>
                   ))}
                 </nav>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2 sm:space-x-4">
                   {isLoggedIn ? (
                     <>
-                      <div className="flex items-center space-x-2 bg-gray-700 px-3 py-1 rounded-full">
-                        <Wallet className="w-5 h-5 text-yellow-400" />
-                        <span className="text-sm font-medium">{balance.toFixed(2)} USDT</span>
+                      <div className="flex items-center space-x-2 bg-gray-700 px-2 sm:px-3 py-1 rounded-full">
+                        <Wallet className="w-4 sm:w-5 h-4 sm:h-5 text-yellow-400" />
+                        <span className="text-xs sm:text-sm font-medium">{balance.toFixed(2)} USDT</span>
                       </div>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center space-x-1 text-sm font-medium text-gray-200 hover:text-yellow-400 transition-colors"
+                        className="flex items-center space-x-1 text-xs sm:text-sm font-medium text-gray-200 hover:text-yellow-400 transition-colors"
                       >
-                        <LogOut className="w-5 h-5" />
+                        <LogOut className="w-4 sm:w-5 h-4 sm:h-5" />
                         <span>Logout</span>
                       </button>
                     </>
                   ) : (
                     <>
-                      <Link to="/login" className="text-sm font-medium text-gray-200 hover:text-yellow-400 transition-colors">
+                      <Link to="/login" className="text-xs sm:text-sm font-medium text-gray-200 hover:text-yellow-400 transition-colors">
                         Login
                       </Link>
                       <Link
                         to="/signup"
-                        className="px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-medium rounded-full hover:bg-yellow-500 transition-colors shadow-md"
+                        className="px-2 sm:px-4 py-1 sm:py-2 bg-yellow-400 text-gray-900 text-xs sm:text-sm font-medium rounded-full hover:bg-yellow-500 transition-colors shadow-md"
                       >
                         Signup
                       </Link>
@@ -651,29 +703,68 @@ function LandingPage() {
                 </div>
               </div>
             </div>
+            <div
+              className={`fixed inset-0 bg-gray-900 bg-opacity-95 z-50 transform transition-transform duration-300 ${
+                isDrawerOpen ? 'translate-x-0' : '-translate-x-full'
+              } sm:hidden`}
+            >
+              <div className="flex justify-between items-center p-4 border-b border-gray-700">
+                <Link to="/" className="flex items-center space-x-2" onClick={() => setIsDrawerOpen(false)}>
+                  <img src="/assets/logo.png" className="h-8 w-8 rounded-full" alt="logo" />
+                  <span className="text-lg font-bold">Quantum</span>
+                </Link>
+                <button onClick={() => setIsDrawerOpen(false)} className="p-2 rounded-md hover:bg-gray-700">
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              <nav className="flex flex-col p-4 space-y-4">
+                {[
+                  { to: '/support', label: 'Support' },
+                  { to: '/Earn', label: 'Earn' },
+                  { to: '/Futures', label: 'Futures' },
+                  { to: '/Spot', label: 'Spot' },
+                  { to: '/assets', label: 'Assets' },
+                  { to: '/tasks', label: 'Tasks' },
+                  { to: '/withdraw', label: 'Withdraw' },
+                ].map((item) => (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    className={({ isActive }) =>
+                      `text-base font-medium transition-colors ${
+                        isActive ? 'text-yellow-400' : 'text-gray-200 hover:text-yellow-400'
+                      }`
+                    }
+                    onClick={() => setIsDrawerOpen(false)}
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
+              </nav>
+            </div>
           </header>
-          <div className="mt-16">
-            <Routes>
-              <Route path="/" element={<AssetsPage updateBalance={updateBalance} />} />
-              <Route path="/assets" element={<AssetsPage updateBalance={updateBalance} />} />
-              <Route path="/deposit" element={<DepositPage updateBalance={updateBalance} />} />
-              <Route path="/withdraw" element={<WithdrawPage updateBalance={updateBalance} />} />
-              <Route path="/tasks" element={<TasksPage updateBalance={updateBalance} />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/Earn" element={<NotAvalible />} />
-              <Route path="/Futures" element={<NotAvalible />} />
-              <Route path="/Spot" element={<NotAvalible />} />
-              <Route path="/transfer" element={<NotAvalible />} />
-              <Route path="/*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </div>
-      );
-    }
-    
-    export default App;
+          <div className="pt-16">
+        <Routes>
+          <Route path="/" element={<AssetsPage updateBalance={updateBalance} />} />
+          <Route path="/assets" element={<AssetsPage updateBalance={updateBalance} />} />
+          <Route path="/deposit" element={<DepositPage updateBalance={updateBalance} />} />
+          <Route path="/withdraw" element={<WithdrawPage updateBalance={updateBalance} />} />
+          <Route path="/tasks" element={<TasksPage updateBalance={updateBalance} />} />
+          <Route path="/signup" element={<SignupPage setIsLoggedIn={setIsLoggedIn} setBalance={setBalance} updateBalance={updateBalance} />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/support" element={<NotAvalible />} />
+          <Route path="/Earn" element={<NotAvalible />} />
+          <Route path="/Futures" element={<NotAvalible />} />
+          <Route path="/Spot" element={<NotAvalible />} />
+          <Route path="/transfer" element={<NotAvalible />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </div>
+  );
+}
+
+export default App;
 
 
 // import { BrowserRouter as Router, Routes, Route, Link, NavLink, useNavigate } from 'react-router-dom';

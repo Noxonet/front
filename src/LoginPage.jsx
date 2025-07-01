@@ -12,7 +12,61 @@ function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleLogin = async () => {
+    if (!email) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Email is required',
+        confirmButtonColor: '#1f2937',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-gray-900',
+          content: 'text-gray-700 text-sm sm:text-base',
+          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+        },
+      });
+      return;
+    }
+    if (!validateEmail(email)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Please enter a valid email address',
+        confirmButtonColor: '#1f2937',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-gray-900',
+          content: 'text-gray-700 text-sm sm:text-base',
+          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+        },
+      });
+      return;
+    }
+    if (!password) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Password is required',
+        confirmButtonColor: '#1f2937',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-gray-900',
+          content: 'text-gray-700 text-sm sm:text-base',
+          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+        },
+      });
+      return;
+    }
+
     setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -27,8 +81,8 @@ function LoginPage() {
         title: 'Login Successful',
         timer: 1000,
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-          title: 'text-xl font-bold text-gray-900',
+          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-gray-900',
           confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
         },
       });
@@ -50,9 +104,9 @@ function LoginPage() {
         confirmButtonColor: '#1f2937',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in',
-          title: 'text-xl font-bold text-gray-900',
-          content: 'text-gray-700',
+          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-gray-900',
+          content: 'text-gray-700 text-sm sm:text-base',
           confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
         },
       });
@@ -73,14 +127,14 @@ function LoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          className="w-full p-3 mb-4 bg-gray-50 !text-black rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors"
+          className="w-full p-3 mb-4 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors !text-black"
         />
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          className="w-full p-3 mb-6 bg-gray-50 !text-black rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors"
+          className="w-full p-3 mb-6 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors !text-black"
         />
         <button
           onClick={handleLogin}
