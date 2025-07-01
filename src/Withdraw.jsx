@@ -36,6 +36,7 @@ function WithdrawPage({ updateBalance }) {
   const [countUsd, setCountUsd] = useState(0);
   const [walletAddress, setWalletAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isPending, setIsPending] = useState(true);
   const [minimumWithdrawal, setMinimumWithdrawal] = useState(5);
   const navigate = useNavigate();
 
@@ -171,11 +172,20 @@ function WithdrawPage({ updateBalance }) {
       <div className="mx-auto px-4 sm:px-6 max-w-3xl">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">Withdraw</h1>
+          {
+            isPending ? 
           <NavLink to="/assets" className="text-sm text-yellow-500 hover:underline">
             Back to Assets
           </NavLink>
+            :
+          <NavLink onClick={() => {setIsPending(true)}} className="text-sm text-yellow-500 hover:underline">
+            Back to previous step
+          </NavLink>
+          }
         </div>
-        <div className="bg-white rounded-2xl p-6 shadow-xl animate-fade-in">
+        {
+          isPending ? 
+          <div className="bg-white rounded-2xl p-6 shadow-xl animate-fade-in">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Select Currency</label>
@@ -194,16 +204,6 @@ function WithdrawPage({ updateBalance }) {
                 ))}
               </select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Amount (USDT)</label>
-              <input
-                type="number"
-                value={countUsd}
-                onChange={(e) => setCountUsd(e.target.value)}
-                placeholder={`Minimum ${minimumWithdrawal} USDT`}
-                className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors"
-              />
-            </div>
           </div>
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Wallet Address</label>
@@ -215,24 +215,63 @@ function WithdrawPage({ updateBalance }) {
               className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors"
             />
           </div>
+
           <button
-            onClick={handleWithdraw}
-            className="w-full bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-              </svg>
-            ) : (
-              <>
-                <Send className="w-5 h-5 mr-2" />
-                Confirm Withdrawal
-              </>
-            )}
-          </button>
-        </div>
+              onClick={() => {setIsPending(false)}}
+              className="w-full bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                </svg>
+              ) : (
+                <>
+                  <Send className="w-5 h-5 mr-2" />
+                  Confirm Withdrawal
+                </>
+              )}
+            </button>
+        </div> 
+        :
+          <div className="bg-white rounded-2xl p-6 shadow-xl animate-fade-in">
+          <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Amount (USDT)</label>
+                <input
+                  type="number"
+                  value={countUsd}
+                  onChange={(e) => setCountUsd(e.target.value)}
+                  placeholder={`Minimum ${minimumWithdrawal} USDT`}
+                  className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors"
+                />
+          </div>
+          <button
+              onClick={handleWithdraw}
+              className="w-full mt-5 bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                </svg>
+              ) : (
+                <>
+                  <Send className="w-5 h-5 mr-2" />
+                  Confirm Withdrawal
+                </>
+              )}
+            </button>
+          </div>
+          
+        }
+
+        
+
+
+
+
       </div>
     </div>
   );
