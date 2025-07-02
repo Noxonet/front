@@ -523,6 +523,7 @@ function LandingPage() {
     }
 
     import {   Wallet } from 'lucide-react';
+import ProfilePage from './ProfilePage';
 
     function App() {
       const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -658,6 +659,7 @@ function LandingPage() {
                     { to: '/assets', label: 'Assets' },
                     { to: '/tasks', label: 'Tasks' },
                     { to: '/withdraw', label: 'Withdraw' },
+                    // { to: '/profile', label: 'Profile' },
                   ].map((item) => (
                     <NavLink
                       key={item.to}
@@ -726,6 +728,8 @@ function LandingPage() {
                   { to: '/assets', label: 'Assets' },
                   { to: '/tasks', label: 'Tasks' },
                   { to: '/withdraw', label: 'Withdraw' },
+                  // { to: '/profile', label: 'Profile' },
+
                 ].map((item) => (
                   <NavLink
                     key={item.to}
@@ -757,6 +761,7 @@ function LandingPage() {
           <Route path="/Futures" element={<NotAvalible />} />
           <Route path="/Spot" element={<NotAvalible />} />
           <Route path="/transfer" element={<NotAvalible />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

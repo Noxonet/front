@@ -28,6 +28,32 @@ function DepositPage({ updateBalance }) {
   const [isPending, setIsPending] = useState(false);
   const navigate = useNavigate();
 
+  const restrictToEnglish = (value, type) => {
+    let regex;
+    if (type === 'amount') regex = /^[0-9.]*$/;
+    return regex.test(value);
+  };
+
+  const handleInputChange = (value, type, setter) => {
+    if (!restrictToEnglish(value, type)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Input',
+        text: 'Only English numbers are allowed',
+        confirmButtonColor: '#1f2937',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-gray-900',
+          content: 'text-gray-700 text-sm sm:text-base',
+          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+        },
+      });
+      return;
+    }
+    setter(value);
+  };
+
   const addressChangeHandler = (e) => {
     setSelectValue(e.target.value);
     const address = addresses.find((item) => item.chanel === e.target.value);
@@ -214,7 +240,7 @@ function DepositPage({ updateBalance }) {
               <input
                 type="number"
                 value={countUsd}
-                onChange={(e) => setCountUsd(e.target.value)}
+                onChange={(e) => handleInputChange(e.target.value, 'amount', setCountUsd)}
                 placeholder="Minimum 5 USDT"
                 className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors !text-black"
               />
