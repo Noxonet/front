@@ -304,6 +304,8 @@ function LandingPage() {
 
     import {   Wallet } from 'lucide-react';
 import ProfilePage from './ProfilePage';
+import TradePage from './TradePage';
+import PropPurchase from './PropPurchase';
 
     function App() {
       const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -439,6 +441,8 @@ import ProfilePage from './ProfilePage';
                     { to: '/assets', label: 'Assets' },
                     { to: '/tasks', label: 'Tasks' },
                     { to: '/withdraw', label: 'Withdraw' },
+                    { to: '/trade', label: 'Trade' },
+                    { to: '/prop', label: 'Prop' }, 
                     // { to: '/profile', label: 'Profile' },
                   ].map((item) => (
                     <NavLink
@@ -508,6 +512,8 @@ import ProfilePage from './ProfilePage';
                   { to: '/assets', label: 'Assets' },
                   { to: '/tasks', label: 'Tasks' },
                   { to: '/withdraw', label: 'Withdraw' },
+                  { to: '/trade', label: 'Trade' }, 
+                  { to: '/prop', label: 'Prop' }, 
                   // { to: '/profile', label: 'Profile' },
 
                 ].map((item) => (
@@ -542,6 +548,8 @@ import ProfilePage from './ProfilePage';
           <Route path="/Spot" element={<NotAvalible />} />
           <Route path="/transfer" element={<NotAvalible />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/trade" element={<TradePage />} />
+          <Route path="/prop" element={<PropPurchase />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

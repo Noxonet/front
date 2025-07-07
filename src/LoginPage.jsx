@@ -6,7 +6,7 @@ import { auth } from './firebase';
 import { fetchWithErrorHandling } from './fetchHelper';
 import { LogIn } from 'lucide-react';
 
-function LoginPage() {
+function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -101,19 +101,32 @@ function LoginPage() {
       localStorage.setItem('token', token);
       const userData = await fetchWithErrorHandling('GET', `users/${userCredential.user.uid}`);
       if (!userData) {
-        throw new Error('User data not found');
+        await fetchWithErrorHandling('PATCH', `users/${userCredential.user.uid}`, {
+          email,
+          balance: 0,
+          mainBalance: 0,
+          propBalance: 0,
+          propStatus: false
+        });
       }
+      setIsLoggedIn(true);
+      setBalance(userData?.balance || 0);
+      await updateBalance();
+
       Swal.fire({
         icon: 'success',
         title: 'Login Successful',
         timer: 1000,
+        confirmButtonColor: '#1f2937',
+        confirmButtonText: 'OK',
         customClass: {
           popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
           title: 'text-lg sm:text-xl font-bold text-gray-900',
+          content: 'text-gray-700 text-sm sm:text-base',
           confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
         },
       });
-      navigate('/assets');
+      navigate('/prop-purchase');
     } catch (error) {
       let errorMessage = error.message;
       if (error.code === 'auth/invalid-credential') {
@@ -122,7 +135,7 @@ function LoginPage() {
         errorMessage = 'User data not found, please sign up';
         navigate('/signup');
       } else if (error.message.includes('Unauthorized')) {
-        errorMessage = 'Invalid API secret, please contact support';
+        errorMessage = 'Invalid API key, please contact support';
       }
       Swal.fire({
         icon: 'error',

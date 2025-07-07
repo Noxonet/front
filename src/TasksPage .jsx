@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { auth } from './firebase';
+import { auth ,db,functions} from './firebase';
 import { fetchWithErrorHandling } from './fetchHelper';
 import { claimReferralBonus } from './utils';
 import { DollarSign, List, CheckCircle, Circle } from 'lucide-react';

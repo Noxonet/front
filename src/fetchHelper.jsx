@@ -1,37 +1,30 @@
-import { DATABASE_URL, API_SECRET } from './firebase';
+import { DATABASE_URL, auth } from './firebase';
 
 export const fetchWithErrorHandling = async (method, path, data = null) => {
-  const url = `${DATABASE_URL}/${path}.json?auth=${API_SECRET}`;
+  if (!DATABASE_URL) {
+    throw new Error('Firebase DATABASE_URL is not configured in firebase.js.');
+  }
   try {
-    const options = {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('User is not authenticated. Please sign in again.');
+    }
+    const idToken = await user.getIdToken(true); // Force refresh token
+    console.log('ID Token:', idToken); // Debugging
+
+    const response = await fetch(`${DATABASE_URL}/${path}.json?auth=${idToken}`, {
       method,
       headers: { 'Content-Type': 'application/json' },
-    };
-    if (data) {
-      options.body = JSON.stringify(data);
-    }
-    const response = await fetch(url, options);
-    const text = await response.text();
+      body: data ? JSON.stringify(data) : null,
+    });
     if (!response.ok) {
-      let errorMessage = `HTTP error ${response.status}: ${text || 'No response body'}`;
-      if (response.status === 401) {
-        errorMessage = 'Unauthorized: Invalid API secret';
-      } else if (response.status === 404 || (text === '' && method === 'GET')) {
-        errorMessage = 'User data not found';
-      } else {
-        errorMessage = 'An error occurred, please try again later';
-      }
-      throw new Error(errorMessage);
+      const errorText = await response.text();
+      throw new Error(`HTTP error! Status: ${response.status}, Details: ${errorText}`);
     }
-    if (!text) {
-      return null;
-    }
-    try {
-      return JSON.parse(text);
-    } catch (jsonError) {
-      throw new Error('Invalid JSON response');
-    }
+    const result = await response.json();
+    return result === null ? {} : result; // Handle null response
   } catch (error) {
-    throw error;
+    console.error(`Fetch error for ${method} ${path}:`, error);
+    throw new Error(`Failed to ${method} data at ${path}: ${error.message}`);
   }
 };

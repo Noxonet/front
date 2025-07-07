@@ -131,9 +131,12 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
         claimedReferralBonus: 0,
         referredBy: referralCode || null,
         createdAt: Date.now(),
+        mainBalance: 0,
+        propBalance: 0,
+        propStatus: false
       };
 
-      await fetchWithErrorHandling('PUT', `users/${userCredential.user.uid}`, userData);
+      await fetchWithErrorHandling('PATCH', `users/${userCredential.user.uid}`, userData);
 
       if (referralCode) {
         const usersData = await fetchWithErrorHandling('GET', 'users');
@@ -174,7 +177,7 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
       });
 
       setTimeout(() => {
-        navigate('/assets');
+        navigate('/prop-purchase');
       }, 1000);
     } catch (error) {
       let errorMessage = error.message;
@@ -185,7 +188,7 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
       } else if (error.code === 'auth/weak-password') {
         errorMessage = 'Password must be at least 6 characters';
       } else if (error.message.includes('Unauthorized')) {
-        errorMessage = 'Invalid API secret, please contact support';
+        errorMessage = 'Invalid API key, please contact support';
       }
       Swal.fire({
         icon: 'error',
