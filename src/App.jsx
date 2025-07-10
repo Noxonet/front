@@ -429,7 +429,7 @@ import BotActivationPage from './BotsPage';
                     <Menu className="w-6 h-6" />
                   </button>
                   <Link to="/" className="flex items-center space-x-2">
-                    <img src="/assets/logo.png" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full" alt="logo" />
+                    <img src='./public/atomic.png' className="h-8 w-8 sm:h-10 sm:w-10 rounded-full" alt="logo" />
                     <span className="text-lg sm:text-xl font-bold">Quantum</span>
                   </Link>
                 </div>
