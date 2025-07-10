@@ -1,0 +1,16 @@
+{
+    "builds": [
+      {
+        "src": "./build/**",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "build",
+          "installCommand": "npm ci",
+          "buildCommand": "npm run build"
+        }
+      }
+    ],
+    "engines": {
+      "node": "18.x"
+    }
+  }
