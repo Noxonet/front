@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { getFunctions } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
-
+import { getDatabase } from 'firebase/database';
 
 import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
@@ -24,4 +24,5 @@ export const auth = getAuth(app);
 export const storage = getStorage(app);
 export const db = getFirestore(app);
 export const functions = getFunctions(app);
+export const rtdb = getDatabase(app);
 export const DATABASE_URL = firebaseConfig.databaseURL;

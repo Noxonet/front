@@ -10,7 +10,7 @@ export const fetchWithErrorHandling = async (method, path, data = null) => {
       throw new Error('User is not authenticated. Please sign in again.');
     }
     const idToken = await user.getIdToken(true); // Force refresh token
-    console.log('ID Token:', idToken); // Debugging
+    // console.log('ID Token:', idToken); // Debugging
 
     const response = await fetch(`${DATABASE_URL}/${path}.json?auth=${idToken}`, {
       method,

@@ -306,6 +306,7 @@ function LandingPage() {
 import ProfilePage from './ProfilePage';
 import TradePage from './TradePage';
 import PropPurchase from './PropPurchase';
+import BotActivationPage from './BotsPage';
 
     function App() {
       const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -550,6 +551,7 @@ import PropPurchase from './PropPurchase';
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/trade" element={<TradePage />} />
           <Route path="/prop" element={<PropPurchase />} />
+          <Route path="/bots" element={<BotActivationPage />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
