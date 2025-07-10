@@ -66,8 +66,9 @@ function PropPurchase() {
     }
     setEmail(value);
   };
-
+  
   const sendConfirmationEmail = async () => {
+  
     if (!validateEmail(email)) {
       Swal.fire({
         icon: 'error',
@@ -101,7 +102,7 @@ function PropPurchase() {
       });
       return;
     }
-
+    
     setIsLoading(true);
     let code = ''; // تعریف کد در خارج از try
     try {
@@ -193,7 +194,8 @@ function PropPurchase() {
         }
         setIsLoading(false)
   };
-
+  }
+  
   const confirmPurchase = async () => {
     const storedCode = localStorage.getItem('confirmationCode');
     const usedWalletAddress = localStorage.getItem('usedWalletAddress') || defaultWalletAddress;
@@ -214,6 +216,7 @@ function PropPurchase() {
       });
       return;
     }
+    
 
     setIsLoading(true);
     try {
@@ -376,5 +379,5 @@ function PropPurchase() {
     </div>
   );
 }
-}
+
 export default PropPurchase;
