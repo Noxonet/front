@@ -1,0 +1,19 @@
+{
+    "builds": [
+      {
+        "src": "./build/**",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "build",
+          "installCommand": "npm ci",
+          "buildCommand": "npm run build"
+        }
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
+      }
+    ]
+  }
