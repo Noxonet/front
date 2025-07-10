@@ -444,6 +444,7 @@ import BotActivationPage from './BotsPage';
                     { to: '/withdraw', label: 'Withdraw' },
                     { to: '/trade', label: 'Trade' },
                     { to: '/prop', label: 'Prop' }, 
+                    { to: '/earn', label: 'Earn' }, 
                     // { to: '/profile', label: 'Profile' },
                   ].map((item) => (
                     <NavLink
@@ -515,6 +516,7 @@ import BotActivationPage from './BotsPage';
                   { to: '/withdraw', label: 'Withdraw' },
                   { to: '/trade', label: 'Trade' }, 
                   { to: '/prop', label: 'Prop' }, 
+                  { to: '/earn', label: 'Earn' }, 
                   // { to: '/profile', label: 'Profile' },
 
                 ].map((item) => (
@@ -544,7 +546,7 @@ import BotActivationPage from './BotsPage';
           <Route path="/signup" element={<SignupPage setIsLoggedIn={setIsLoggedIn} setBalance={setBalance} updateBalance={updateBalance} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/support" element={<NotAvalible />} />
-          <Route path="/Earn" element={<NotAvalible />} />
+          <Route path="/Earn" element={<BotActivationPage/>} />
           <Route path="/Futures" element={<NotAvalible />} />
           <Route path="/Spot" element={<NotAvalible />} />
           <Route path="/transfer" element={<NotAvalible />} />
