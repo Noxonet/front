@@ -444,7 +444,6 @@ import BotActivationPage from './BotsPage';
                     { to: '/withdraw', label: 'Withdraw' },
                     { to: '/trade', label: 'Trade' },
                     { to: '/prop', label: 'Prop' }, 
-                    { to: '/earn', label: 'Earn' }, 
                     // { to: '/profile', label: 'Profile' },
                   ].map((item) => (
                     <NavLink
@@ -516,7 +515,6 @@ import BotActivationPage from './BotsPage';
                   { to: '/withdraw', label: 'Withdraw' },
                   { to: '/trade', label: 'Trade' }, 
                   { to: '/prop', label: 'Prop' }, 
-                  { to: '/earn', label: 'Earn' }, 
                   // { to: '/profile', label: 'Profile' },
 
                 ].map((item) => (
