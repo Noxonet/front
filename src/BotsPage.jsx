@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from './firebase';
 import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
 import { CheckCircle, Bot } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 const BotActivationPage = () => {
   const [token, setToken] = useState('');
@@ -20,7 +21,19 @@ const BotActivationPage = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (!user) {
         console.log('No user logged in, redirecting to login');
-        setError('Please log in to activate your bot.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Authentication Required',
+          text: 'Please log in to activate your bot.',
+          confirmButtonColor: '#7F00FF',
+          confirmButtonText: 'OK',
+          customClass: {
+            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white',
+            content: 'text-gray-300 text-sm sm:text-base',
+            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          },
+        });
         navigate('/login');
         return;
       }
@@ -54,7 +67,19 @@ const BotActivationPage = () => {
 
       if (depositsSnapshot.empty) {
         console.error('No deposits found for user:', uid);
-        setError('No valid deposit found.');
+        Swal.fire({
+          icon: 'error',
+          title: 'No Deposit Found',
+          text: 'No valid deposit found.',
+          confirmButtonColor: '#7F00FF',
+          confirmButtonText: 'OK',
+          customClass: {
+            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white',
+            content: 'text-gray-300 text-sm sm:text-base',
+            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          },
+        });
         setIsBotActive(false);
         return;
       }
@@ -75,7 +100,19 @@ const BotActivationPage = () => {
 
       if (!latestDeposit) {
         console.error('No valid deposit found for user:', uid);
-        setError('No valid deposit found.');
+        Swal.fire({
+          icon: 'error',
+          title: 'No Deposit Found',
+          text: 'No valid deposit found.',
+          confirmButtonColor: '#7F00FF',
+          confirmButtonText: 'OK',
+          customClass: {
+            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white',
+            content: 'text-gray-300 text-sm sm:text-base',
+            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          },
+        });
         return;
       }
 
@@ -123,15 +160,51 @@ const BotActivationPage = () => {
           console.log('Deposit deleted successfully');
           setDepositInfo(null);
           setBotSales(null);
-          setSuccess('Balance updated and bot data cleared after 5 days.');
+          Swal.fire({
+            icon: 'success',
+            title: 'Balance Updated',
+            text: 'Balance updated and bot data cleared after 5 days.',
+            confirmButtonColor: '#7F00FF',
+            confirmButtonText: 'OK',
+            customClass: {
+              popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+              title: 'text-lg sm:text-xl font-bold text-white',
+              content: 'text-gray-300 text-sm sm:text-base',
+              confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+            },
+          });
         } catch (balanceError) {
           console.error('Balance update error:', balanceError.code, balanceError.message);
-          setError(`Failed to update balance: ${balanceError.message}`);
+          Swal.fire({
+            icon: 'error',
+            title: 'Balance Update Failed',
+            text: `Failed to update balance: ${balanceError.message}`,
+            confirmButtonColor: '#7F00FF',
+            confirmButtonText: 'OK',
+            customClass: {
+              popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+              title: 'text-lg sm:text-xl font-bold text-white',
+              content: 'text-gray-300 text-sm sm:text-base',
+              confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+            },
+          });
         }
       }
     } catch (err) {
       console.error('Error fetching deposit info:', err.code, err.message);
-      setError(`Failed to fetch deposit: ${err.message}`);
+      Swal.fire({
+        icon: 'error',
+        title: 'Deposit Fetch Failed',
+        text: `Failed to fetch deposit: ${err.message}`,
+        confirmButtonColor: '#7F00FF',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+        },
+      });
     }
   };
 
@@ -143,13 +216,37 @@ const BotActivationPage = () => {
     setBotSales(0); // Initially 0
 
     if (!token || !password) {
-      setError('Please enter both token and password.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Input Required',
+        text: 'Please enter both token and password.',
+        confirmButtonColor: '#7F00FF',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+        },
+      });
       return;
     }
 
     const user = auth.currentUser;
     if (!user) {
-      setError('No authenticated user found. Please log in again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Authentication Required',
+        text: 'No authenticated user found. Please log in again.',
+        confirmButtonColor: '#7F00FF',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+        },
+      });
       navigate('/login');
       return;
     }
@@ -170,253 +267,197 @@ const BotActivationPage = () => {
 
       if (depositsSnapshot.empty) {
         console.error('No deposits found for token:', token);
-        setError('Invalid token or password.');
-        return;
-      }
-
-      // Log all deposits for debugging
-      console.log('All deposits found:');
-      let validDeposit = null;
-      let depositId = null;
-      depositsSnapshot.forEach((doc) => {
-        const data = doc.data();
-        console.log(`Deposit ID: ${doc.id}, Data:`, data);
-        if (data.status === 'confirmed' && data.userId === user.uid) {
-          validDeposit = data;
-          depositId = doc.id;
-        }
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Credentials',
+          text: 'Invalid token or password.',
+          confirmButtonColor: '#7F00FF',
+          confirmButtonText: 'OK',
+          customClass: {
+            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white',
+            content: 'text-gray-300 text-sm sm:text-base',
+            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+        },
       });
-
-      if (!validDeposit) {
-        console.error('No confirmed deposit found for token:', token);
-        setError('Invalid token or password.');
-        return;
-      }
-
-      console.log('Valid deposit found:', validDeposit);
-
-      // Mark bot as activated
-      const userDoc = doc(db, 'users', user.uid);
-      await setDoc(userDoc, { botActivated: true }, { merge: true });
-      console.log('Bot marked as activated for user:', user.uid);
-
-      // Set deposit info
-      setDepositInfo({
-        email: validDeposit.email, // Use email from deposit (user's actual email)
-        price: validDeposit.price,
-        weeklySales: validDeposit.weeklySales,
-        timestamp: validDeposit.timestamp?.toDate().toLocaleString('en-US') || 'N/A',
-      });
-
-      // Set bot sales to 0 initially
-      setBotSales(0);
-      console.log('Bot sales set to 0 initially');
-
-      setIsBotActive(true);
-      setSuccess('Bot activated successfully! You can now view your bot details.');
-    } catch (err) {
-      console.error('Error activating bot:', err.code, err.message, err);
-      setError(`Failed to activate bot: ${err.message}`);
+      return;
     }
-  };
 
-  return (
-    <div
-      style={{
-        backgroundColor: '#FFFFE0',
-        padding: '20px',
-        minHeight: '100vh',
-        fontFamily: "'Roboto', sans-serif",
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '20px',
-        maxWidth: '1400px',
-        margin: '0 auto',
-      }}
-      className="bot-activation-page"
-    >
-      <h1
-        style={{
-          color: '#FFD700',
-          textAlign: 'center',
-          marginBottom: '20px',
-          fontSize: '2rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-        }}
-      >
-        <Bot size={32} /> Your Trading Bot
-      </h1>
-      <div
-        style={{
-          backgroundColor: '#FFF',
-          padding: '20px',
-          borderRadius: '12px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-          transition: 'box-shadow 0.3s, transform 0.3s',
-          width: '100%',
-          maxWidth: '400px',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 6px 25px rgba(0,0,0,0.15)';
-          e.currentTarget.style.transform = 'scale(1.02)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
-          e.currentTarget.style.transform = 'scale(1)';
-        }}
-      >
-        {!isBotActive ? (
-          <>
-            <h2 style={{ color: '#333', marginBottom: '20px', fontSize: '1.5rem', textAlign: 'center' }}>
-              Enter Token and Password
-            </h2>
-            <div style={{ marginBottom: '15px' }}>
-              <label style={{ display: 'block', color: '#333', marginBottom: '5px', fontWeight: '500' }}>
-                Token:
-              </label>
-              <input
-                type="text"
-                value={token}
-                onChange={(e) => setToken(e.target.value)}
-                placeholder="Enter your token"
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  border: '1px solid #ddd',
-                  fontSize: '1rem',
-                  color: '#000',
-                  transition: 'border-color 0.3s, box-shadow 0.3s',
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = '#FFD700';
-                  e.target.style.boxShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = '#ddd';
-                  e.target.style.boxShadow = 'none';
-                }}
-              />
-            </div>
-            <div style={{ marginBottom: '15px' }}>
-              <label style={{ display: 'block', color: '#333', marginBottom: '5px', fontWeight: '500' }}>
-                Password:
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  border: '1px solid #ddd',
-                  fontSize: '1rem',
-                  color: '#000',
-                  transition: 'border-color 0.3s, box-shadow 0.3s',
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = '#FFD700';
-                  e.target.style.boxShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = '#ddd';
-                  e.target.style.boxShadow = 'none';
-                }}
-              />
-            </div>
-            <button
-              onClick={handleActivateBot}
-              style={{
-                backgroundColor: '#FFD700',
-                border: 'none',
-                padding: '12px 20px',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                color: '#333',
-                width: '100%',
-                fontSize: '1rem',
-                fontWeight: '500',
-                transition: 'background-color 0.3s, transform 0.2s, box-shadow 0.3s',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'scale(1.05)';
-                e.target.style.boxShadow = '0 4px 15px rgba(255, 215, 0, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'scale(1)';
-                e.target.style.boxShadow = 'none';
-              }}
-            >
-              Activate Bot
-            </button>
-          </>
-        ) : (
-          <>
-            <h2 style={{ color: '#333', marginBottom: '20px', fontSize: '1.5rem', textAlign: 'center' }}>
-              Your Bot Details
-            </h2>
-            {depositInfo && (
-              <div style={{ marginTop: '20px', textAlign: 'center', color: '#333', fontSize: '1rem' }}>
-                <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
-                  <CheckCircle size={20} color="#4caf50" /> Bot is active!
-                </p>
-                <div style={{ marginTop: '10px', textAlign: 'left', maxWidth: '300px', margin: '10px auto' }}>
-                  <p><strong>Deposit Info:</strong></p>
-                  <p>Email: {depositInfo.email}</p>
-                  <p>Price: ${depositInfo.price}</p>
-                  <p>Weekly Sales: {depositInfo.weeklySales}</p>
-                  <p>Bot Sales: {botSales !== null ? botSales : 'N/A'}</p>
-                  <p>Timestamp: {depositInfo.timestamp}</p>
-                </div>
+    // Log all deposits for debugging
+    console.log('All deposits found:');
+    let validDeposit = null;
+    let depositId = null;
+    depositsSnapshot.forEach((doc) => {
+      const data = doc.data();
+      console.log(`Deposit ID: ${doc.id}, Data:`, data);
+      if (data.status === 'confirmed' && data.userId === user.uid) {
+        validDeposit = data;
+        depositId = doc.id;
+      }
+    });
+
+    if (!validDeposit) {
+      console.error('No confirmed deposit found for token:', token);
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Credentials',
+        text: 'Invalid token or password.',
+        confirmButtonColor: '#7F00FF',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+        },
+      });
+      return;
+    }
+
+    console.log('Valid deposit found:', validDeposit);
+
+    // Mark bot as activated
+    const userDoc = doc(db, 'users', user.uid);
+    await setDoc(userDoc, { botActivated: true }, { merge: true });
+    console.log('Bot marked as activated for user:', user.uid);
+
+    // Set deposit info
+    setDepositInfo({
+      email: validDeposit.email, // Use email from deposit (user's actual email)
+      price: validDeposit.price,
+      weeklySales: validDeposit.weeklySales,
+      timestamp: validDeposit.timestamp?.toDate().toLocaleString('en-US') || 'N/A',
+    });
+
+    // Set bot sales to 0 initially
+    setBotSales(0);
+    console.log('Bot sales set to 0 initially');
+
+    setIsBotActive(true);
+    Swal.fire({
+      icon: 'success',
+      title: 'Bot Activated',
+      text: 'Bot activated successfully! You can now view your bot details.',
+      confirmButtonColor: '#7F00FF',
+      confirmButtonText: 'OK',
+      customClass: {
+        popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+        title: 'text-lg sm:text-xl font-bold text-white',
+        content: 'text-gray-300 text-sm sm:text-base',
+        confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+      },
+    });
+  } catch (err) {
+    console.error('Error activating bot:', err.code, err.message, err);
+    Swal.fire({
+      icon: 'error',
+      title: 'Bot Activation Failed',
+      text: `Failed to activate bot: ${err.message}`,
+      confirmButtonColor: '#7F00FF',
+      confirmButtonText: 'OK',
+      customClass: {
+        popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+        title: 'text-lg sm:text-xl font-bold text-white',
+        content: 'text-gray-300 text-sm sm:text-base',
+        confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+      },
+    });
+  }
+};
+
+return (
+  <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white flex flex-col items-center gap-5 py-5  mx-auto relative overflow-hidden">
+    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+    <h1 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-2.5 relative z-10">
+      <Bot size={32} className="text-purple-400" /> Your Trading Bot
+    </h1>
+    <div className="bg-gray-900 bg-opacity-20 backdrop-blur-lg p-5 rounded-xl shadow-2xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] w-full max-w-md border border-gray-700 border-opacity-20 relative z-10">
+      {!isBotActive ? (
+        <>
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-5 text-center">
+            Enter Token and Password
+          </h2>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Token:
+            </label>
+            <input
+              type="text"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+              placeholder="Enter your token"
+              className="w-full p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm text-white placeholder-gray-400"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Password:
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              className="w-full p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm text-white placeholder-gray-400"
+            />
+          </div>
+          <button
+            onClick={handleActivateBot}
+            className="w-full bg-purple-600 bg-opacity-80 backdrop-blur-md text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors text-sm font-medium shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+          >
+            Activate Bot
+          </button>
+        </>
+      ) : (
+        <>
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-5 text-center">
+            Your Bot Details
+          </h2>
+          {depositInfo && (
+            <div className="mt-5 text-center text-sm text-gray-300">
+              <p className="flex items-center justify-center gap-1.5 mb-2">
+                <CheckCircle size={20} className="text-green-500" /> Bot is active!
+              </p>
+              <div className="text-left max-w-xs mx-auto">
+                <p className="font-medium text-white">Deposit Info:</p>
+                <p>Email: {depositInfo.email}</p>
+                <p>Price: ${depositInfo.price}</p>
+                <p>Weekly Sales: {depositInfo.weeklySales}</p>
+                <p>Bot Sales: {botSales !== null ? botSales : 'N/A'}</p>
+                <p>Timestamp: {depositInfo.timestamp}</p>
               </div>
-            )}
-          </>
-        )}
-        {error && (
-          <p style={{ color: '#f44336', textAlign: 'center', marginTop: '15px', fontSize: '0.9rem' }}>
-            {error}
-          </p>
-        )}
-        {success && (
-          <p style={{ color: '#4caf50', textAlign: 'center', marginTop: '15px', fontSize: '0.9rem' }}>
-            {success}
-          </p>
-        )}
-      </div>
-
-      {/* Styling */}
-      <style>
-        {`
-          @media (max-width: 768px) {
-            .bot-activation-page {
-              padding: 10px;
-            }
-            .bot-activation-page > div {
-              max-width: 100%;
-            }
-          }
-          input::placeholder {
-            color: #000 !important;
-            opacity: 1;
-          }
-          input::-webkit-input-placeholder {
-            color: #000 !important;
-          }
-          input::-moz-placeholder {
-            color: #000 !important;
-          }
-          input:-ms-input-placeholder {
-            color: #000 !important;
-          }
-        `}
-      </style>
+            </div>
+          )}
+        </>
+      )}
+      {error && (
+        <p className="text-red-400 text-center mt-4 text-sm">
+          {error}
+        </p>
+      )}
+      {success && (
+        <p className="text-green-400 text-center mt-4 text-sm">
+          {success}
+        </p>
+      )}
     </div>
-  );
+
+    <style jsx>{`
+      @media (max-width: 768px) {
+        .bot-activation-page {
+          padding: 10px;
+        }
+        .bot-activation-page > div {
+          max-width: 100%;
+        }
+      }
+      input::placeholder {
+        color: #9CA3AF !important;
+        opacity: 1;
+      }
+    `}</style>
+  </div>
+);
 };
 
 export default BotActivationPage;

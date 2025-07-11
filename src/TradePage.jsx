@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { auth, db } from './firebase';
@@ -135,7 +134,7 @@ const TradingPage = () => {
       if (orderStatus && orderStatus.status === 'pending') {
         const bp = parseFloat(orderStatus.buyPrice);
         const currentPrice = currentPrices[selectedCoin];
-        if (orderStatus.orderType === 'limit' && currentPrice <= bp) {
+        if (orderType === 'limit' && currentPrice <= bp) {
           setOrderStatus({ ...orderStatus, status: 'executed' });
           setSuccess('Limit order executed successfully.');
         }
@@ -236,7 +235,7 @@ const TradingPage = () => {
     chart: {
       type: 'area',
       height: 400,
-      background: '#FFFFE0',
+      background: 'transparent',
       animations: {
         enabled: true,
         easing: 'easeinout',
@@ -258,15 +257,15 @@ const TradingPage = () => {
     stroke: {
       curve: 'smooth',
       width: 3,
-      colors: ['#FFD700'],
+      colors: ['#7F00FF'],
     },
     fill: {
       type: 'gradient',
       gradient: {
-        shade: 'light',
+        shade: 'dark',
         type: 'vertical',
         shadeIntensity: 0.5,
-        gradientToColors: ['#FFFFE0'],
+        gradientToColors: ['#3B0764'],
         inverseColors: false,
         opacityFrom: 0.7,
         opacityTo: 0.2,
@@ -276,52 +275,52 @@ const TradingPage = () => {
     xaxis: {
       type: 'datetime',
       labels: {
-        style: { colors: '#333', fontFamily: 'Roboto, sans-serif' },
+        style: { colors: '#D1D5DB', fontFamily: 'Roboto, sans-serif' },
         format: 'dd MMM',
       },
     },
     yaxis: {
       labels: {
         formatter: (value) => `$${value.toFixed(2)}`,
-        style: { colors: '#333', fontFamily: 'Roboto, sans-serif' },
+        style: { colors: '#D1D5DB', fontFamily: 'Roboto, sans-serif' },
       },
     },
     annotations: {
       yaxis: [
         {
           y: currentPrices[selectedCoin] || 0,
-          borderColor: '#FFD700',
+          borderColor: '#7F00FF',
           label: {
             text: 'Current Price',
-            style: { color: '#333', background: '#FFD700', fontFamily: 'Roboto, sans-serif' },
+            style: { color: '#fff', background: '#7F00FF', fontFamily: 'Roboto, sans-serif' },
           },
         },
         orderStatus && takeProfit && orderStatus.coin === selectedCoin
           ? {
               y: parseFloat(takeProfit),
-              borderColor: '#4caf50',
+              borderColor: '#4CAF50',
               label: {
                 text: 'Take Profit',
-                style: { color: '#fff', background: '#4caf50', fontFamily: 'Roboto, sans-serif' },
+                style: { color: '#fff', background: '#4CAF50', fontFamily: 'Roboto, sans-serif' },
               },
             }
           : {},
         orderStatus && stopLoss && orderStatus.coin === selectedCoin
           ? {
               y: parseFloat(stopLoss),
-              borderColor: '#f44336',
+              borderColor: '#F44336',
               label: {
                 text: 'Stop Loss',
-                style: { color: '#fff', background: '#f44336', fontFamily: 'Roboto, sans-serif' },
+                style: { color: '#fff', background: '#F44336', fontFamily: 'Roboto, sans-serif' },
               },
             }
           : {},
       ],
     },
-    grid: { borderColor: '#ddd' },
+    grid: { borderColor: '#4B5563' },
     tooltip: {
       enabled: true,
-      theme: 'light',
+      theme: 'dark',
       x: { format: 'dd MMM yyyy' },
       style: { fontFamily: 'Roboto, sans-serif' },
     },
@@ -337,25 +336,38 @@ const TradingPage = () => {
   return (
     <div
       style={{
-        backgroundColor: '#FFFFE0',
+        background: 'linear-gradient(to bottom right, #111827, #1E3A8A, #4C1D95)',
         padding: '20px',
         minHeight: '100vh',
         fontFamily: "'Roboto', sans-serif",
         display: 'grid',
         gap: '20px',
         gridTemplateColumns: '1fr 2fr',
-        maxWidth: '1400px',
+        
         margin: '0 auto',
+        position: 'relative',
+        overflow: 'hidden',
       }}
-      className="trading-page"
+      className="trading-page !w-full "
     >
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: `url('https://www.transparenttextures.com/patterns/stardust.png')`,
+          opacity: 0.2,
+          animation: 'pulse 10s infinite',
+        }}
+      ></div>
       <h1
         style={{
-          color: '#FFD700',
+          color: '#fff',
           textAlign: 'center',
           marginBottom: '20px',
           fontSize: '2rem',
           gridColumn: '1 / -1',
+          position: 'relative',
+          zIndex: 10,
         }}
       >
         Trading Dashboard
@@ -364,35 +376,39 @@ const TradingPage = () => {
       {/* Order Form */}
       <div
         style={{
-          backgroundColor: '#FFF',
+          backgroundColor: 'rgba(17, 24, 39, 0.2)',
+          backdropFilter: 'blur(12px)',
           padding: '20px',
           borderRadius: '12px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          boxShadow: '0 4px 20px rgba(126, 0, 255, 0.3)',
           transition: 'box-shadow 0.3s, transform 0.3s',
+          border: '1px solid rgba(75, 85, 99, 0.2)',
+          position: 'relative',
+          zIndex: 10,
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 6px 25px rgba(0,0,0,0.15)';
+          e.currentTarget.style.boxShadow = '0 6px 25px rgba(126, 0, 255, 0.5)';
           e.currentTarget.style.transform = 'scale(1.02)';
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+          e.currentTarget.style.boxShadow = '0 4px 20px rgba(126, 0, 255, 0.3)';
           e.currentTarget.style.transform = 'scale(1)';
         }}
       >
-        <h2 style={{ color: '#333', marginBottom: '20px', fontSize: '1.5rem' }}>
+        <h2 style={{ color: '#fff', marginBottom: '20px', fontSize: '1.5rem' }}>
           Place Order
         </h2>
-        <p style={{ color: '#333', marginBottom: '10px', fontWeight: '500' }}>
+        <p style={{ color: '#D1D5DB', marginBottom: '10px', fontWeight: '500' }}>
           User: {userEmail || 'Loading...'}
         </p>
-        <p style={{ color: '#333', marginBottom: '10px', fontWeight: '500' }}>
+        <p style={{ color: '#D1D5DB', marginBottom: '10px', fontWeight: '500' }}>
           Wallet: {WALLET_ADDRESS}
         </p>
-        <p style={{ color: '#333', marginBottom: '20px', fontWeight: '500' }}>
+        <p style={{ color: '#D1D5DB', marginBottom: '20px', fontWeight: '500' }}>
           Prop Balance: ${propBalance.toFixed(2)}
         </p>
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', color: '#333', marginBottom: '5px', fontWeight: '500' }}>
+          <label style={{ display: 'block', color: '#D1D5DB', marginBottom: '5px', fontWeight: '500' }}>
             Select Coin:
           </label>
           <select
@@ -405,17 +421,19 @@ const TradingPage = () => {
               width: '100%',
               padding: '12px',
               borderRadius: '8px',
-              border: '1px solid #ddd',
+              border: '1px solid rgba(75, 85, 99, 0.2)',
               fontSize: '1rem',
-              color: '#000', // Black text
+              color: '#fff',
+              backgroundColor: 'rgba(17, 24, 39, 0.2)',
+              backdropFilter: 'blur(12px)',
               transition: 'border-color 0.3s, box-shadow 0.3s',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#FFD700';
-              e.target.style.boxShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
+              e.target.style.borderColor = '#7F00FF';
+              e.target.style.boxShadow = '0 0 5px rgba(126, 0, 255, 0.5)';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#ddd';
+              e.target.style.borderColor = 'rgba(75, 85, 99, 0.2)';
               e.target.style.boxShadow = 'none';
             }}
           >
@@ -427,7 +445,7 @@ const TradingPage = () => {
           </select>
         </div>
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', color: '#333', marginBottom: '5px', fontWeight: '500' }}>
+          <label style={{ display: 'block', color: '#D1D5DB', marginBottom: '5px', fontWeight: '500' }}>
             Order Type:
           </label>
           <select
@@ -440,17 +458,19 @@ const TradingPage = () => {
               width: '100%',
               padding: '12px',
               borderRadius: '8px',
-              border: '1px solid #ddd',
+              border: '1px solid rgba(75, 85, 99, 0.2)',
               fontSize: '1rem',
-              color: '#000', // Black text
+              color: '#fff',
+              backgroundColor: 'rgba(17, 24, 39, 0.2)',
+              backdropFilter: 'blur(12px)',
               transition: 'border-color 0.3s, box-shadow 0.3s',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#FFD700';
-              e.target.style.boxShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
+              e.target.style.borderColor = '#7F00FF';
+              e.target.style.boxShadow = '0 0 5px rgba(126, 0, 255, 0.5)';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#ddd';
+              e.target.style.borderColor = 'rgba(75, 85, 99, 0.2)';
               e.target.style.boxShadow = 'none';
             }}
           >
@@ -459,7 +479,7 @@ const TradingPage = () => {
           </select>
         </div>
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', color: '#333', marginBottom: '5px', fontWeight: '500' }}>
+          <label style={{ display: 'block', color: '#D1D5DB', marginBottom: '5px', fontWeight: '500' }}>
             Buy Price ($):
           </label>
           <input
@@ -472,24 +492,25 @@ const TradingPage = () => {
               width: '100%',
               padding: '12px',
               borderRadius: '8px',
-              border: '1px solid #ddd',
+              border: '1px solid rgba(75, 85, 99, 0.2)',
               fontSize: '1rem',
-              color: '#000', // Black text
+              color: '#fff',
+              backgroundColor: orderType === 'market' ? 'rgba(75, 85, 99, 0.4)' : 'rgba(17, 24, 39, 0.2)',
+              backdropFilter: 'blur(12px)',
               transition: 'border-color 0.3s, box-shadow 0.3s',
-              backgroundColor: orderType === 'market' ? '#f0f0f0' : '#fff',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#FFD700';
-              e.target.style.boxShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
+              e.target.style.borderColor = '#7F00FF';
+              e.target.style.boxShadow = '0 0 5px rgba(126, 0, 255, 0.5)';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#ddd';
+              e.target.style.borderColor = 'rgba(75, 85, 99, 0.2)';
               e.target.style.boxShadow = 'none';
             }}
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', color: '#333', marginBottom: '5px', fontWeight: '500' }}>
+          <label style={{ display: 'block', color: '#D1D5DB', marginBottom: '5px', fontWeight: '500' }}>
             Quantity ({coins.find((c) => c.id === selectedCoin)?.symbol}):
           </label>
           <input
@@ -501,23 +522,25 @@ const TradingPage = () => {
               width: '100%',
               padding: '12px',
               borderRadius: '8px',
-              border: '1px solid #ddd',
+              border: '1px solid rgba(75, 85, 99, 0.2)',
               fontSize: '1rem',
-              color: '#000', // Black text
+              color: '#fff',
+              backgroundColor: 'rgba(17, 24, 39, 0.2)',
+              backdropFilter: 'blur(12px)',
               transition: 'border-color 0.3s, box-shadow 0.3s',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#FFD700';
-              e.target.style.boxShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
+              e.target.style.borderColor = '#7F00FF';
+              e.target.style.boxShadow = '0 0 5px rgba(126, 0, 255, 0.5)';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#ddd';
+              e.target.style.borderColor = 'rgba(75, 85, 99, 0.2)';
               e.target.style.boxShadow = 'none';
             }}
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', color: '#333', marginBottom: '5px', fontWeight: '500' }}>
+          <label style={{ display: 'block', color: '#D1D5DB', marginBottom: '5px', fontWeight: '500' }}>
             Take Profit (Optional) ($):
           </label>
           <input
@@ -529,23 +552,25 @@ const TradingPage = () => {
               width: '100%',
               padding: '12px',
               borderRadius: '8px',
-              border: '1px solid #ddd',
+              border: '1px solid rgba(75, 85, 99, 0.2)',
               fontSize: '1rem',
-              color: '#000', // Black text
+              color: '#fff',
+              backgroundColor: 'rgba(17, 24, 39, 0.2)',
+              backdropFilter: 'blur(12px)',
               transition: 'border-color 0.3s, box-shadow 0.3s',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#FFD700';
-              e.target.style.boxShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
+              e.target.style.borderColor = '#7F00FF';
+              e.target.style.boxShadow = '0 0 5px rgba(126, 0, 255, 0.5)';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#ddd';
+              e.target.style.borderColor = 'rgba(75, 85, 99, 0.2)';
               e.target.style.boxShadow = 'none';
             }}
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', color: '#333', marginBottom: '5px', fontWeight: '500' }}>
+          <label style={{ display: 'block', color: '#D1D5DB', marginBottom: '5px', fontWeight: '500' }}>
             Stop Loss (Optional) ($):
           </label>
           <input
@@ -557,17 +582,19 @@ const TradingPage = () => {
               width: '100%',
               padding: '12px',
               borderRadius: '8px',
-              border: '1px solid #ddd',
+              border: '1px solid rgba(75, 85, 99, 0.2)',
               fontSize: '1rem',
-              color: '#000', // Black text
+              color: '#fff',
+              backgroundColor: 'rgba(17, 24, 39, 0.2)',
+              backdropFilter: 'blur(12px)',
               transition: 'border-color 0.3s, box-shadow 0.3s',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#FFD700';
-              e.target.style.boxShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
+              e.target.style.borderColor = '#7F00FF';
+              e.target.style.boxShadow = '0 0 5px rgba(126, 0, 255, 0.5)';
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = '#ddd';
+              e.target.style.borderColor = 'rgba(75, 85, 99, 0.2)';
               e.target.style.boxShadow = 'none';
             }}
           />
@@ -576,18 +603,19 @@ const TradingPage = () => {
           onClick={handleBuy}
           disabled={orderStatus}
           style={{
-            backgroundColor: orderStatus ? '#ccc' : '#FFD700',
-            border: 'none',
+            backgroundColor: orderStatus ? 'rgba(75, 85, 99, 0.4)' : 'rgba(126, 0, 255, 0.8)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(75, 85, 99, 0.2)',
             padding: '12px 20px',
             borderRadius: '8px',
             cursor: orderStatus ? 'not-allowed' : 'pointer',
-            color: '#333',
+            color: '#fff',
             width: '100%',
             fontSize: '1rem',
             fontWeight: '500',
             transition: 'background-color 0.3s, transform 0.2s, box-shadow 0.3s',
           }}
-          onMouseEnter={(e) => !orderStatus && (e.target.style.transform = 'scale(1.05)') && (e.target.style.boxShadow = '0 4px 15px rgba(255, 215, 0, 0.5)')}
+          onMouseEnter={(e) => !orderStatus && (e.target.style.transform = 'scale(1.05)') && (e.target.style.boxShadow = '0 4px 15px rgba(126, 0, 255, 0.7)')}
           onMouseLeave={(e) => !orderStatus && (e.target.style.transform = 'scale(1)') && (e.target.style.boxShadow = 'none')}
         >
           Place Order
@@ -596,8 +624,9 @@ const TradingPage = () => {
           <button
             onClick={handleCancelOrder}
             style={{
-              backgroundColor: '#f44336',
-              border: 'none',
+              backgroundColor: 'rgba(244, 67, 54, 0.8)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(75, 85, 99, 0.2)',
               padding: '12px 20px',
               borderRadius: '8px',
               cursor: 'pointer',
@@ -610,7 +639,7 @@ const TradingPage = () => {
             }}
             onMouseEnter={(e) => {
               e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 4px 15px rgba(244, 67, 54, 0.5)';
+              e.target.style.boxShadow = '0 4px 15px rgba(244, 67, 54, 0.7)';
             }}
             onMouseLeave={(e) => {
               e.target.style.transform = 'scale(1)';
@@ -621,12 +650,12 @@ const TradingPage = () => {
           </button>
         )}
         {error && (
-          <p style={{ color: '#f44336', textAlign: 'center', marginTop: '15px', fontSize: '0.9rem' }}>
+          <p style={{ color: '#F44336', textAlign: 'center', marginTop: '15px', fontSize: '0.9rem' }}>
             {error}
           </p>
         )}
         {success && (
-          <p style={{ color: '#4caf50', textAlign: 'center', marginTop: '15px', fontSize: '0.9rem' }}>
+          <p style={{ color: '#4CAF50', textAlign: 'center', marginTop: '15px', fontSize: '0.9rem' }}>
             {success}
           </p>
         )}
@@ -634,50 +663,52 @@ const TradingPage = () => {
           <div
             style={{
               marginTop: '20px',
-              backgroundColor: '#f9f9f9',
+              backgroundColor: 'rgba(17, 24, 39, 0.2)',
+              backdropFilter: 'blur(12px)',
               padding: '15px',
               borderRadius: '8px',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
+              boxShadow: '0 2px 10px rgba(126, 0, 255, 0.3)',
               transition: 'box-shadow 0.3s, transform 0.3s',
+              border: '1px solid rgba(75, 85, 99, 0.2)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(126, 0, 255, 0.5)';
               e.currentTarget.style.transform = 'scale(1.02)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+              e.currentTarget.style.boxShadow = '0 2px 10px rgba(126, 0, 255, 0.3)';
               e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            <h3 style={{ color: '#333', fontSize: '1.2rem', marginBottom: '10px' }}>
+            <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '10px' }}>
               Open Order
             </h3>
-            <p style={{ color: '#333', fontSize: '0.9rem', margin: '5px 0' }}>
+            <p style={{ color: '#D1D5DB', fontSize: '0.9rem', margin: '5px 0' }}>
               Coin: <span style={{ fontWeight: '600' }}>{orderStatus.symbol}</span>
             </p>
-            <p style={{ color: '#333', fontSize: '0.9rem', margin: '5px 0' }}>
+            <p style={{ color: '#D1D5DB', fontSize: '0.9rem', margin: '5px 0' }}>
               Order Type: <span style={{ fontWeight: '600' }}>{orderStatus.orderType.toUpperCase()}</span>
             </p>
-            <p style={{ color: '#333', fontSize: '0.9rem', margin: '5px 0' }}>
+            <p style={{ color: '#D1D5DB', fontSize: '0.9rem', margin: '5px 0' }}>
               Status: <span style={{ fontWeight: '600' }}>{orderStatus.status.toUpperCase()}</span>
             </p>
-            <p style={{ color: '#333', fontSize: '0.9rem', margin: '5px 0' }}>
+            <p style={{ color: '#D1D5DB', fontSize: '0.9rem', margin: '5px 0' }}>
               Buy Price: <span style={{ fontWeight: '600' }}>${orderStatus.buyPrice.toFixed(2)}</span>
             </p>
-            <p style={{ color: '#333', fontSize: '0.9rem', margin: '5px 0' }}>
+            <p style={{ color: '#D1D5DB', fontSize: '0.9rem', margin: '5px 0' }}>
               Quantity: <span style={{ fontWeight: '600' }}>{orderStatus.quantity.toFixed(4)} {orderStatus.symbol}</span>
             </p>
             {orderStatus.takeProfit && (
-              <p style={{ color: '#333', fontSize: '0.9rem', margin: '5px 0' }}>
-                Take Profit: <span style={{ fontWeight: '600', color: '#4caf50' }}>${orderStatus.takeProfit.toFixed(2)}</span>
+              <p style={{ color: '#D1D5DB', fontSize: '0.9rem', margin: '5px 0' }}>
+                Take Profit: <span style={{ fontWeight: '600', color: '#4CAF50' }}>${orderStatus.takeProfit.toFixed(2)}</span>
               </p>
             )}
             {orderStatus.stopLoss && (
-              <p style={{ color: '#333', fontSize: '0.9rem', margin: '5px 0' }}>
-                Stop Loss: <span style={{ fontWeight: '600', color: '#f44336' }}>${orderStatus.stopLoss.toFixed(2)}</span>
+              <p style={{ color: '#D1D5DB', fontSize: '0.9rem', margin: '5px 0' }}>
+                Stop Loss: <span style={{ fontWeight: '600', color: '#F44336' }}>${orderStatus.stopLoss.toFixed(2)}</span>
               </p>
             )}
-            <p style={{ color: '#333', fontSize: '0.9rem', margin: '5px 0' }}>
+            <p style={{ color: '#D1D5DB', fontSize: '0.9rem', margin: '5px 0' }}>
               Current Price: <span style={{ fontWeight: '600' }}>${currentPrices[selectedCoin]?.toFixed(2) || 'Loading...'}</span>
             </p>
           </div>
@@ -688,22 +719,26 @@ const TradingPage = () => {
       <div
         style={{
           gridColumn: '2 / 3',
-          backgroundColor: '#FFF',
+          backgroundColor: 'rgba(17, 24, 39, 0.2)',
+          backdropFilter: 'blur(12px)',
           padding: '20px',
           borderRadius: '12px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          boxShadow: '0 4px 20px rgba(126, 0, 255, 0.3)',
           transition: 'box-shadow 0.3s, transform 0.3s',
+          border: '1px solid rgba(75, 85, 99, 0.2)',
+          position: 'relative',
+          zIndex: 10,
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 6px 25px rgba(0,0,0,0.15)';
+          e.currentTarget.style.boxShadow = '0 6px 25px rgba(126, 0, 255, 0.5)';
           e.currentTarget.style.transform = 'scale(1.02)';
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+          e.currentTarget.style.boxShadow = '0 4px 20px rgba(126, 0, 255, 0.3)';
           e.currentTarget.style.transform = 'scale(1)';
         }}
       >
-        <h2 style={{ color: '#333', marginBottom: '10px', fontSize: '1.5rem' }}>
+        <h2 style={{ color: '#fff', marginBottom: '10px', fontSize: '1.5rem' }}>
           Price Chart ({coins.find((c) => c.id === selectedCoin)?.symbol}/USD)
         </h2>
         <Chart options={chartOptions} series={chartSeries} type="area" height={400} />
@@ -721,17 +756,22 @@ const TradingPage = () => {
             }
           }
           input::placeholder, select::placeholder {
-            color: #000 !important; /* Black placeholder text */
+            color: #D1D5DB !important;
             opacity: 1;
           }
           input::-webkit-input-placeholder, select::-webkit-input-placeholder {
-            color: #000 !important; /* Black placeholder text for WebKit browsers */
+            color: #D1D5DB !important;
           }
           input::-moz-placeholder, select::-moz-placeholder {
-            color: #000 !important; /* Black placeholder text for Firefox */
+            color: #D1D5DB !important;
           }
           input:-ms-input-placeholder, select:-ms-input-placeholder {
-            color: #000 !important; /* Black placeholder text for Edge */
+            color: #D1D5DB !important;
+          }
+          @keyframes pulse {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.2; }
           }
         `}
       </style>

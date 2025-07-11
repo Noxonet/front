@@ -56,13 +56,13 @@ function ProfilePage() {
           icon: 'error',
           title: 'Error Fetching Profile',
           text: errorMessage,
-          confirmButtonColor: '#1f2937',
+          confirmButtonColor: '#7F00FF',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-gray-900',
-            content: 'text-gray-700 text-sm sm:text-base',
-            confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white',
+            content: 'text-gray-300 text-sm sm:text-base',
+            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
           },
         });
       } finally {
@@ -91,13 +91,13 @@ function ProfilePage() {
             : type === 'phone'
             ? 'Only numbers are allowed'
             : 'Only English characters are allowed',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -128,13 +128,13 @@ function ProfilePage() {
           icon: 'error',
           title: 'Invalid File',
           text: 'Only JPEG or PNG images are allowed',
-          confirmButtonColor: '#1f2937',
+          confirmButtonColor: '#7F00FF',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-gray-900',
-            content: 'text-gray-700 text-sm sm:text-base',
-            confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white',
+            content: 'text-gray-300 text-sm sm:text-base',
+            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
           },
         });
         return;
@@ -145,13 +145,13 @@ function ProfilePage() {
           icon: 'error',
           title: 'File Too Large',
           text: 'Image size must be less than 2MB',
-          confirmButtonColor: '#1f2937',
+          confirmButtonColor: '#7F00FF',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-gray-900',
-            content: 'text-gray-700 text-sm sm:text-base',
-            confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white',
+            content: 'text-gray-300 text-sm sm:text-base',
+            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
           },
         });
         return;
@@ -167,13 +167,13 @@ function ProfilePage() {
         icon: 'error',
         title: 'No Bonus Available',
         text: 'You have no referral bonus to claim',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -195,13 +195,13 @@ function ProfilePage() {
         icon: 'success',
         title: 'Referral Bonus Claimed',
         text: `$${bonusToClaim.toFixed(2)} added to your balance`,
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
     } catch (error) {
@@ -219,13 +219,13 @@ function ProfilePage() {
         icon: 'error',
         title: 'Claim Error',
         text: errorMessage,
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
     } finally {
@@ -239,13 +239,13 @@ function ProfilePage() {
         icon: 'error',
         title: 'Validation Error',
         text: 'Name is required',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -256,13 +256,13 @@ function ProfilePage() {
         icon: 'error',
         title: 'Validation Error',
         text: 'Phone number must be at least 10 digits and contain only numbers',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -273,13 +273,13 @@ function ProfilePage() {
         icon: 'error',
         title: 'Validation Error',
         text: 'Password must be at least 8 characters, including uppercase, lowercase, number, and special character',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -310,13 +310,13 @@ function ProfilePage() {
         title: 'Profile Updated',
         text: 'Your profile has been successfully updated',
         timer: 2000,
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       setPassword('');
@@ -336,13 +336,13 @@ function ProfilePage() {
         icon: 'error',
         title: 'Save Error',
         text: errorMessage,
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
     } finally {
@@ -362,35 +362,37 @@ function ProfilePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="flex items-center space-x-2">
-          <svg className="animate-spin h-6 sm:h-8 w-6 sm:w-8 text-gray-800" viewBox="0 0 24 24">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+        <div className="flex items-center space-x-2 relative z-10">
+          <svg className="animate-spin h-6 sm:h-8 w-6 sm:w-8 text-white" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
           </svg>
-          <span className="text-base sm:text-lg font-medium text-gray-800">Loading...</span>
+          <span className="text-base sm:text-lg font-medium text-white">Loading...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900">
-      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="mt-4 sm:mt-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">Profile</h1>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Profile</h1>
             <NavLink
               to="/assets"
-              className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-transparent text-gray-800 text-xs sm:text-sm font-medium rounded-full hover:bg-gray-200 transition-colors border border-gray-300 shadow-md mt-3 sm:mt-0"
+              className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white text-xs sm:text-sm font-medium rounded-full hover:bg-gray-800 hover:bg-opacity-30 transition-colors border border-gray-700 border-opacity-20 shadow-md mt-3 sm:mt-0"
             >
               Back to Assets
             </NavLink>
           </div>
-          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-xl animate-fade-in">
+          <div className="bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 shadow-2xl transform transition-all duration-300 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] border border-gray-700 border-opacity-20">
             <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-              <User className="w-6 sm:w-8 h-6 sm:h-8 text-gray-600" />
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900">Personal Information</h2>
+              <User className="w-6 sm:w-8 h-6 sm:h-8 text-gray-300" />
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white">Personal Information</h2>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:gap-4">
               <div className="flex items-center gap-3">
@@ -398,78 +400,78 @@ function ProfilePage() {
                   <img
                     src={avatar || 'https://via.placeholder.com/64'}
                     alt="User Avatar"
-                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border border-gray-200"
+                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border border-gray-700 border-opacity-20"
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Profile Picture</label>
+                  <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">Profile Picture</label>
                   <input
                     type="file"
                     accept="image/jpeg,image/png"
                     onChange={handleAvatarChange}
-                    className="w-full p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200 text-xs sm:text-sm text-gray-700"
+                    className="w-full p-2 sm:p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 text-xs sm:text-sm text-gray-300"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Email</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">Email</label>
                 <input
                   type="text"
                   value={email}
                   disabled
-                  className="w-full p-2 sm:p-3 bg-gray-100 rounded-lg border border-gray-200 text-xs sm:text-sm text-gray-600 cursor-not-allowed"
+                  className="w-full p-2 sm:p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 text-xs sm:text-sm text-gray-400 cursor-not-allowed"
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Name</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">Name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => handleInputChange(e.target.value, 'name', setName)}
                   placeholder="Enter your name"
-                  className="w-full p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors text-xs sm:text-sm text-black"
+                  className="w-full p-2 sm:p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white placeholder-gray-400"
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">Phone Number</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">Phone Number</label>
                 <input
                   type="text"
                   value={phoneNumber}
                   onChange={(e) => handleInputChange(e.target.value, 'phone', setPhoneNumber)}
                   placeholder="Enter your phone number"
-                  className="w-full p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors text-xs sm:text-sm text-black"
+                  className="w-full p-2 sm:p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white placeholder-gray-400"
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">New Password</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">New Password</label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => handleInputChange(e.target.value, 'password', setPassword)}
                   placeholder="Enter new password (optional)"
-                  className="w-full p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors text-xs sm:text-sm text-black"
+                  className="w-full p-2 sm:p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white placeholder-gray-400"
                 />
               </div>
             </div>
-            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-50 rounded-lg">
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20">
               <div className="flex items-center gap-2">
-                <Users className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
-                <p className="text-xs sm:text-sm font-medium text-gray-700">
-                  Total Referrals: <span className="text-yellow-500">{referralCount}</span>
+                <Users className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
+                <p className="text-xs sm:text-sm font-medium text-gray-300">
+                  Total Referrals: <span className="text-purple-400">{referralCount}</span>
                 </p>
               </div>
             </div>
-            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-50 rounded-lg">
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <DollarSign className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
-                  <p className="text-xs sm:text-sm font-medium text-gray-700">
-                    Referral Bonus: <span className="text-yellow-500">{referralBonus.toFixed(2)} USDT</span>
+                  <DollarSign className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
+                  <p className="text-xs sm:text-sm font-medium text-gray-300">
+                    Referral Bonus: <span className="text-purple-400">{referralBonus.toFixed(2)} USDT</span>
                   </p>
                 </div>
                 <button
                   onClick={handleClaimReferralBonus}
-                  className="flex items-center justify-center gap-1 text-xs sm:text-sm bg-gray-800 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-900 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center gap-1 text-xs sm:text-sm bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors disabled:bg-gray-600 disabled:bg-opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
                   disabled={isSaving || referralBonus <= 0}
                 >
                   <DollarSign className="w-3 sm:w-4 h-3 sm:h-4" />
@@ -477,25 +479,25 @@ function ProfilePage() {
                 </button>
               </div>
             </div>
-            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-50 rounded-lg">
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20">
               <div className="flex items-center gap-2">
-                <Activity className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
-                <p className="text-xs sm:text-sm font-medium text-gray-700">
-                  Last Login: <span className="text-yellow-500">{formatDate(lastLogin)}</span>
+                <Activity className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
+                <p className="text-xs sm:text-sm font-medium text-gray-300">
+                  Last Login: <span className="text-purple-400">{formatDate(lastLogin)}</span>
                 </p>
               </div>
             </div>
-            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-50 rounded-lg">
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20">
               <div className="flex items-center gap-2">
-                <Shield className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
-                <p className="text-xs sm:text-sm font-medium text-gray-700">
-                  Account Status: <span className="text-yellow-500 capitalize">{accountStatus}</span>
+                <Shield className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
+                <p className="text-xs sm:text-sm font-medium text-gray-300">
+                  Account Status: <span className="text-purple-400 capitalize">{accountStatus}</span>
                 </p>
               </div>
             </div>
             <button
               onClick={handleSaveProfile}
-              className="w-full bg-gray-800 text-white p-2 sm:p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center text-xs sm:text-sm mt-4 sm:mt-6 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="w-full bg-purple-600 bg-opacity-80 backdrop-blur-md text-white p-2 sm:p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors flex items-center justify-center text-xs sm:text-sm mt-4 sm:mt-6 disabled:bg-gray-600 disabled:bg-opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
               disabled={isSaving}
             >
               {isSaving ? (
@@ -505,7 +507,7 @@ function ProfilePage() {
                 </svg>
               ) : (
                 <>
-                  <Save className="w-4 sm:w-5 h-4 sm:h-5 mr-1 sm:mr-2" />
+                  <Save className="w-4 sm:w-5 h-4 sm:h-5 mr-1 sm:mr-2 text-gray-300" />
                   Save Profile
                 </>
               )}

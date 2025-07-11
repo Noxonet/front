@@ -30,13 +30,13 @@ function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Invalid Input',
         text: 'Only English characters are allowed',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -50,13 +50,13 @@ function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Email is required',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -66,13 +66,13 @@ function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Please enter a valid email address',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -82,13 +82,13 @@ function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Password is required',
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -117,13 +117,13 @@ function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'success',
         title: 'Login Successful',
         timer: 1000,
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       navigate('/prop-purchase');
@@ -141,13 +141,13 @@ function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Login Error',
         text: errorMessage,
-        confirmButtonColor: '#1f2937',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-fade-in max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
     } finally {
@@ -156,29 +156,30 @@ function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
-      <div className="max-w-md w-full p-8 bg-white rounded-2xl shadow-xl transform transition-all duration-300 hover:shadow-2xl animate-fade-in">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center px-4 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+      <div className="max-w-md w-full p-8 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl transform transition-all duration-300 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] border border-gray-700 border-opacity-20 relative z-10">
         <div className="flex items-center justify-center mb-6">
-          <LogIn className="w-8 h-8 text-gray-800 mr-2" />
-          <h2 className="text-3xl font-bold text-gray-900">Login</h2>
+          <LogIn className="w-8 h-8 text-purple-400 mr-2" />
+          <h2 className="text-3xl font-bold text-white">Login</h2>
         </div>
         <input
           type="email"
           value={email}
           onChange={(e) => handleInputChange(e.target.value, 'email', setEmail)}
           placeholder="Email"
-          className="w-full p-3 mb-4 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors !text-black"
+          className="w-full p-3 mb-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm text-white"
         />
         <input
           type="password"
           value={password}
           onChange={(e) => handleInputChange(e.target.value, 'password', setPassword)}
           placeholder="Password"
-          className="w-full p-3 mb-6 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors !text-black"
+          className="w-full p-3 mb-6 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm text-white"
         />
         <button
           onClick={handleLogin}
-          className="w-full bg-gray-800 text-white p-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center"
+          className="w-full bg-purple-600 bg-opacity-80 backdrop-blur-md text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors flex items-center justify-center text-sm shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
           disabled={isLoading}
         >
           {isLoading ? (
@@ -190,9 +191,9 @@ function LoginPage({ setIsLoggedIn, setBalance, updateBalance }) {
             'Login'
           )}
         </button>
-        <p className="text-center text-sm text-gray-600 mt-4">
+        <p className="text-center text-sm text-gray-300 mt-4">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-yellow-500 hover:underline">
+          <Link to="/signup" className="text-purple-400 hover:underline">
             Sign up
           </Link>
         </p>

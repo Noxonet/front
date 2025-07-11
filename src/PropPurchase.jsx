@@ -53,13 +53,13 @@ function PropPurchase() {
         icon: 'error',
         title: 'Invalid Input',
         text: 'Only English characters are allowed for email',
-        confirmButtonColor: '#facc15',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-yellow-400 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -68,19 +68,18 @@ function PropPurchase() {
   };
   
   const sendConfirmationEmail = async () => {
-  
     if (!validateEmail(email)) {
       Swal.fire({
         icon: 'error',
         title: 'Validation Error',
         text: 'Please enter a valid email address',
-        confirmButtonColor: '#facc15',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-yellow-400 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
@@ -91,20 +90,20 @@ function PropPurchase() {
         icon: 'error',
         title: 'Validation Error',
         text: 'Please select a prop package',
-        confirmButtonColor: '#facc15',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-yellow-400 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
     }
     
     setIsLoading(true);
-    let code = ''; // تعریف کد در خارج از try
+    let code = '';
     try {
       code = Math.floor(100000 + Math.random() * 900000).toString();
       const templateParams = {
@@ -144,13 +143,13 @@ function PropPurchase() {
         icon: 'success',
         title: 'Email Sent',
         text: `Confirmation sent to code your email. Please send $${selectedProp.cost} to wallet address: ${defaultWalletAddress}`,
-        confirmButtonColor: '#facc15',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-extrabold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-yellow-400 text-gray-900 px-4 py-4 py-2 rounded-md hover:bg-yellow-500 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
+          title: 'text-lg sm:text-xl font-extrabold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
     } catch (error) {
@@ -162,7 +161,7 @@ function PropPurchase() {
           to_email: email || 'Not set',
           confirmation_code: code || localStorage.getItem('confirmationCode') || 'Not generated',
           amount: selectedProp?.cost?.toString() || 'Not selected',
-          prop_value: selectedProp?.selected?.propValue?.toString() || 'Not selected',
+          prop_value: selectedProp?.propValue?.toString() || 'Not selected',
           wallet_address: defaultWalletAddress || 'Not set',
         },
       });
@@ -170,31 +169,31 @@ function PropPurchase() {
       let errorMessage = 'Failed to send confirmation email. Please try again later.';
       if (error.response?.status === 400) {
         errorMessage = 'Invalid email configuration. Please check backend settings.';
-        if (error.response?.status === 401) {
-            errorMessage = 'Unauthorized API request. Please verify your Sender API key in backend.';
-        } else if (error.response?.status === 404) {
-            errorMessage = 'Sender API endpoint not found. Please verify the API endpoint.';
-        } else if (error.message.includes('network')) {
-            errorMessage = 'Network error. Please check your internet connection and backend server.';
-        }
+      } else if (error.response?.status === 401) {
+        errorMessage = 'Unauthorized API request. Please verify your Sender API key in backend.';
+      } else if (error.response?.status === 404) {
+        errorMessage = 'Sender API endpoint not found. Please verify the API endpoint.';
+      } else if (error.message.includes('network')) {
+        errorMessage = 'Network error. Please check your internet connection and backend server.';
+      }
 
-        Swal.fire({
-            icon: 'error',
-            title: 'Email Error',
-            text: errorMessage,
-            confirmButtonColor: '#facc15',
-            confirmButtonText: 'OK',
-            customClass: {
-              popup: 'bg-white shadow-2xl rounded-lg animate-object',
-              title: 'text-lg sm:text-xl font-bold text-gray-900',
-              content: 'text-gray-700 text-sm sm:text-base',
-              confirmButton: 'bg-yellow-400 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors',
-            },
-        });
-        }
-        setIsLoading(false)
+      Swal.fire({
+        icon: 'error',
+        title: 'Email Error',
+        text: errorMessage,
+        confirmButtonColor: '#7F00FF',
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+        },
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
-  }
   
   const confirmPurchase = async () => {
     const storedCode = localStorage.getItem('confirmationCode');
@@ -205,19 +204,18 @@ function PropPurchase() {
         icon: 'error',
         title: 'Invalid Code',
         text: 'The confirmation code is incorrect',
-        confirmButtonColor: '#facc15',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-yellow-400 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
       return;
     }
     
-
     setIsLoading(true);
     try {
       const userId = auth.currentUser?.uid;
@@ -228,7 +226,6 @@ function PropPurchase() {
       const userData = await fetchWithErrorHandling('GET', `users/${userId}`);
       const newPropBalance = (userData?.propBalance || 0) + selectedProp.propValue;
 
-      // ذخیره تراکنش پراپ توی propPurchases
       await setDoc(doc(db, 'propPurchases', `${userId}_${Date.now()}`), {
         userId,
         email: auth.currentUser.email,
@@ -247,13 +244,13 @@ function PropPurchase() {
         icon: 'success',
         title: 'Purchase Confirmed',
         text: `Prop balance updated to $${newPropBalance}`,
-        confirmButtonColor: '#facc15',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-yellow-400 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
 
@@ -269,13 +266,13 @@ function PropPurchase() {
         icon: 'error',
         title: 'Purchase Error',
         text: error.message || 'Failed to confirm purchase',
-        confirmButtonColor: '#facc15',
+        confirmButtonColor: '#7F00FF',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-gray-900',
-          content: 'text-gray-700 text-sm sm:text-base',
-          confirmButton: 'bg-yellow-400 text-gray-900 px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors',
+          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
+          title: 'text-lg sm:text-xl font-bold text-white',
+          content: 'text-gray-300 text-sm sm:text-base',
+          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
         },
       });
     } finally {
@@ -284,26 +281,27 @@ function PropPurchase() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100 flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-2xl transform transition-all duration-300 hover:shadow-3xl">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
-          Purchase Prop
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center px-4 py-8 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+      <div className="w-full max-w-lg p-8 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl transform transition-all duration-500 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] relative z-10 border border-gray-700 border-opacity-20">
+        <h2 className="text-3xl font-extrabold text-white mb-6 text-center tracking-wide">
+          Purchase Cosmic Prop
         </h2>
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => handleEmailChange(e.target.value)}
-              placeholder="Email"
-              className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors text-sm text-gray-900"
+              placeholder="Enter your email"
+              className="w-full p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white rounded-lg border border-gray-600 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm"
               disabled={isCodeSent}
             />
           </div>
           {!isPriceSelected && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Prop Package</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Select Prop Package</label>
               <div className="grid grid-cols-2 gap-3">
                 {propPrices.map((prop) => (
                   <button
@@ -312,9 +310,9 @@ function PropPurchase() {
                       setSelectedProp(prop);
                       setIsPriceSelected(true);
                     }}
-                    className="bg-yellow-100 text-yellow-800 p-3 rounded-lg hover:bg-yellow-200 transition-colors text-sm font-medium shadow-sm hover:shadow-md"
+                    className="bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white p-3 rounded-lg hover:bg-purple-800 hover:bg-opacity-30 transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
                   >
-                    ${prop.cost} - ${prop.propValue} Prop
+                    ${prop.cost} - ${prop.propValue} Cosmic Prop
                   </button>
                 ))}
               </div>
@@ -323,20 +321,20 @@ function PropPurchase() {
           {isPriceSelected && !isCodeSent && (
             <>
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">
-                  Selected Package: ${selectedProp.cost} for ${selectedProp.propValue} Prop
+                <p className="text-sm font-medium text-gray-300 mb-2">
+                  Selected Package: ${selectedProp.cost} for ${selectedProp.propValue} Cosmic Prop
                 </p>
-                <p className="text-sm text-gray-600">
-                  Please send payment to: <span className="font-semibold text-yellow-600">{defaultWalletAddress}</span>
+                <p className="text-sm text-gray-400">
+                  Please send payment to: <span className="font-semibold text-purple-400">{defaultWalletAddress}</span>
                 </p>
               </div>
               <button
                 onClick={sendConfirmationEmail}
-                className="w-full bg-yellow-400 text-gray-900 p-3 rounded-lg hover:bg-yellow-500 transition-colors flex items-center justify-center text-sm font-medium shadow-md hover:shadow-lg"
+                className="w-full bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center text-sm font-medium shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <svg className="animate-spin h-5 w-5 mr-2 text-gray-900" viewBox="0 0 24 24">
+                  <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
@@ -349,22 +347,22 @@ function PropPurchase() {
           {isCodeSent && (
             <>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Confirmation Code</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Confirmation Code</label>
                 <input
                   type="text"
                   value={confirmationCode}
                   onChange={(e) => setConfirmationCode(e.target.value)}
                   placeholder="Enter Confirmation Code"
-                  className="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-colors text-sm text-gray-900"
+                  className="w-full p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white rounded-lg border border-gray-600 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm"
                 />
               </div>
               <button
                 onClick={confirmPurchase}
-                className="w-full bg-yellow-400 text-gray-900 p-3 rounded-lg hover:bg-yellow-500 transition-colors flex items-center justify-center text-sm font-medium shadow-md hover:shadow-lg"
+                className="w-full bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center text-sm font-medium shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <svg className="animate-spin h-5 w-5 mr-2 text-gray-900" viewBox="0 0 24 24">
+                  <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
