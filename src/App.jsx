@@ -9,7 +9,7 @@ import AssetsPage from './Asset';
 import WithdrawPage from './Withdraw';
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
-import TasksPage from './TasksPage';
+import TasksPage from './TasksPage ';
 import ProfilePage from './ProfilePage';
 import TradePage from './TradePage';
 import PropPurchase from './PropPurchase';
