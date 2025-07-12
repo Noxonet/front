@@ -40,13 +40,13 @@ function DepositPage({ updateBalance }) {
         icon: 'error',
         title: 'Invalid Input',
         text: 'Only English numbers are allowed',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -69,9 +69,9 @@ function DepositPage({ updateBalance }) {
       title: "Address Copied",
       timer: 1000,
       customClass: {
-        popup: "bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]",
-        title: "text-lg sm:text-xl font-bold text-white",
-        confirmButton: "bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors",
+        popup: "bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]",
+        title: "text-lg sm:text-xl font-bold text-white font-orbitron",
+        confirmButton: "bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins",
       },
     });
   };
@@ -82,13 +82,13 @@ function DepositPage({ updateBalance }) {
         icon: "error",
         title: "Validation Error",
         text: "Amount is required",
-        confirmButtonColor: "#7F00FF",
+        confirmButtonColor: "#1E3A8A",
         confirmButtonText: "OK",
         customClass: {
-          popup: "bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]",
-          title: "text-lg sm:text-xl font-bold text-white",
-          content: "text-gray-300 text-sm sm:text-base",
-          confirmButton: "bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors",
+          popup: "bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]",
+          title: "text-lg sm:text-xl font-bold text-white font-orbitron",
+          content: "text-gray-200 text-sm sm:text-base font-poppins",
+          confirmButton: "bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins",
         },
       });
       return;
@@ -99,13 +99,13 @@ function DepositPage({ updateBalance }) {
         icon: "error",
         title: "Validation Error",
         text: "Please enter a valid positive amount",
-        confirmButtonColor: "#7F00FF",
+        confirmButtonColor: "#1E3A8A",
         confirmButtonText: "OK",
         customClass: {
-          popup: "bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]",
-          title: "text-lg sm:text-xl font-bold text-white",
-          content: "text-gray-300 text-sm sm:text-base",
-          confirmButton: "bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors",
+          popup: "bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]",
+          title: "text-lg sm:text-xl font-bold text-white font-orbitron",
+          content: "text-gray-200 text-sm sm:text-base font-poppins",
+          confirmButton: "bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins",
         },
       });
       return;
@@ -115,13 +115,13 @@ function DepositPage({ updateBalance }) {
         icon: "error",
         title: "Minimum Deposit",
         text: "Minimum deposit is 5 USDT",
-        confirmButtonColor: "#7F00FF",
+        confirmButtonColor: "#1E3A8A",
         confirmButtonText: "OK",
         customClass: {
-          popup: "bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]",
-          title: "text-lg sm:text-xl font-bold text-white",
-          content: "text-gray-300 text-sm sm:text-base",
-          confirmButton: "bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors",
+          popup: "bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]",
+          title: "text-lg sm:text-xl font-bold text-white font-orbitron",
+          content: "text-gray-200 text-sm sm:text-base font-poppins",
+          confirmButton: "bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins",
         },
       });
       return;
@@ -133,13 +133,13 @@ function DepositPage({ updateBalance }) {
         icon: "error",
         title: "Authentication Required",
         text: "Please log in first",
-        confirmButtonColor: "#7F00FF",
+        confirmButtonColor: "#1E3A8A",
         confirmButtonText: "OK",
         customClass: {
-          popup: "bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]",
-          title: "text-lg sm:text-xl font-bold text-white",
-          content: "text-gray-300 text-sm sm:text-base",
-          confirmButton: "bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors",
+          popup: "bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]",
+          title: "text-lg sm:text-xl font-bold text-white font-orbitron",
+          content: "text-gray-200 text-sm sm:text-base font-poppins",
+          confirmButton: "bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins",
         },
       });
       navigate("/login");
@@ -172,13 +172,13 @@ function DepositPage({ updateBalance }) {
         icon: "success",
         title: "Deposit Successful",
         text: `New balance: ${updatedData.balance.toFixed(2)} USDT\nFee: ${fee} USDT${bonusMessage}`,
-        confirmButtonColor: "#7F00FF",
+        confirmButtonColor: "#1E3A8A",
         confirmButtonText: "OK",
         customClass: {
-          popup: "bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]",
-          title: "text-lg sm:text-xl font-bold text-white",
-          content: "text-gray-300 text-sm sm:text-base",
-          confirmButton: "bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors",
+          popup: "bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]",
+          title: "text-lg sm:text-xl font-bold text-white font-orbitron",
+          content: "text-gray-200 text-sm sm:text-base font-poppins",
+          confirmButton: "bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins",
         },
       });
       navigate("/tasks");
@@ -197,13 +197,13 @@ function DepositPage({ updateBalance }) {
         icon: "error",
         title: "Deposit Error",
         text: errorMessage,
-        confirmButtonColor: "#7F00FF",
+        confirmButtonColor: "#1E3A8A",
         confirmButtonText: "OK",
         customClass: {
-          popup: "bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]",
-          title: "text-lg sm:text-xl font-bold text-white",
-          content: "text-gray-300 text-sm sm:text-base",
-          confirmButton: "bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors",
+          popup: "bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]",
+          title: "text-lg sm:text-xl font-bold text-white font-orbitron",
+          content: "text-gray-200 text-sm sm:text-base font-poppins",
+          confirmButton: "bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins",
         },
       });
     } finally {
@@ -212,43 +212,43 @@ function DepositPage({ updateBalance }) {
   };
 
   return (
-    <div className="min-h-screen py-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
-      <div className="mx-auto px-4 sm:px-6 max-w-3xl relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl sm:text-4xl font-bold text-white">Deposit</h1>
+    <div className="min-h-screen py-4 sm:py-6 bg-gradient-to-br from-black via-blue-950 to-purple-950 font-poppins relative overflow-hidden w-full">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
+      <div className="absolute inset-0 stars"></div>
+      <div className="max-w-full mx-auto px-4 sm:px-6 relative z-10">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white font-orbitron">Deposit</h1>
           {isPending ? (
             <NavLink
               onClick={() => setIsPending(false)}
-              className="text-sm text-purple-400 hover:underline"
+              className="text-xs sm:text-sm text-gray-200 hover:text-blue-400 font-poppins"
             >
               Back to Assets
             </NavLink>
           ) : (
-            <NavLink to="/assets" className="text-sm text-purple-400 hover:underline">
+            <NavLink to="/assets" className="text-xs sm:text-sm text-gray-200 hover:text-blue-400 font-poppins">
               Back to Assets
             </NavLink>
           )}
         </div>
-
         {isPending ? (
-          <div className="bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 shadow-2xl transform transition-all duration-300 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] border border-gray-700 border-opacity-20">
-            <p className="p-3 rounded-xl text-xs md:text-base text-purple-400 bg-gray-900 bg-opacity-20 backdrop-blur-lg border border-purple-500 border-opacity-20">
+          <div className="bg-[#f0f8ff17] backdrop-blur-lg p-4 sm:p-6 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)] max-w-lg mx-auto">
+            <p className="p-2 sm:p-3 rounded-lg text-xs sm:text-sm text-gray-200 bg-[#f0f8ff17] backdrop-blur-lg border border-gray-600 border-opacity-50 mb-3 font-poppins">
               The amount below must exactly match your deposit amount to protect against bots and hackers.
             </p>
-            <div className="my-4">
-              <label className="block text-sm font-medium text-gray-300 mb-2">Amount (USDT)</label>
+            <div className="mb-3">
+              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">Amount (USDT)</label>
               <input
                 type="number"
                 value={countUsd}
                 onChange={(e) => handleInputChange(e.target.value, 'amount', setCountUsd)}
                 placeholder="Minimum 5 USDT"
-                className="w-full p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm text-white"
+                className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins placeholder-gray-400"
               />
             </div>
             <button
               onClick={handleDeposit}
-              className="w-full bg-purple-600 bg-opacity-80 backdrop-blur-md text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors flex items-center justify-center shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+              className="w-full bg-gradient-to-r from-gray-700 to-blue-900 text-white p-2 sm:p-3 rounded-lg hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 text-xs sm:text-sm font-poppins border border-gray-600 border-opacity-50 flex items-center justify-center"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -258,24 +258,24 @@ function DepositPage({ updateBalance }) {
                 </svg>
               ) : (
                 <>
-                  <Send className="w-5 h-5 mr-2 text-purple-400" />
+                  <Send className="w-4 sm:w-5 h-4 sm:h-5 mr-2 text-white" />
                   Confirm Deposit
                 </>
               )}
             </button>
           </div>
         ) : (
-          <div className="bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 shadow-2xl transform transition-all duration-300 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] border border-gray-700 border-opacity-20">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div className="bg-[#f0f8ff17] backdrop-blur-lg p-4 sm:p-6 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)] max-w-lg mx-auto">
+            <div className="grid grid-cols-1 gap-3 mb-3">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Select Network</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">Select Network</label>
                 <select
-                  className="w-full p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm text-white"
+                  className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
                   value={selectValue}
                   onChange={addressChangeHandler}
                 >
                   {addresses.map((item) => (
-                    <option key={item.id} className="text-sm text-white" value={item.chanel}>
+                    <option key={item.id} className="text-xs sm:text-sm text-white font-poppins" value={item.chanel}>
                       {item.chanel}
                     </option>
                   ))}
@@ -284,28 +284,28 @@ function DepositPage({ updateBalance }) {
             </div>
             <button
               onClick={() => setShowBox(true)}
-              className="w-full bg-purple-600 bg-opacity-80 backdrop-blur-md text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors flex items-center justify-center mb-4 shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+              className="w-full bg-gradient-to-r from-gray-700 to-blue-900 text-white p-2 sm:p-3 rounded-lg hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 text-xs sm:text-sm font-poppins border border-gray-600 border-opacity-50 flex items-center justify-center mb-3"
               disabled={isLoading}
             >
-              <Send className="w-5 h-5 mr-2 text-purple-400" />
+              <Send className="w-4 sm:w-5 h-4 sm:h-5 mr-2 text-white" />
               Show Deposit Address
             </button>
             {showBox && (
-              <div className="bg-gray-900 bg-opacity-20 backdrop-blur-lg p-4 rounded-lg border border-gray-700 border-opacity-20 mb-4">
-                <p className="text-sm font-medium text-gray-300 mb-2">Deposit Address:</p>
-                <p className="text-sm font-mono break-all mb-2 text-white">{walletAddress}</p>
+              <div className="bg-[#f0f8ff17] backdrop-blur-lg p-3 sm:p-4 rounded-lg border border-gray-600 border-opacity-50 mb-3">
+                <p className="text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">Deposit Address:</p>
+                <p className="text-xs sm:text-sm font-mono break-all mb-2 text-white font-poppins">{walletAddress}</p>
                 <button
                   onClick={handleCopyAddress}
-                  className="flex items-center gap-1 text-sm text-purple-400 hover:underline"
+                  className="flex items-center gap-1 text-xs sm:text-sm text-gray-200 hover:text-blue-400 font-poppins"
                 >
-                  <Copy className="w-4 h-4 text-purple-400" />
+                  <Copy className="w-4 h-4 text-white" />
                   Copy Address
                 </button>
               </div>
             )}
             <button
               onClick={() => setIsPending(true)}
-              className="w-full bg-purple-600 bg-opacity-80 backdrop-blur-md text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors flex items-center justify-center shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+              className="w-full bg-gradient-to-r from-gray-700 to-blue-900 text-white p-2 sm:p-3 rounded-lg hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 text-xs sm:text-sm font-poppins border border-gray-600 border-opacity-50 flex items-center justify-center"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -315,7 +315,7 @@ function DepositPage({ updateBalance }) {
                 </svg>
               ) : (
                 <>
-                  <Send className="w-5 h-5 mr-2 text-purple-400" />
+                  <Send className="w-4 sm:w-5 h-4 sm:h-5 mr-2 text-white" />
                   Confirm Deposit
                 </>
               )}
@@ -323,6 +323,54 @@ function DepositPage({ updateBalance }) {
           </div>
         )}
       </div>
+      <style jsx>{`
+        .stars {
+          background: transparent;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+        }
+        .stars::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
+                      radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
+          background-size: 250px 250px;
+          animation: twinkle 10s infinite linear;
+          opacity: 0.3;
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.15; }
+        }
+        input::placeholder, select::placeholder {
+          color: #D1D5DB !important;
+          opacity: 1;
+        }
+        input::-webkit-input-placeholder, select::-webkit-input-placeholder {
+          color: #D1D5DB !important;
+        }
+        input::-moz-placeholder, select::-moz-placeholder {
+          color: #D1D5DB !important;
+        }
+        input:-ms-input-placeholder, select:-ms-input-placeholder {
+          color: #D1D5DB !important;
+        }
+        input, select, button {
+          min-height: 44px;
+        }
+      `}</style>
     </div>
   );
 }

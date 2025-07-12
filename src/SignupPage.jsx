@@ -32,13 +32,13 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Invalid Input',
         text: 'Only English characters are allowed',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -52,13 +52,13 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Email is required',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -68,13 +68,13 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Please enter a valid email address',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -84,13 +84,13 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Password is required',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -100,13 +100,13 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Password must be at least 6 characters',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -166,13 +166,13 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
         title: 'Signup Successful',
         text: `Your Referral Code: ${newReferralCode}\nPlease claim your $5 Signup Bonus in Tasks`,
         timer: 3000,
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
 
@@ -194,13 +194,13 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
         icon: 'error',
         title: 'Signup Error',
         text: errorMessage,
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
     } finally {
@@ -209,37 +209,42 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center px-4 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
-      <div className="w-full max-w-md p-6 sm:p-8 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl transform transition-all duration-300 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] border border-gray-700 border-opacity-20 relative z-10">
+    <div className="min-h-screen bg-gradient-to-br from-black via-blue-950 to-purple-950 flex items-center justify-center px-4 relative overflow-hidden font-poppins">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
+      <div className="absolute inset-0 stars"></div>
+      <div className="w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)] relative z-10" style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}>
         <div className="flex items-center justify-center mb-4 sm:mb-6">
-          <UserPlus className="w-6 sm:w-8 h-6 sm:h-8 text-purple-400 mr-1 sm:mr-2" />
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">Signup</h2>
+          <UserPlus className="w-6 sm:w-8 h-6 sm:h-8 text-white mr-1 sm:mr-2" />
+          <h2 className="text-2xl sm:text-3xl font-bold text-white font-orbitron">Join Cosmic Trade</h2>
         </div>
         <input
           type="email"
           value={email}
           onChange={(e) => handleInputChange(e.target.value, 'email', setEmail)}
           placeholder="Email"
-          className="w-full p-2 sm:p-3 mb-3 sm:mb-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white"
+          className="w-full p-2 sm:p-3 mb-3 sm:mb-4 rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
+          style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
         />
         <input
           type="password"
           value={password}
           onChange={(e) => handleInputChange(e.target.value, 'password', setPassword)}
           placeholder="Password"
-          className="w-full p-2 sm:p-3 mb-3 sm:mb-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white"
+          className="w-full p-2 sm:p-3 mb-3 sm:mb-4 rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
+          style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
         />
         <input
           type="text"
           value={referralCode}
           onChange={(e) => handleInputChange(e.target.value, 'referral', setReferralCode)}
           placeholder="Referral Code (Optional)"
-          className="w-full p-2 sm:p-3 mb-4 sm:mb-6 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white"
+          className="w-full p-2 sm:p-3 mb-4 sm:mb-6 rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
+          style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
         />
         <button
           onClick={handleSignup}
-          className="w-full bg-purple-600 bg-opacity-80 backdrop-blur-md text-white p-2 sm:p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors flex items-center justify-center text-xs sm:text-sm shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+          className="w-full p-2 sm:p-3 rounded-lg border border-gray-600 border-opacity-50 text-white text-xs sm:text-sm font-medium transition-all duration-500 hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] flex items-center justify-center font-poppins"
+          style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
           disabled={isLoading}
         >
           {isLoading ? (
@@ -251,13 +256,45 @@ function SignupPage({ setIsLoggedIn, setBalance, updateBalance }) {
             'Signup'
           )}
         </button>
-        <p className="text-center text-xs sm:text-sm text-gray-300 mt-3 sm:mt-4">
+        <p className="text-center text-xs sm:text-sm text-gray-200 mt-3 sm:mt-4 font-poppins">
           Already have an account?{' '}
-          <Link to="/login" className="text-purple-400 hover:underline">
+          <Link to="/login" className="text-white hover:text-blue-500 hover:underline transition-all duration-500">
             Login
           </Link>
         </p>
       </div>
+      <style jsx>{`
+        .stars {
+          background: transparent;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+        }
+        .stars::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
+                      radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
+          background-size: 250px 250px;
+          animation: twinkle 10s infinite linear;
+          opacity: 0.3;
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.15; }
+        }
+      `}</style>
     </div>
   );
 }

@@ -31,13 +31,13 @@ function WithdrawPage({ updateBalance }) {
         icon: 'error',
         title: 'Invalid Input',
         text: 'Only English characters and numbers are allowed',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -73,13 +73,13 @@ function WithdrawPage({ updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Amount is required',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -90,13 +90,13 @@ function WithdrawPage({ updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Please enter a valid positive amount',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -106,13 +106,13 @@ function WithdrawPage({ updateBalance }) {
         icon: 'error',
         title: 'Minimum Withdrawal',
         text: `Minimum withdrawal is ${minimumWithdrawal} USDT`,
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -122,13 +122,13 @@ function WithdrawPage({ updateBalance }) {
         icon: 'error',
         title: 'Validation Error',
         text: 'Wallet address is required',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -140,13 +140,13 @@ function WithdrawPage({ updateBalance }) {
         icon: 'error',
         title: 'Authentication Required',
         text: 'Please log in first',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       navigate('/login');
@@ -163,13 +163,13 @@ function WithdrawPage({ updateBalance }) {
           icon: 'error',
           title: 'Insufficient Balance',
           text: 'You do not have enough balance',
-          confirmButtonColor: '#7F00FF',
+          confirmButtonColor: '#1E3A8A',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white',
-            content: 'text-gray-300 text-sm sm:text-base',
-            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+            popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+            content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       } else {
@@ -182,13 +182,13 @@ function WithdrawPage({ updateBalance }) {
           icon: 'success',
           title: 'Withdrawal Successful',
           text: `New balance: ${updatedData.balance.toFixed(2)} USDT`,
-          confirmButtonColor: '#7F00FF',
+          confirmButtonColor: '#1E3A8A',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white',
-            content: 'text-gray-300 text-sm sm:text-base',
-            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+            popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+            content: 'text-gray-200 text-sm sm:text-base font-poppins',
+            confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
           },
         });
         navigate('/assets');
@@ -208,13 +208,13 @@ function WithdrawPage({ updateBalance }) {
         icon: 'error',
         title: 'Withdrawal Error',
         text: errorMessage,
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
     } finally {
@@ -223,21 +223,37 @@ function WithdrawPage({ updateBalance }) {
   };
 
   return (
-    <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+    <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-black via-blue-950 to-purple-950 text-white font-poppins relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
+      <div className="absolute inset-0 stars"></div>
       <div className="mx-auto px-4 sm:px-6 max-w-3xl relative z-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Withdraw</h1>
-          <NavLink to="/assets" className="text-xs sm:text-sm text-purple-400 hover:text-purple-300 mt-2 sm:mt-0 transition-colors">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-orbitron">Withdraw Assets</h1>
+          <NavLink
+            to="/assets"
+            className="text-xs sm:text-sm text-white hover:text-blue-500 hover:underline transition-all duration-500 mt-2 sm:mt-0"
+          >
             Back to Assets
           </NavLink>
         </div>
-        <div className="bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 shadow-2xl transform transition-all duration-500 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] border border-gray-700 border-opacity-20">
+        <div
+          className="rounded-2xl p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)]"
+          style={{
+            backgroundColor: '#f0f8ff17',
+            backdropFilter: 'blur(10px)',
+          }}
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
             <div>
-              <label className="block text-xs इसका sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">Select Network</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 sm:mb-2 font-poppins">
+                Select Network
+              </label>
               <select
-                className="w-full p-2 sm:p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white"
+                className="w-full p-2 sm:p-3 rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
+                style={{
+                  backgroundColor: '#f0f8ff17',
+                  backdropFilter: 'blur(10px)',
+                }}
                 value={selectValue}
                 onChange={(e) => setSelectValue(e.target.value)}
               >
@@ -247,29 +263,45 @@ function WithdrawPage({ updateBalance }) {
               </select>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">Amount (USDT)</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 sm:mb-2 font-poppins">
+                Amount (USDT)
+              </label>
               <input
                 type="number"
                 value={countUsd}
                 onChange={(e) => handleInputChange(e.target.value, 'amount', setCountUsd)}
                 placeholder={`Minimum ${minimumWithdrawal} USDT`}
-                className="w-full p-2 sm:p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white"
+                className="w-full p-2 sm:p-3 rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
+                style={{
+                  backgroundColor: '#f0f8ff17',
+                  backdropFilter: 'blur(10px)',
+                }}
               />
             </div>
           </div>
           <div className="mb-4 sm:mb-6">
-            <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">Wallet Address</label>
+            <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 sm:mb-2 font-poppins">
+              Wallet Address
+            </label>
             <input
               type="text"
               value={walletAddress}
               onChange={(e) => handleInputChange(e.target.value, 'wallet', setWalletAddress)}
               placeholder="Enter wallet address"
-              className="w-full p-2 sm:p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-xs sm:text-sm text-white"
+              className="w-full p-2 sm:p-3 rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
+              style={{
+                backgroundColor: '#f0f8ff17',
+                backdropFilter: 'blur(10px)',
+              }}
             />
           </div>
           <button
             onClick={handleWithdraw}
-            className="w-full bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white p-2 sm:p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center text-xs sm:text-sm shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+            className="w-full p-2 sm:p-3 rounded-lg border border-gray-600 border-opacity-50 text-white text-xs sm:text-sm font-medium transition-all duration-500 hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] flex items-center justify-center font-poppins"
+            style={{
+              backgroundColor: '#f0f8ff17',
+              backdropFilter: 'blur(10px)',
+            }}
             disabled={isLoading}
           >
             {isLoading ? (
@@ -279,13 +311,45 @@ function WithdrawPage({ updateBalance }) {
               </svg>
             ) : (
               <>
-                <Send className="w-4 sm:w-5 h-4 sm:h-5 mr-1 sm:mr-2" />
+                <Send className="w-4 sm:w-5 h-4 sm:h-5 mr-1 sm:mr-2 text-white" />
                 Confirm Withdrawal
               </>
             )}
           </button>
         </div>
       </div>
+      <style jsx>{`
+        .stars {
+          background: transparent;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+        }
+        .stars::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
+                      radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
+          background-size: 250px 250px;
+          animation: twinkle 10s infinite linear;
+          opacity: 0.3;
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.15; }
+        }
+      `}</style>
     </div>
   );
 }

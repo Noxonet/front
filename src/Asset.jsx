@@ -47,13 +47,13 @@ function AssetsPage({ updateBalance }) {
           icon: 'error',
           title: 'Error Fetching User Data',
           text: errorMessage,
-          confirmButtonColor: '#7F00FF',
+          confirmButtonColor: '#1E3A8A',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white',
-            content: 'text-gray-300 text-sm sm:text-base',
-            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+            popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+            content: 'text-gray-200 text-sm sm:text-base font-poppins',
+            confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
           },
         });
       } finally {
@@ -71,9 +71,9 @@ function AssetsPage({ updateBalance }) {
         title: 'Referral Code Copied',
         timer: 1000,
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
     }
@@ -101,105 +101,125 @@ function AssetsPage({ updateBalance }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+      <div className="min-h-screen bg-gradient-to-br from-black via-blue-950 to-purple-950 flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
+        <div className="absolute inset-0 stars"></div>
         <div className="flex items-center space-x-2 relative z-10">
-          <svg className="animate-spin h-6 sm:h-8 w-6 sm:w-8 text-white" viewBox="0 0 24 24">
+          <svg className="animate-spin h-6 sm:h-8 w-6 sm:w-8 text-blue-900" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
           </svg>
-          <span className="text-base sm:text-lg font-medium text-white">Loading...</span>
+          <span className="text-base sm:text-lg font-medium text-white font-orbitron">Initializing...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+    <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-black via-blue-950 to-purple-950 text-white font-poppins relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
+      <div className="absolute inset-0 stars"></div>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="mt-4 sm:mt-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Assets Overview</h1>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-orbitron">Cosmic Portfolio</h1>
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-3 sm:mt-0">
               <NavLink
                 to="/deposit"
-                className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-purple-600 bg-opacity-80 backdrop-blur-md text-white text-xs sm:text-sm font-medium rounded-full hover:bg-purple-700 hover:bg-opacity-90 transition-colors shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+                className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-gradient-to-r from-gray-700 to-blue-900 text-white text-xs sm:text-sm font-medium rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 border border-blue-800 border-opacity-50 shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
               >
                 Deposit
               </NavLink>
               <NavLink
                 to="/withdraw"
-                className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white text-xs sm:text-sm font-medium rounded-full hover:bg-gray-800 hover:bg-opacity-30 transition-colors border border-gray-700 border-opacity-20 shadow-md"
+                className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-black bg-opacity-80 backdrop-blur-lg text-white text-xs sm:text-sm font-medium rounded-md hover:bg-opacity-90 hover:shadow-[0_0_8px_rgba(96,165,250,0.4)] transition-all duration-500 border border-gray-600 border-opacity-50 shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
               >
                 Withdraw
               </NavLink>
               <NavLink
                 to="/transfer"
-                className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white text-xs sm:text-sm font-medium rounded-full hover:bg-gray-800 hover:bg-opacity-30 transition-colors border border-gray-700 border-opacity-20 shadow-md"
+                className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-black bg-opacity-80 backdrop-blur-lg text-white text-xs sm:text-sm font-medium rounded-md hover:bg-opacity-90 hover:shadow-[0_0_8px_rgba(96,165,250,0.4)] transition-all duration-500 border border-gray-600 border-opacity-50 shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
               >
                 Transfer
               </NavLink>
             </div>
           </div>
-          <div className="bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 shadow-2xl transform transition-all duration-300 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] border border-gray-700 border-opacity-20">
+          <div
+            className="rounded-2xl p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)]"
+            style={{
+              backgroundColor: '#f0f8ff17',
+              backdropFilter: 'blur(10px)',
+            }}
+          >
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white">Total Balance</h2>
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white font-orbitron">Stellar Balance</h2>
               <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-0">
                 <span className="text-base sm:text-lg font-medium text-white">
                   {showBalance ? `${accountBalance.toFixed(2)} USDT` : '****'}
                 </span>
                 <button
                   onClick={() => setShowBalance(!showBalance)}
-                  className="p-1 sm:p-2 rounded-full hover:bg-gray-800 hover:bg-opacity-30 transition-colors"
+                  className="p-1 sm:p-2 rounded-full hover:bg-black hover:bg-opacity-50 hover:shadow-[0_0_8px_rgba(96,165,250,0.4)] transition-all duration-500"
                 >
                   {showBalance ? (
-                    <EyeOff className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
+                    <EyeOff className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
                   ) : (
-                    <Eye className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
+                    <Eye className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
                   )}
                 </button>
               </div>
             </div>
             {referralCode && (
-              <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20">
+              <div
+                className="mb-4 sm:mb-6 p-3 sm:p-4 rounded-lg border border-gray-600 border-opacity-50"
+                style={{
+                  backgroundColor: '#f0f8ff17',
+                  backdropFilter: 'blur(10px)',
+                }}
+              >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
                   <div className="flex items-center gap-2">
-                    <Copy className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
-                    <p className="text-xs sm:text-sm font-medium text-gray-300">
-                      Referral Code: <span className="text-purple-400">{referralCode}</span>
+                    <Copy className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
+                    <p className="text-xs sm:text-sm font-medium text-gray-200">
+                      Referral Code: <span className="text-white font-orbitron">{referralCode}</span>
                     </p>
                     <button
                       onClick={handleCopyReferralCode}
-                      className="flex items-center gap-1 text-xs sm:text-sm text-purple-400 hover:underline"
+                      className="flex items-center gap-1 text-xs sm:text-sm text-white hover:text-blue-500 hover:underline transition-all duration-500"
                     >
-                      <Copy className="w-3 sm:w-4 h-3 sm:h-4" />
+                      <Copy className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
                       Copy
                     </button>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Users className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
-                    <p className="text-xs sm:text-sm font-medium text-gray-300">
-                      Referrals: <span className="text-purple-400">{referralCount}</span>
+                    <Users className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
+                    <p className="text-xs sm:text-sm font-medium text-gray-200">
+                      Referrals: <span className="text-white font-orbitron">{referralCount}</span>
                     </p>
                   </div>
                 </div>
               </div>
             )}
-            <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20">
+            <div
+              className="mb-4 sm:mb-6 p-3 sm:p-4 rounded-lg border border-gray-600 border-opacity-50"
+              style={{
+                backgroundColor: '#f0f8ff17',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
                 <div className="flex items-center gap-2">
-                  <DollarSign className="w-4 sm:w-5 h-4 sm:h-5 text-gray-300" />
-                  <p className="text-xs sm:text-sm font-medium text-gray-300">
-                    Referral Bonus: <span className="text-purple-400">{referralBonus.toFixed(2)} USDT</span>
+                  <DollarSign className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
+                  <p className="text-xs sm:text-sm font-medium text-gray-200">
+                    Referral Bonus: <span className="text-white font-orbitron">{referralBonus.toFixed(2)} USDT</span>
                   </p>
                 </div>
                 <button
                   onClick={handleClaimReferralBonus}
-                  className="flex items-center justify-center gap-1 text-xs sm:text-sm bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-purple-700 hover:bg-opacity-90 transition-colors disabled:bg-gray-600 disabled:bg-opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+                  className="flex items-center justify-center gap-1 text-xs sm:text-sm bg-gradient-to-r from-gray-700 to-blue-900 text-white px-3 sm:px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 disabled:bg-gray-700 disabled:bg-opacity-50 disabled:cursor-not-allowed border border-blue-800 border-opacity-50 shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
                   disabled={isSaving || referralBonus <= 0}
                 >
-                  <DollarSign className="w-3 sm:w-4 h-3 sm:h-4" />
+                  <DollarSign className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
                   Claim Referral Bonus
                 </button>
               </div>
@@ -208,18 +228,23 @@ function AssetsPage({ updateBalance }) {
               {accountData.map((account) => (
                 <div
                   key={account.name}
-                  className="flex items-center justify-between p-3 sm:p-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg cursor-pointer transition-all duration-300 hover:bg-gray-800 hover:bg-opacity-30 hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+                  className="flex items-center justify-between p-3 sm:p-4 cursor-pointer transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)] border border-gray-600 border-opacity-50 rounded-lg"
+                  style={{
+                    backgroundColor: '#f0f8ff17',
+                    backdropFilter: 'blur(10px)',
+                    padding: '1rem 2rem',
+                  }}
                 >
                   <div className="flex items-center gap-2 sm:gap-3">
-                    <Wallet className="w-6 sm:w-8 h-6 sm:h-8 text-gray-300" />
+                    <Wallet className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
                     <div>
-                      <p className="font-medium text-white text-sm sm:text-base">{account.name}</p>
-                      <p className="text-xs sm:text-sm text-gray-300">{account.balance}</p>
+                      <p className="font-medium text-white text-sm sm:text-base font-orbitron">{account.name}</p>
+                      <p className="text-xs sm:text-sm text-gray-200">{account.balance}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs sm:text-sm text-gray-300">{account.usdValue}</p>
-                    <p className="text-xs sm:text-sm text-gray-300">{account.percentage}%</p>
+                    <p className="text-xs sm:text-sm text-gray-200">{account.usdValue}</p>
+                    <p className="text-xs sm:text-sm text-gray-200">{account.percentage}%</p>
                   </div>
                 </div>
               ))}
@@ -227,6 +252,38 @@ function AssetsPage({ updateBalance }) {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        .stars {
+          background: transparent;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+        }
+        .stars::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
+                      radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
+          background-size: 250px 250px;
+          animation: twinkle 10s infinite linear;
+          opacity: 0.3;
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.15; }
+        }
+      `}</style>
     </div>
   );
 }

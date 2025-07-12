@@ -40,6 +40,18 @@ body {
 .swal2-confirm{
   border: 1px solid #252525;
   border-radius: .5rem;
-  color: #252525;
+  color: #ffffff;
 
+}
+.swal2-modal{
+  background-color: #ffffff5f;
+  backdrop-filter: blur(8px);
+  border: 1px solid aliceblue;
+}
+.swal2-modal *{
+  color: #ffffff !important;
+}
+.swal2-modal .swal2-icon .swal2-success-circular-line-left,.swal2-success-circular-line-right,.swal2-success-fix{
+  /* color: transparent !important; */
+  background-color: transparent !important;
 }

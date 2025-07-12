@@ -53,13 +53,13 @@ function PropPurchase() {
         icon: 'error',
         title: 'Invalid Input',
         text: 'Only English characters are allowed for email',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -73,13 +73,13 @@ function PropPurchase() {
         icon: 'error',
         title: 'Validation Error',
         text: 'Please enter a valid email address',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -90,13 +90,13 @@ function PropPurchase() {
         icon: 'error',
         title: 'Validation Error',
         text: 'Please select a prop package',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -143,13 +143,13 @@ function PropPurchase() {
         icon: 'success',
         title: 'Email Sent',
         text: `Confirmation sent to code your email. Please send $${selectedProp.cost} to wallet address: ${defaultWalletAddress}`,
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-extrabold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
     } catch (error) {
@@ -181,13 +181,13 @@ function PropPurchase() {
         icon: 'error',
         title: 'Email Error',
         text: errorMessage,
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
     } finally {
@@ -204,13 +204,13 @@ function PropPurchase() {
         icon: 'error',
         title: 'Invalid Code',
         text: 'The confirmation code is incorrect',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
       return;
@@ -244,13 +244,13 @@ function PropPurchase() {
         icon: 'success',
         title: 'Purchase Confirmed',
         text: `Prop balance updated to $${newPropBalance}`,
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
 
@@ -266,13 +266,13 @@ function PropPurchase() {
         icon: 'error',
         title: 'Purchase Error',
         text: error.message || 'Failed to confirm purchase',
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object',
-          title: 'text-lg sm:text-xl font-bold text-white',
-          content: 'text-gray-300 text-sm sm:text-base',
-          confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
     } finally {
@@ -281,27 +281,27 @@ function PropPurchase() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center px-4 py-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
-      <div className="w-full max-w-lg p-8 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl shadow-2xl transform transition-all duration-500 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] relative z-10 border border-gray-700 border-opacity-20">
-        <h2 className="text-3xl font-extrabold text-white mb-6 text-center tracking-wide">
-          Purchase Cosmic Prop
-        </h2>
+    <div className="min-h-screen bg-gradient-to-br from-black via-blue-950 to-purple-950 flex items-center justify-center px-4 py-8 relative overflow-hidden font-poppins">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
+      <div className="absolute inset-0 stars"></div>
+      <div className="w-full max-w-lg p-8 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)] relative z-10" style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}>
+        <h2 className="text-3xl font-bold text-white mb-6 text-center font-orbitron">Purchase Cosmic Prop</h2>
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+            <label className="block text-sm font-medium text-gray-200 mb-2 font-poppins">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => handleEmailChange(e.target.value)}
               placeholder="Enter your email"
-              className="w-full p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white rounded-lg border border-gray-600 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm"
+              className="w-full p-3 rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-sm text-white font-poppins"
+              style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
               disabled={isCodeSent}
             />
           </div>
           {!isPriceSelected && (
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Select Prop Package</label>
+              <label className="block text-sm font-medium text-gray-200 mb-2 font-poppins">Select Prop Package</label>
               <div className="grid grid-cols-2 gap-3">
                 {propPrices.map((prop) => (
                   <button
@@ -310,7 +310,8 @@ function PropPurchase() {
                       setSelectedProp(prop);
                       setIsPriceSelected(true);
                     }}
-                    className="bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white p-3 rounded-lg hover:bg-purple-800 hover:bg-opacity-30 transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+                    className="p-3 rounded-lg border border-gray-600 border-opacity-50 text-white text-sm font-medium hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins"
+                    style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
                   >
                     ${prop.cost} - ${prop.propValue} Cosmic Prop
                   </button>
@@ -321,16 +322,17 @@ function PropPurchase() {
           {isPriceSelected && !isCodeSent && (
             <>
               <div>
-                <p className="text-sm font-medium text-gray-300 mb-2">
+                <p className="text-sm font-medium text-gray-200 mb-2 font-poppins">
                   Selected Package: ${selectedProp.cost} for ${selectedProp.propValue} Cosmic Prop
                 </p>
-                <p className="text-sm text-gray-400">
-                  Please send payment to: <span className="font-semibold text-purple-400">{defaultWalletAddress}</span>
+                <p className="text-sm text-gray-200 font-poppins">
+                  Please send payment to: <span className="font-semibold text-white">{defaultWalletAddress}</span>
                 </p>
               </div>
               <button
                 onClick={sendConfirmationEmail}
-                className="w-full bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center text-sm font-medium shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+                className="w-full p-3 rounded-lg border border-gray-600 border-opacity-50 text-white text-sm font-medium transition-all duration-500 hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] flex items-center justify-center font-poppins"
+                style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -347,18 +349,20 @@ function PropPurchase() {
           {isCodeSent && (
             <>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Confirmation Code</label>
+                <label className="block text-sm font-medium text-gray-200 mb-2 font-poppins">Confirmation Code</label>
                 <input
                   type="text"
                   value={confirmationCode}
                   onChange={(e) => setConfirmationCode(e.target.value)}
                   placeholder="Enter Confirmation Code"
-                  className="w-full p-3 bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white rounded-lg border border-gray-600 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors text-sm"
+                  className="w-full p-3 rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-sm text-white font-poppins"
+                  style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
                 />
               </div>
               <button
                 onClick={confirmPurchase}
-                className="w-full bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white p-3 rounded-lg hover:bg-purple-700 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center text-sm font-medium shadow-md hover:shadow-[0_0_10px_rgba(126,0,255,0.7)] border border-gray-700 border-opacity-20"
+                className="w-full p-3 rounded-lg border border-gray-600 border-opacity-50 text-white text-sm font-medium transition-all duration-500 hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] flex items-center justify-center font-poppins"
+                style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -374,6 +378,38 @@ function PropPurchase() {
           )}
         </div>
       </div>
+      <style jsx>{`
+        .stars {
+          background: transparent;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+        }
+        .stars::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
+                      radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
+          background-size: 250px 250px;
+          animation: twinkle 10s infinite linear;
+          opacity: 0.3;
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.15; }
+        }
+      `}</style>
     </div>
   );
 }

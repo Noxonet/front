@@ -68,13 +68,13 @@ function TasksPage({ updateBalance }) {
           icon: 'error',
           title: 'Error Fetching Tasks',
           text: errorMessage,
-          confirmButtonColor: '#7F00FF',
+          confirmButtonColor: '#1E3A8A',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white',
-            content: 'text-gray-300 text-sm sm:text-base',
-            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+            popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+            content: 'text-gray-200 text-sm sm:text-base font-poppins',
+            confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
           },
         });
       } finally {
@@ -140,13 +140,13 @@ function TasksPage({ updateBalance }) {
           icon: 'success',
           title: 'Reward Claimed',
           text: `New balance: ${newBalance.toFixed(2)} USDT`,
-          confirmButtonColor: '#7F00FF',
+          confirmButtonColor: '#1E3A8A',
           confirmButtonText: 'OK',
           customClass: {
-            popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white',
-            content: 'text-gray-300 text-sm sm:text-base',
-            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+            popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+            title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+            content: 'text-gray-200 text-sm sm:text-base font-poppins',
+            confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
           },
         });
       }
@@ -166,13 +166,13 @@ function TasksPage({ updateBalance }) {
         icon: 'error',
         title: 'Error Claiming Reward',
         text: errorMessage,
-        confirmButtonColor: '#7F00FF',
+        confirmButtonColor: '#1E3A8A',
         confirmButtonText: 'OK',
         customClass: {
-          popup: 'bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white shadow-2xl rounded-lg animate-object max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white',
-            content: 'text-gray-300 text-sm sm:text-base',
-            confirmButton: 'bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-4 py-2 rounded-md hover:bg-purple-700 hover:bg-opacity-90 transition-colors',
+          popup: 'bg-black bg-opacity-90 backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-xl max-w-[90vw]',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
     } finally {
@@ -182,64 +182,98 @@ function TasksPage({ updateBalance }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+      <div className="min-h-screen bg-gradient-to-br from-black via-blue-950 to-purple-950 flex items-center justify-center relative overflow-hidden font-poppins">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
+        <div className="absolute inset-0 stars"></div>
         <div className="flex items-center space-x-2 relative z-10">
           <svg className="animate-spin h-6 sm:h-8 w-6 sm:w-8 text-white" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
           </svg>
-          <span className="text-base sm:text-lg font-medium text-white">Loading...</span>
+          <span className="text-base sm:text-lg font-medium text-white font-poppins">Loading...</span>
         </div>
+        <style jsx>{`
+          .stars {
+            background: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+          }
+          .stars::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
+                        radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
+                        radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
+                        radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
+                        radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
+                        radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
+            background-size: 250px 250px;
+            animation: twinkle 10s infinite linear;
+            opacity: 0.3;
+          }
+          @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.15; }
+          }
+        `}</style>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 animate-pulse"></div>
+    <div className="min-h-screen py-6 sm:py-8 bg-gradient-to-br from-black via-blue-950 to-purple-950 text-white font-poppins relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
+      <div className="absolute inset-0 stars"></div>
       <div className="mx-auto px-4 sm:px-6 max-w-3xl relative z-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Tasks</h1>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-orbitron">Cosmic Tasks</h1>
           <NavLink
             to="/assets"
-            className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg text-white text-xs sm:text-sm font-medium rounded-full hover:bg-purple-700 hover:bg-opacity-30 transition-colors border border-gray-700 border-opacity-20 shadow-md mt-3 sm:mt-0"
+            className="inline-flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 text-white text-xs sm:text-sm font-medium rounded-lg hover:text-blue-500 transition-all duration-500 border border-gray-600 border-opacity-50 mt-3 sm:mt-0 font-poppins"
+            style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
           >
             Go to Assets
           </NavLink>
         </div>
-        <div className="bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 shadow-2xl transform transition-all duration-500 hover:shadow-[0_0_20px_rgba(126,0,255,0.5)] border border-gray-700 border-opacity-20">
+        <div className="rounded-2xl p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)]" style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}>
           {tasks.map((task) => (
             <div
               key={task.id}
-              className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 mb-3 sm:mb-4 bg-gray-900 bg-opacity-20 backdrop-blur-lg rounded-lg border border-gray-700 border-opacity-20 ${
-                task.status === 'pending' ? 'cursor-pointer hover:bg-purple-800 hover:bg-opacity-30 transition-all duration-300' : ''
-              }`}
+              className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 mb-3 sm:mb-4 rounded-lg border border-gray-600 border-opacity-50 ${task.status === 'pending' ? 'cursor-pointer hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500' : ''}`}
+              style={{ backgroundColor: '#f0f8ff17', backdropFilter: 'blur(10px)' }}
               onClick={() => task.status === 'pending' && handleTaskClick(task.id)}
             >
               <div className="flex items-center gap-2 sm:gap-3">
                 {task.status === 'claimed' ? (
-                  <CheckCircle className="w-5 sm:w-6 h-5 sm:h-6 text-green-500" />
+                  <CheckCircle className="w-5 sm:w-6 h-5 sm:h-6 text-white" />
                 ) : task.status === 'completed' ? (
-                  <CheckCircle className="w-5 sm:w-6 h-5 sm:h-6 text-purple-400" />
+                  <CheckCircle className="w-5 sm:w-6 h-5 sm:h-6 text-white" />
                 ) : (
-                  <Circle className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400" />
+                  <Circle className="w-5 sm:w-6 h-5 sm:h-6 text-white" />
                 )}
                 <div>
-                  <p className="font-medium text-white text-sm sm:text-base">{task.title}</p>
-                  <p className="text-xs sm:text-sm text-gray-300">
+                  <p className="font-medium text-white text-sm sm:text-base font-poppins">{task.title}</p>
+                  <p className="text-xs sm:text-sm text-gray-200 font-poppins">
                     {task.id === 'invite' ? `${task.description} (${task.count} referrals)` : task.description}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-0">
-                <p className="text-xs sm:text-sm font-medium text-purple-400">
+                <p className="text-xs sm:text-sm font-medium text-white font-poppins">
                   {task.id === 'invite' ? `$${referralBonus.toFixed(2)} USDT` : `$${task.reward} USDT`}
                 </p>
                 {task.status === 'completed' && (
                   <button
                     onClick={() => handleClaim(task.id)}
-                    className="bg-purple-600 bg-opacity-80 backdrop-blur-md text-white px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm font-medium hover:bg-purple-700 hover:bg-opacity-90 transition-colors disabled:bg-gray-600 disabled:bg-opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gradient-to-r from-gray-700 to-blue-900 text-white px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm font-medium hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins disabled:bg-gray-600 disabled:bg-opacity-50 disabled:cursor-not-allowed"
                     disabled={isSaving || (task.id === 'invite' && referralBonus <= 0)}
                   >
                     Claim
@@ -250,6 +284,38 @@ function TasksPage({ updateBalance }) {
           ))}
         </div>
       </div>
+      <style jsx>{`
+        .stars {
+          background: transparent;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+        }
+        .stars::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
+                      radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
+                      radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
+          background-size: 250px 250px;
+          animation: twinkle 10s infinite linear;
+          opacity: 0.3;
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.15; }
+        }
+      `}</style>
     </div>
   );
 }
