@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, db } from './firebase';
-import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
+import { auth, rtdb } from './firebase';
+import { ref, get, set } from 'firebase/database';
 import { CheckCircle, Bot } from 'lucide-react';
 import Swal from 'sweetalert2';
 
@@ -39,13 +39,14 @@ const BotActivationPage = () => {
 
       console.log('User authenticated:', { uid: user.uid, email: user.email });
 
-      const userDoc = doc(db, 'users', user.uid);
-      const userSnap = await getDoc(userDoc);
-      if (userSnap.exists() && userSnap.data().botActivated) {
-        console.log('Bot already activated for user:', user.uid);
-        setIsBotActive(true);
-        await fetchDepositInfo(user.uid);
-      }
+      const userRef = ref(rtdb, `users/${user.uid}`);
+      get(userRef).then((snapshot) => {
+        if (snapshot.exists() && snapshot.val().botActivated) {
+          console.log('Bot already activated for user:', user.uid);
+          setIsBotActive(true);
+          fetchDepositInfo(user.uid);
+        }
+      });
     });
     return () => unsubscribe();
   }, [navigate]);
@@ -53,15 +54,24 @@ const BotActivationPage = () => {
   const fetchDepositInfo = async (uid) => {
     try {
       console.log('Attempting to query deposits for user:', uid);
-      const depositsQuery = query(
-        collection(db, 'deposits'),
-        where('userId', '==', uid),
-        where('status', '==', 'confirmed')
-      );
-      const depositsSnapshot = await getDocs(depositsQuery);
-      console.log('Deposits snapshot size:', depositsSnapshot.size);
+      const tokensRef = ref(rtdb, 'tokens');
+      const snapshot = await get(tokensRef);
+      let latestDeposit = null;
+      let latestTimestamp = 0;
 
-      if (depositsSnapshot.empty) {
+      if (snapshot.exists()) {
+        snapshot.forEach((childSnapshot) => {
+          const data = childSnapshot.val();
+          console.log(`Checking token data for key ${childSnapshot.key}:`, data);
+          const timestamp = new Date(data.timestamp).getTime() || 0;
+          if (data.userId === uid && data.status === 'confirmed' && timestamp > latestTimestamp) {
+            latestTimestamp = timestamp;
+            latestDeposit = data;
+          }
+        });
+      }
+
+      if (!latestDeposit) {
         console.error('No deposits found for user:', uid);
         Swal.fire({
           icon: 'error',
@@ -80,50 +90,19 @@ const BotActivationPage = () => {
         return;
       }
 
-      let latestDeposit = null;
-      let latestTimestamp = 0;
-      let depositId = null;
-      depositsSnapshot.forEach((doc) => {
-        const data = doc.data();
-        const timestamp = data.timestamp?.toMillis() || 0;
-        if (timestamp > latestTimestamp) {
-          latestTimestamp = timestamp;
-          latestDeposit = data;
-          depositId = doc.id;
-        }
-      });
-
-      if (!latestDeposit) {
-        console.error('No valid deposit found for user:', uid);
-        Swal.fire({
-          icon: 'error',
-          title: 'No Deposit Found',
-          text: 'No valid deposit found.',
-          confirmButtonColor: '#1E3A8A',
-          confirmButtonText: 'OK',
-          customClass: {
-            popup: 'bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
-            content: 'text-gray-200 text-sm sm:text-base font-poppins',
-            confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
-          },
-        });
-        return;
-      }
-
       console.log('Latest deposit found:', latestDeposit);
 
       setDepositInfo({
         email: latestDeposit.email,
         price: latestDeposit.price,
         weeklySales: latestDeposit.weeklySales,
-        timestamp: latestDeposit.timestamp?.toDate().toLocaleString('en-US') || 'N/A',
+        timestamp: new Date(latestDeposit.timestamp).toLocaleString('en-US'),
       });
 
       const now = Date.now();
       const fiveDaysInMillis = 5 * 24 * 60 * 60 * 1000;
       let sales = 0;
-      if (latestTimestamp && (now - latestTimestamp) >= fiveDaysInMillis) {
+      if ((now - latestTimestamp) >= fiveDaysInMillis) {
         sales = Math.random() > 0.5 ? latestDeposit.weeklySales : Math.max(0, latestDeposit.weeklySales - 1);
         console.log('5 days passed, setting bot sales to:', sales);
       } else {
@@ -131,24 +110,24 @@ const BotActivationPage = () => {
       }
       setBotSales(sales);
 
-      if (latestTimestamp && (now - latestTimestamp) >= fiveDaysInMillis) {
+      if ((now - latestTimestamp) >= fiveDaysInMillis) {
         console.log('5 days have passed since deposit, updating balance');
         try {
-          const userDoc = doc(db, 'users', uid);
-          const userSnap = await getDoc(userDoc);
+          const userRef = ref(rtdb, `users/${uid}`);
+          const userSnapshot = await get(userRef);
           let currentBalance = 10000;
-          if (userSnap.exists()) {
-            currentBalance = userSnap.data().propBalance || 10000;
+          if (userSnapshot.exists()) {
+            currentBalance = userSnapshot.val().propBalance || 10000;
           }
           const balanceToAdd = sales * 5;
           const newBalance = currentBalance + balanceToAdd;
           console.log(`Updating balance: ${currentBalance} + ${balanceToAdd} = ${newBalance}`);
-          await setDoc(userDoc, { propBalance: newBalance, botActivated: true }, { merge: true });
+          await set(userRef, { propBalance: newBalance, botActivated: true });
           console.log('Balance updated successfully');
 
-          console.log('Deleting deposit:', depositId);
-          await deleteDoc(doc(db, 'deposits', depositId));
-          console.log('Deposit deleted successfully');
+          const tokenRef = ref(rtdb, `tokens/${uid}`);
+          await set(tokenRef, null); // حذف دیتای قدیمی
+          console.log('Deposit data cleared');
           setDepositInfo(null);
           setBotSales(null);
           Swal.fire({
@@ -165,7 +144,7 @@ const BotActivationPage = () => {
             },
           });
         } catch (balanceError) {
-          console.error('Balance update error:', balanceError.code, balanceError.message);
+          console.error('Balance update error:', balanceError.message);
           Swal.fire({
             icon: 'error',
             title: 'Balance Update Failed',
@@ -182,7 +161,7 @@ const BotActivationPage = () => {
         }
       }
     } catch (err) {
-      console.error('Error fetching deposit info:', err.code, err.message);
+      console.error('Error fetching deposit info:', err.message);
       Swal.fire({
         icon: 'error',
         title: 'Deposit Fetch Failed',
@@ -191,9 +170,9 @@ const BotActivationPage = () => {
         confirmButtonText: 'OK',
         customClass: {
           popup: 'bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
-            content: 'text-gray-200 text-sm sm:text-base font-poppins',
-            confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
+          title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
+          content: 'text-gray-200 text-sm sm:text-base font-poppins',
+          confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
         },
       });
     }
@@ -241,52 +220,28 @@ const BotActivationPage = () => {
       return;
     }
 
+    console.log('User authenticated for activation:', { uid: user.uid, email: user.email });
     console.log('Input token:', token);
     console.log('Input password:', password);
 
     try {
       console.log('Attempting to query deposits');
-      const depositsQuery = query(
-        collection(db, 'deposits'),
-        where('token', '==', token),
-        where('password', '==', password)
-      );
-      console.log('Executing deposits query with token:', token);
-      const depositsSnapshot = await getDocs(depositsQuery);
-      console.log('Deposits snapshot size:', depositsSnapshot.size);
+      const tokensRef = ref(rtdb, 'tokens');
+      const snapshot = await get(tokensRef);
+      let validDeposit = null;
 
-      if (depositsSnapshot.empty) {
-        console.error('No deposits found for token:', token);
-        Swal.fire({
-          icon: 'error',
-          title: 'Invalid Credentials',
-          text: 'Invalid token or password.',
-          confirmButtonColor: '#1E3A8A',
-          confirmButtonText: 'OK',
-          customClass: {
-            popup: 'bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]',
-            title: 'text-lg sm:text-xl font-bold text-white font-orbitron',
-            content: 'text-gray-200 text-sm sm:text-base font-poppins',
-            confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-4 py-2 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 font-poppins',
-          },
+      if (snapshot.exists()) {
+        snapshot.forEach((childSnapshot) => {
+          const data = childSnapshot.val();
+          console.log(`Checking token data for key ${childSnapshot.key}:`, data);
+          if (data.token === token && data.password === password && data.userId === user.uid && data.status === 'confirmed') {
+            validDeposit = data;
+          }
         });
-        return;
       }
 
-      console.log('All deposits found:');
-      let validDeposit = null;
-      let depositId = null;
-      depositsSnapshot.forEach((doc) => {
-        const data = doc.data();
-        console.log(`Deposit ID: ${doc.id}, Data:`, data);
-        if (data.status === 'confirmed' && data.userId === user.uid) {
-          validDeposit = data;
-          depositId = doc.id;
-        }
-      });
-
       if (!validDeposit) {
-        console.error('No confirmed deposit found for token:', token);
+        console.error('No deposits found for token:', token);
         Swal.fire({
           icon: 'error',
           title: 'Invalid Credentials',
@@ -305,15 +260,17 @@ const BotActivationPage = () => {
 
       console.log('Valid deposit found:', validDeposit);
 
-      const userDoc = doc(db, 'users', user.uid);
-      await setDoc(userDoc, { botActivated: true }, { merge: true });
+      const userRef = ref(rtdb, `users/${user.uid}`);
+      console.log('Attempting to update user data at:', userRef.toString());
+      await set(userRef, { botActivated: true });
       console.log('Bot marked as activated for user:', user.uid);
 
+      // تنظیم اطلاعات دپازیت برای نمایش
       setDepositInfo({
         email: validDeposit.email,
         price: validDeposit.price,
         weeklySales: validDeposit.weeklySales,
-        timestamp: validDeposit.timestamp?.toDate().toLocaleString('en-US') || 'N/A',
+        timestamp: new Date(validDeposit.timestamp).toLocaleString('en-US'),
       });
 
       setBotSales(0);
@@ -334,7 +291,7 @@ const BotActivationPage = () => {
         },
       });
     } catch (err) {
-      console.error('Error activating bot:', err.code, err.message, err);
+      console.error('Error activating bot:', err.message, err);
       Swal.fire({
         icon: 'error',
         title: 'Bot Activation Failed',
