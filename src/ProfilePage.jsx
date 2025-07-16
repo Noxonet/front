@@ -396,24 +396,6 @@ function ProfilePage() {
               <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white font-orbitron">Personal Information</h2>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:gap-4">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0">
-                  <img
-                    src={avatar || 'https://via.placeholder.com/64'}
-                    alt="User Avatar"
-                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border border-gray-600 border-opacity-50"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 sm:mb-2 font-poppins">Profile Picture</label>
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png"
-                    onChange={handleAvatarChange}
-                    className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 text-xs sm:text-sm text-white font-poppins"
-                  />
-                </div>
-              </div>
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 sm:mb-2 font-poppins">Email</label>
                 <input

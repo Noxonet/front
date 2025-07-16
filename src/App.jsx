@@ -21,6 +21,7 @@ import { LuHeadset } from 'react-icons/lu';
 import { IoMdChatboxes } from 'react-icons/io';
 import { IoDocuments } from 'react-icons/io5';
 import { GrDocumentText } from 'react-icons/gr';
+import LeaderboardPage from './LeaderBoardPage';
 
 function LandingPage() {
   return (
@@ -498,11 +499,10 @@ function Drawer({ isOpen, toggleDrawer, isLoggedIn, handleLogout }) {
             {[
               { to: "/support", label: "Support" },
               { to: "/Earn", label: "Earn" },
-              { to: "/Futures", label: "Futures" },
-              { to: "/Spot", label: "Spot" },
               { to: "/assets", label: "Assets" },
               { to: "/tasks", label: "Tasks" },
-              { to: "/withdraw", label: "Withdraw" },
+              { to: '/profile', label: 'Profile' },
+              // { to: "/withdraw", label: "Withdraw" },
               { to: "/trade", label: "Trade" },
               { to: "/prop", label: "Prop" },
             ].map((item) => (
@@ -680,13 +680,13 @@ function App() {
               {[
                 { to: '/support', label: 'Support' },
                 { to: '/Earn', label: 'Earn' },
-                { to: '/Futures', label: 'Futures' },
-                { to: '/Spot', label: 'Spot' },
                 { to: '/assets', label: 'Assets' },
                 { to: '/tasks', label: 'Tasks' },
                 { to: '/withdraw', label: 'Withdraw' },
+                { to: '/profile', label: 'Profile' },
                 { to: '/trade', label: 'Trade' },
-                { to: '/prop', label: 'Prop' },
+                // { to: '/prop', label: 'Prop' },
+                { to: '/raffle', label: 'raffle' },
               ].map((item) => (
                 <NavLink
                   key={item.to}
@@ -750,12 +750,11 @@ function App() {
           <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} setBalance={setBalance} updateBalance={updateBalance} />} />
           <Route path="/support" element={<Support />} />
           <Route path="/Earn" element={<BotActivationPage />} />
-          <Route path="/Futures" element={<Futures />} />
-          <Route path="/Spot" element={<Spot />} />
           <Route path="/transfer" element={<NotAvailable />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/trade" element={<TradePage />} />
           <Route path="/prop" element={<PropPurchase />} />
+          <Route path="/raffle" element={<LeaderboardPage />} />
           <Route path="/bots" element={<BotActivationPage />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>

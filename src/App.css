@@ -37,6 +37,57 @@ body {
 .font-medium { font-weight: 500; }
 .hover\:bg-quantum-light-gray:hover { background-color: var(--quantum-light-gray); }
 
+
+
+.stars {
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+.stars::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
+              radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
+              radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
+              radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
+              radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
+              radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
+  background-size: 250px 250px;
+  animation: twinkle 10s infinite linear;
+  opacity: 0.3;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.15; }
+}
+input::placeholder, select::placeholder {
+  color: #D1D5DB !important;
+  opacity: 1;
+}
+input::-webkit-input-placeholder, select::-webkit-input-placeholder {
+  color: #D1D5DB !important;
+}
+input::-moz-placeholder, select::-moz-placeholder {
+  color: #D1D5DB !important;
+}
+input:-ms-input-placeholder, select:-ms-input-placeholder {
+  color: #D1D5DB !important;
+}
+input, select, button {
+  min-height: 44px;
+}
+
+
+
 .swal2-confirm{
   border: 1px solid #252525;
   border-radius: .5rem;
@@ -54,4 +105,15 @@ body {
 .swal2-modal .swal2-icon .swal2-success-circular-line-left,.swal2-success-circular-line-right,.swal2-success-fix{
   /* color: transparent !important; */
   background-color: transparent !important;
+}
+option { 
+  color: #000000 !important;
+  margin-block: 2vw !important;
+  background-color: #9999994b !important;
+  backdrop-filter: blur(5px) !important;
+}
+select {
+  border-radius: 1rem !important;
+  background-color: #9999994b !important;
+  backdrop-filter: blur(5px) !important;
 }

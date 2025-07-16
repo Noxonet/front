@@ -1,20 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import Chart from 'react-apexcharts';
-import { auth, db } from './firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import axios from 'axios';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { auth, db, rtdb } from './firebase';
+import { ref, get, set } from 'firebase/database';
+import { doc, updateDoc, collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
+import Swal from 'sweetalert2';
+import PriceChart from './PriceChart';
+import OrderForm from './OrderForm';
+import { FaHistory, FaExchangeAlt, FaTimesCircle } from 'react-icons/fa';
 
-// Environment variables
-const WALLET_ADDRESS = 'process.env.REACT_APP_WALLET_ADDRESS' || import.meta.env.VITE_WALLET_ADDRESS || '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa';
-const COINGECKO_API_KEY = 'process.env.REACT_APP_COINGECKO_API_KEY' || import.meta.env.VITE_COINGECKO_API_KEY || '';
+// Constants
+const WALLET_ADDRESS = import.meta.env.VITE_WALLET_ADDRESS || '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa';
+const MIN_ORDER_VALUE = 10;
+const MIN_AMOUNT_USD = 10;
+const MIN_LEVERAGE = 1;
+const MAX_LEVERAGE = 100;
+const COINS = [
+  { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin' },
+  { id: 'ethereum', symbol: 'ETH', name: 'Ethereum' },
+  { id: 'binancecoin', symbol: 'BNB', name: 'Binance Coin' },
+  { id: 'solana', symbol: 'SOL', name: 'Solana' },
+  { id: 'ripple', symbol: 'XRP', name: 'Ripple' },
+];
+const CACHE_DURATION = 30000;
 
-const TradingPage = () => {
+const TradingPage = ({ updateBalance = () => {} }) => {
   const [userEmail, setUserEmail] = useState('');
-  const [propBalance, setPropBalance] = useState(10000);
+  const [mainBalance, setMainBalance] = useState(0); // Initial value 0
   const [selectedCoin, setSelectedCoin] = useState('bitcoin');
   const [orderType, setOrderType] = useState('market');
+  const [tradeType, setTradeType] = useState('long');
   const [buyPrice, setBuyPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [amountInUSD, setAmountInUSD] = useState('');
+  const [leverage, setLeverage] = useState(1);
   const [takeProfit, setTakeProfit] = useState('');
   const [stopLoss, setStopLoss] = useState('');
   const [orderStatus, setOrderStatus] = useState(null);
@@ -22,519 +38,491 @@ const TradingPage = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [historyOrders, setHistoryOrders] = useState([]);
+  const [isAuthLoaded, setIsAuthLoaded] = useState(false);
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [sortOrder, setSortOrder] = useState('desc');
 
-  const coins = [
-    { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin' },
-    { id: 'ethereum', symbol: 'ETH', name: 'Ethereum' },
-    { id: 'binancecoin', symbol: 'BNB', name: 'Binance Coin' },
-    { id: 'solana', symbol: 'SOL', name: 'Solana' },
-    { id: 'ripple', symbol: 'XRP', name: 'XRP' },
-  ];
+  const priceCache = useMemo(() => new Map(), []);
+  const chartDataCache = useMemo(() => new Map(), []);
 
-  const generateMockAreaData = () => {
+  const generateMockPriceData = () => ({
+    bitcoin: 60000,
+    ethereum: 3000,
+    binancecoin: 500,
+    solana: 150,
+    ripple: 0.5,
+  });
+
+  const generateMockChartData = () => {
     const data = [];
-    const startTime = new Date('2025-07-01').getTime();
-    let price = 50000;
-    for (let i = 0; i < 7; i++) {
-      const time = startTime + i * 24 * 3600000;
-      price += (Math.random() - 0.5) * 1000;
-      data.push([time, price]);
+    const now = Date.now();
+    for (let i = 0; i < 24; i++) {
+      const timestamp = now - i * 60 * 60 * 1000;
+      const price = 60000 + (Math.random() - 0.5) * 1000;
+      data.push({ date: timestamp, open: price, high: price + 100, low: price - 100, close: price });
     }
-    return data;
+    return data.reverse();
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        setUserEmail(user.email || 'fisa5551@gmail.com');
-        const userDoc = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(userDoc);
-        if (docSnap.exists()) {
-          setPropBalance(docSnap.data().propBalance || 10000);
-        } else {
-          setError('User data not found. Please contact support.');
-        }
-      } else {
-        setError('Please log in to your account first.');
-      }
-    };
-    fetchUserData();
-  }, []);
+  const showAlert = (type, title, text) => {
+    Swal.fire({
+      icon: type,
+      title,
+      text,
+      customClass: {
+        popup: 'bg-[#f0f8ff17] backdrop-blur-lg text-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] rounded-lg max-w-[90vw]',
+        title: 'text-lg sm:text-xl font-bold text-white font-vazirmatn',
+        content: 'text-gray-200 text-sm sm:text-base font-vazirmatn',
+        confirmButton: 'bg-gradient-to-r from-gray-700 to-blue-900 text-white px-3 py-1 rounded-md hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-300 font-vazirmatn',
+      },
+    });
+  };
 
-  useEffect(() => {
-    const fetchPrices = async () => {
+  const fetchUserData = useCallback(async () => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserEmail(user.email || 'fisa5551@gmail.com');
       try {
-        const response = await axios.get(
-          'https://api.coingecko.com/api/v3/coins/markets',
-          {
-            params: {
-              vs_currency: 'usd',
-              ids: coins.map((coin) => coin.id).join(','),
-              order: 'market_cap_desc',
-              per_page: 5,
-              page: 1,
-              sparkline: false,
-            },
-            headers: COINGECKO_API_KEY ? { 'X-Cg-Api-Key': COINGECKO_API_KEY } : {},
-          }
-        );
-        const prices = {};
-        response.data.forEach((coin) => {
-          prices[coin.id] = coin.current_price;
-        });
-        setCurrentPrices(prices);
-        if (orderType === 'market' && !buyPrice) {
-          setBuyPrice(prices[selectedCoin]?.toFixed(2) || '');
+        const balanceRef = ref(rtdb, `users/${user.uid}/balance`);
+        const snapshot = await get(balanceRef);
+        const fetchedBalance = snapshot.exists() ? snapshot.val() : null;
+        if (fetchedBalance !== null && !isNaN(fetchedBalance)) {
+          setMainBalance(fetchedBalance);
+          updateBalance(fetchedBalance);
+        } else {
+          console.error('بالانس پیدا نشد، مقدار پیش‌فرض 0 تنظیم شد.');
+          setMainBalance(0);
+          updateBalance(0);
+          await set(balanceRef, 0);
         }
       } catch (err) {
-        setError('Failed to fetch real-time prices. Please check your API key or try again later.');
+        console.error('خطا در گرفتن بالانس از Realtime Database:', err);
+        setMainBalance(0);
+        updateBalance(0);
+        await set(ref(rtdb, `users/${user.uid}/balance`), 0);
+        setError('Failed to fetch balance from database.');
+        showAlert('error', 'Database Error', 'Unable to fetch balance from database. Balance set to 0.');
       }
-    };
+    }
+    setIsAuthLoaded(true);
+  }, [updateBalance]);
 
+  const fetchPrices = useCallback(async () => {
+    const now = Date.now();
+    if (priceCache.has('prices') && now - priceCache.get('timestamp') < CACHE_DURATION) {
+      setCurrentPrices(priceCache.get('prices'));
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const ids = COINS.map(coin => coin.id).join(',');
+      const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`, { timeout: 5000 });
+      const data = await response.json();
+      const prices = Object.fromEntries(COINS.map(coin => [coin.id, data[coin.id]?.usd || 0]));
+      priceCache.set('prices', prices);
+      priceCache.set('timestamp', now);
+      setCurrentPrices(prices);
+    } catch (err) {
+      console.error('خطا در گرفتن قیمت‌ها:', err);
+      const mockPrices = generateMockPriceData();
+      priceCache.set('prices', mockPrices);
+      priceCache.set('timestamp', now);
+      setCurrentPrices(mockPrices);
+    } finally {
+      setLoading(false);
+    }
+  }, [priceCache]);
+
+  const fetchChartData = useCallback(async (coin, timeframe) => {
+    const cacheKey = `${coin}_${timeframe}`;
+    if (chartDataCache.has(cacheKey) && Date.now() - chartDataCache.get(`${cacheKey}_timestamp`) < CACHE_DURATION) {
+      setChartData(chartDataCache.get(cacheKey));
+      return;
+    }
+
+    let days, interval;
+    switch (timeframe) {
+      case '1m': case '2m': case '5m': case '15m':
+        days = 1;
+        interval = timeframe;
+        break;
+      case '1h': case '2h': case '4h':
+        days = 7;
+        interval = timeframe;
+        break;
+      case '1d':
+        days = 30;
+        interval = 'daily';
+        break;
+      case '1w':
+        days = 90;
+        interval = 'weekly';
+        break;
+      default:
+        days = 7;
+        interval = '1h';
+    }
+
+    try {
+      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/ohlc?vs_currency=usd&days=${days}`, { timeout: 5000 });
+      const data = await response.json();
+      const chartData = data.map(([timestamp, open, high, low, close]) => ({ date: timestamp, open, high, low, close }));
+      if (chartData.length > 0) {
+        chartDataCache.set(cacheKey, chartData);
+        chartDataCache.set(`${cacheKey}_timestamp`, Date.now());
+        setChartData(chartData);
+      }
+    } catch (err) {
+      console.error('خطا در گرفتن داده‌های چارت:', err);
+      const mockData = generateMockChartData();
+      chartDataCache.set(cacheKey, mockData);
+      chartDataCache.set(`${cacheKey}_timestamp`, Date.now());
+      setChartData(mockData);
+    }
+  }, [chartDataCache]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
+
+  useEffect(() => {
     fetchPrices();
     const interval = setInterval(fetchPrices, 15000);
     return () => clearInterval(interval);
-  }, [selectedCoin, orderType]);
+  }, [fetchPrices]);
 
   useEffect(() => {
-    const fetchChartData = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.coingecko.com/api/v3/coins/${selectedCoin}/market_chart`,
-          {
-            params: {
-              vs_currency: 'usd',
-              days: 7,
-              interval: 'daily',
-            },
-            headers: COINGECKO_API_KEY ? { 'X-Cg-Api-Key': COINGECKO_API_KEY } : {},
-          }
-        );
-        const data = response.data.prices.map(([timestamp, price]) => [
-          timestamp,
-          price,
-        ]);
-        setChartData(data);
-      } catch (err) {
-        setError('Failed to fetch chart data. Using default chart. Consider adding a CoinGecko API key.');
-        setChartData(generateMockAreaData());
-      }
+    fetchChartData(selectedCoin, '1h');
+  }, [fetchChartData, selectedCoin]);
+
+  useEffect(() => {
+    if (!isAuthLoaded || !auth.currentUser?.uid) return;
+
+    const q = query(collection(db, 'orders'), where('userId', '==', auth.currentUser.uid), where('status', 'in', ['pending', 'executed']));
+    const unsubscribe = onSnapshot(q, (snapshot) => setOrders(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), tradeType: doc.data().tradeType || 'long' }))), (err) => {
+      setError('Failed to fetch open orders.');
+      showAlert('error', 'Orders Error', err.message);
+    });
+
+    const hq = query(collection(db, 'orders'), where('userId', '==', auth.currentUser.uid), where('status', 'in', ['closed', 'canceled']));
+    const unsubscribeHistory = onSnapshot(hq, (snapshot) => setHistoryOrders(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), tradeType: doc.data().tradeType || 'long' }))), (err) => {
+      setError('Failed to fetch order history.');
+      showAlert('error', 'History Error', err.message);
+    });
+
+    return () => {
+      unsubscribe();
+      unsubscribeHistory();
     };
-    fetchChartData();
-  }, [selectedCoin]);
+  }, [isAuthLoaded]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (orderStatus && orderStatus.status === 'pending') {
-        const bp = parseFloat(orderStatus.buyPrice);
-        const currentPrice = currentPrices[selectedCoin];
-        if (orderType === 'limit' && currentPrice <= bp) {
-          setOrderStatus({ ...orderStatus, status: 'executed' });
-          setSuccess('Limit order executed successfully.');
+      orders.forEach(async (order) => {
+        if (order.status === 'pending' && order.orderType === 'limit') {
+          const bp = parseFloat(order.buyPrice);
+          const currentPrice = currentPrices[order.coin];
+          if (currentPrice && ((order.tradeType === 'long' && currentPrice <= bp) || (order.tradeType === 'short' && currentPrice >= bp))) {
+            await updateDoc(doc(db, 'orders', order.id), { status: 'executed', executedAt: new Date().toISOString() });
+            setSuccess('Limit order executed.');
+            showAlert('success', 'Order Executed', `Limit order for ${order.symbol} executed.`);
+          }
         }
-      }
-      if (orderStatus && orderStatus.status === 'executed') {
-        const bp = parseFloat(orderStatus.buyPrice);
-        const qty = parseFloat(orderStatus.quantity);
-        const tp = parseFloat(takeProfit);
-        const sl = parseFloat(stopLoss);
-        const currentPrice = currentPrices[selectedCoin];
-        if (tp && currentPrice >= tp) {
-          const profit = (tp - bp) * qty;
-          updateBalance(propBalance + profit);
-          setOrderStatus(null);
-          setSuccess(`Order closed with ${profit.toFixed(2)} USD profit.`);
-          setError('');
-        } else if (sl && currentPrice <= sl) {
-          const loss = (bp - sl) * qty;
-          updateBalance(propBalance - loss);
-          setOrderStatus(null);
-          setSuccess(`Order closed with ${loss.toFixed(2)} USD loss.`);
-          setError('');
+        if (order.status === 'executed') {
+          const { buyPrice, quantity, leverage, takeProfit, stopLoss, tradeType, coin } = order;
+          const currentPrice = currentPrices[coin];
+          if (takeProfit && currentPrice) {
+            const shouldClose = tradeType === 'long' ? currentPrice >= takeProfit : currentPrice <= takeProfit;
+            if (shouldClose) {
+              const profit = tradeType === 'long' ? (takeProfit - buyPrice) * quantity * leverage : (buyPrice - takeProfit) * quantity * leverage;
+              await handleOrderClose(order.id, profit, 'closed', 'Order closed with profit.');
+            }
+          }
+          if (stopLoss && currentPrice) {
+            const shouldClose = tradeType === 'long' ? currentPrice <= stopLoss : currentPrice >= stopLoss;
+            if (shouldClose) {
+              const loss = tradeType === 'long' ? (buyPrice - stopLoss) * quantity * leverage : (stopLoss - buyPrice) * quantity * leverage;
+              await handleOrderClose(order.id, loss, 'closed', 'Order closed with loss.', true);
+            }
+          }
         }
-      }
-    }, 5000);
-
+      });
+    }, 10000);
     return () => clearInterval(interval);
-  }, [orderStatus, takeProfit, stopLoss, propBalance, currentPrices, selectedCoin]);
+  }, [orders, currentPrices, mainBalance]);
 
-  const updateBalance = async (newBalance) => {
-    const user = auth.currentUser;
-    if (user) {
-      const userDoc = doc(db, 'users', user.uid);
-      await updateDoc(userDoc, { propBalance: newBalance });
-      setPropBalance(newBalance);
+  const handleOrderClose = async (orderId, profitLoss, status, message, isLoss = false) => {
+    const newBalance = mainBalance + (isLoss ? -profitLoss : profitLoss);
+    if (newBalance < 0) {
+      setError('Balance cannot be negative.');
+      showAlert('error', 'Balance Error', 'Balance cannot be negative.');
+      return;
+    }
+    await updateUserBalance(newBalance);
+    await updateDoc(doc(db, 'orders', orderId), { status, closedAt: new Date().toISOString(), profitLoss });
+    setSuccess(`${message} $${Math.abs(profitLoss).toFixed(2)}`);
+    showAlert('success', 'Order Closed', `${message} $${Math.abs(profitLoss).toFixed(2)}`);
+  };
+
+  const updateUserBalance = async (newBalance) => {
+    if (auth.currentUser) {
+      try {
+        await set(ref(rtdb, `users/${auth.currentUser.uid}/balance`), newBalance);
+        setMainBalance(newBalance);
+        updateBalance(newBalance);
+      } catch (err) {
+        console.error('خطا در آپدیت موجودی:', err);
+        setError('Failed to update balance.');
+        showAlert('error', 'Update Error', 'Unable to update balance.');
+      }
     }
   };
 
-  const handleBuy = () => {
-    if (!quantity || isNaN(quantity) || parseFloat(quantity) <= 0.0001) {
-      setError('Please enter a valid quantity (minimum 0.0001).');
+  const handleBuy = async () => {
+    if (!auth.currentUser) {
+      setError('Please log in to your account.');
+      showAlert('error', 'Login Required', 'Please log in to your account.');
       return;
     }
-    const qty = parseFloat(quantity);
-    const currentPrice = currentPrices[selectedCoin] || 0;
+    const amount = parseFloat(amountInUSD);
+    if (!amount || amount < MIN_AMOUNT_USD) {
+      setError(`Minimum amount is $${MIN_AMOUNT_USD}.`);
+      showAlert('error', 'Invalid Amount', `Minimum amount is $${MIN_AMOUNT_USD}.`);
+      return;
+    }
+    if (leverage < MIN_LEVERAGE || leverage > MAX_LEVERAGE) {
+      setError(`Leverage must be between ${MIN_LEVERAGE}x and ${MAX_LEVERAGE}x.`);
+      showAlert('error', 'Invalid Leverage', `Leverage must be between ${MIN_LEVERAGE}x and ${MAX_LEVERAGE}x.`);
+      return;
+    }
+    const currentPrice = currentPrices[selectedCoin];
     const bp = orderType === 'market' ? currentPrice : parseFloat(buyPrice);
-    const totalCost = bp * qty;
-
-    if (isNaN(bp) || bp <= 0) {
-      setError('Please enter a valid buy price.');
+    if (!bp || bp <= 0) {
+      setError('Invalid buy price.');
+      showAlert('error', 'Invalid Price', 'Invalid buy price.');
       return;
     }
-    if (totalCost > propBalance || totalCost < 10) {
-      setError('Insufficient balance or order below minimum ($10).');
+    const actualAmount = amount / leverage;
+    if (actualAmount > mainBalance || mainBalance <= 0) {
+      setError('Insufficient balance.');
+      showAlert('error', 'Balance Error', 'Insufficient balance.');
+      return;
+    }
+    if (amount < MIN_ORDER_VALUE) {
+      setError(`Minimum order value is $${MIN_ORDER_VALUE}.`);
+      showAlert('error', 'Minimum Order', `Minimum order value is $${MIN_ORDER_VALUE}.`);
       return;
     }
     const tp = takeProfit ? parseFloat(takeProfit) : null;
     const sl = stopLoss ? parseFloat(stopLoss) : null;
-    if (tp && tp <= bp) {
-      setError('Take profit must be higher than buy price.');
+    if (tp && !((tradeType === 'long' && tp > bp) || (tradeType === 'short' && tp < bp))) {
+      setError('Invalid take profit.');
+      showAlert('error', 'Invalid Take Profit', 'Invalid take profit.');
       return;
     }
-    if (sl && sl >= bp) {
-      setError('Stop loss must be lower than buy price.');
+    if (sl && !((tradeType === 'long' && sl < bp) || (tradeType === 'short' && sl > bp))) {
+      setError('Invalid stop loss.');
+      showAlert('error', 'Invalid Stop Loss', 'Invalid stop loss.');
       return;
     }
 
     const order = {
+      userId: auth.currentUser.uid,
       buyPrice: bp,
-      quantity: qty,
+      quantity: (amount * leverage) / bp,
+      leverage,
       orderType,
+      tradeType,
       status: orderType === 'market' ? 'executed' : 'pending',
       coin: selectedCoin,
-      symbol: coins.find((c) => c.id === selectedCoin).symbol,
+      symbol: COINS.find(c => c.id === selectedCoin).symbol,
+      amountInUSD: amount,
       takeProfit: tp,
       stopLoss: sl,
+      createdAt: new Date().toISOString(),
     };
-    setOrderStatus(order);
-    setSuccess(
-      orderType === 'market'
-        ? 'Market order executed successfully.'
-        : 'Limit order placed successfully.'
-    );
-    setError('');
+
+    try {
+      setLoading(true);
+      await updateUserBalance(mainBalance - actualAmount);
+      const docRef = await addDoc(collection(db, 'orders'), order);
+      setOrderStatus({ ...order, id: docRef.id });
+      setSuccess(`Order ${orderType === 'market' ? 'executed' : 'placed'} successfully.`);
+      showAlert('success', 'Order Success', `Order ${orderType === 'market' ? 'executed' : 'placed'} for ${order.symbol}.`);
+      setAmountInUSD('');
+      setTakeProfit('');
+      setStopLoss('');
+      setLeverage(1);
+      setBuyPrice(orderType === 'market' ? currentPrice?.toFixed(2) || '' : '');
+    } catch (err) {
+      setError('Failed to place order.');
+      showAlert('error', 'Order Error', err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleCancelOrder = () => {
-    setOrderStatus(null);
-    setSuccess('Order canceled.');
-    setError('');
+  const handleCancelOrder = async () => {
+    if (orderStatus?.id) {
+      try {
+        await updateDoc(doc(db, 'orders', orderStatus.id), { status: 'canceled', canceledAt: new Date().toISOString() });
+        await updateUserBalance(mainBalance + orderStatus.amountInUSD / orderStatus.leverage);
+        setOrderStatus(null);
+        setSuccess('Order canceled successfully.');
+        showAlert('success', 'Order Canceled', 'Order canceled successfully.');
+      } catch (err) {
+        setError('Failed to cancel order.');
+        showAlert('error', 'Cancel Error', err.message);
+      }
+    }
   };
 
-  const chartOptions = {
-    chart: {
-      type: 'area',
-      height: 400,
-      background: 'transparent',
-      animations: {
-        enabled: true,
-        easing: 'easeinout',
-        speed: 800,
-      },
-      toolbar: {
-        show: true,
-        tools: {
-          download: false,
-          selection: true,
-          zoom: true,
-          zoomin: true,
-          zoomout: true,
-          pan: true,
-        },
-      },
-    },
-    dataLabels: { enabled: false },
-    stroke: {
-      curve: 'smooth',
-      width: 3,
-      colors: ['#1E3A8A'],
-    },
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shade: 'dark',
-        type: 'vertical',
-        shadeIntensity: 0.5,
-        gradientToColors: ['#6B7280'],
-        inverseColors: false,
-        opacityFrom: 0.7,
-        opacityTo: 0.2,
-        stops: [0, 90, 100],
-      },
-    },
-    xaxis: {
-      type: 'datetime',
-      labels: {
-        style: { colors: '#D1D5DB', fontFamily: 'Poppins, sans-serif' },
-        format: 'dd MMM',
-      },
-    },
-    yaxis: {
-      labels: {
-        formatter: (value) => `$${value.toFixed(2)}`,
-        style: { colors: '#D1D5DB', fontFamily: 'Poppins, sans-serif' },
-      },
-    },
-    annotations: {
-      yaxis: [
-        {
-          y: currentPrices[selectedCoin] || 0,
-          borderColor: '#1E3A8A',
-          label: {
-            text: 'Current Price',
-            style: { color: '#fff', background: '#1E3A8A', fontFamily: 'Poppins, sans-serif' },
-          },
-        },
-        orderStatus && takeProfit && orderStatus.coin === selectedCoin
-          ? {
-              y: parseFloat(takeProfit),
-              borderColor: '#10B981',
-              label: {
-                text: 'Take Profit',
-                style: { color: '#fff', background: '#10B981', fontFamily: 'Poppins, sans-serif' },
-              },
-            }
-          : {},
-        orderStatus && stopLoss && orderStatus.coin === selectedCoin
-          ? {
-              y: parseFloat(stopLoss),
-              borderColor: '#EF4444',
-              label: {
-                text: 'Stop Loss',
-                style: { color: '#fff', background: '#EF4444', fontFamily: 'Poppins, sans-serif' },
-              },
-            }
-          : {},
-      ],
-    },
-    grid: { borderColor: '#4B5563' },
-    tooltip: {
-      enabled: true,
-      theme: 'dark',
-      x: { format: 'dd MMM yyyy' },
-      style: { fontFamily: 'Poppins, sans-serif' },
-    },
-  };
-
-  const chartSeries = [
-    {
-      name: `${coins.find((c) => c.id === selectedCoin)?.symbol}/USD`,
-      data: chartData,
-    },
-  ];
+  const sortOrders = (orders) => [...orders].sort((a, b) => (sortOrder === 'desc' ? (a[sortBy] > b[sortBy] ? -1 : 1) : (a[sortBy] < b[sortBy] ? -1 : 1)));
 
   return (
-    <div className="min-h-screen py-4 sm:py-6 bg-gradient-to-br from-black via-blue-950 to-purple-950 font-poppins relative overflow-hidden w-full">
+    <div className="min-h-screen py-4 sm:py-6 bg-gradient-to-br from-black via-blue-950 to-purple-950 font-vazirmatn relative overflow-hidden w-full">
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')] opacity-15"></div>
       <div className="absolute inset-0 stars"></div>
-      <div className="max-w-full mx-auto px-4 sm:px-6 relative z-10">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white font-orbitron text-center mb-4 sm:mb-6">
+      <div className="max-w-full mx-auto px-3 sm:px-4 relative z-10">
+        {isAuthLoaded && !auth.currentUser && <div className="text-center text-red-500 mb-3 font-vazirmatn">Please log in to your account.</div>}
+        <h1 className="text-xl sm:text-2xl font-bold text-white font-vazirmatn text-center mb-3 sm:mb-4 animate-fadeIn">
           Trading Dashboard
         </h1>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-          {/* Order Form */}
-          <div className="bg-[#f0f8ff17] backdrop-blur-lg p-4 sm:p-6 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)] lg:col-span-1">
-            <h2 className="text-lg sm:text-xl font-semibold text-white font-orbitron mb-4">Place Order</h2>
-            <p className="text-xs sm:text-sm text-gray-200 mb-3 font-poppins">
-              User: {userEmail || 'Loading...'}
-            </p>
-            <p className="text-xs sm:text-sm text-gray-200 mb-3 font-poppins">
-              Wallet: {WALLET_ADDRESS}
-            </p>
-            <p className="text-xs sm:text-sm text-gray-200 mb-4 font-poppins">
-              Prop Balance: ${propBalance.toFixed(2)}
-            </p>
-            <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">Select Coin:</label>
-              <select
-                value={selectedCoin}
-                onChange={(e) => {
-                  setSelectedCoin(e.target.value);
-                  setBuyPrice(orderType === 'market' ? currentPrices[e.target.value]?.toFixed(2) || '' : '');
-                }}
-                className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
-              >
-                {coins.map((coin) => (
-                  <option key={coin.id} value={coin.id}>
-                    {coin.name} ({coin.symbol})
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">Order Type:</label>
-              <select
-                value={orderType}
-                onChange={(e) => {
-                  setOrderType(e.target.value);
-                  setBuyPrice(e.target.value === 'market' ? currentPrices[selectedCoin]?.toFixed(2) || '' : '');
-                }}
-                className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins"
-              >
-                <option value="market">Market Order</option>
-                <option value="limit">Limit Order</option>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">Buy Price ($):</label>
-              <input
-                type="number"
-                value={buyPrice}
-                onChange={(e) => setBuyPrice(e.target.value)}
-                placeholder={`Current: $${currentPrices[selectedCoin]?.toFixed(2) || 'Loading...'}`}
-                disabled={orderType === 'market'}
-                className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins placeholder-gray-400"
-              />
-            </div>
-            <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">
-                Quantity ({coins.find((c) => c.id === selectedCoin)?.symbol}):
-              </label>
-              <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                placeholder="Example: 0.001"
-                className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins placeholder-gray-400"
-              />
-            </div>
-            <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">Take Profit (Optional) ($):</label>
-              <input
-                type="number"
-                value={takeProfit}
-                onChange={(e) => setTakeProfit(e.target.value)}
-                placeholder="Example: 51000"
-                className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins placeholder-gray-400"
-              />
-            </div>
-            <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-200 mb-1 font-poppins">Stop Loss (Optional) ($):</label>
-              <input
-                type="number"
-                value={stopLoss}
-                onChange={(e) => setStopLoss(e.target.value)}
-                placeholder="Example: 49000"
-                className="w-full p-2 sm:p-3 bg-[#f0f8ff17] backdrop-blur-lg rounded-lg border border-gray-600 border-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500 text-xs sm:text-sm text-white font-poppins placeholder-gray-400"
-              />
-            </div>
-            <button
-              onClick={handleBuy}
-              disabled={orderStatus}
-              className="w-full bg-gradient-to-r from-gray-700 to-blue-900 text-white p-2 sm:p-3 rounded-lg hover:shadow-[0_0_12px_rgba(30,58,138,0.5)] transition-all duration-500 text-xs sm:text-sm font-poppins border border-gray-600 border-opacity-50 disabled:bg-gray-600 disabled:cursor-not-allowed"
-            >
-              Place Order
-            </button>
-            {orderStatus && (
-              <button
-                onClick={handleCancelOrder}
-                className="w-full bg-gradient-to-r from-red-700 to-red-900 text-white p-2 sm:p-3 rounded-lg hover:shadow-[0_0_12px_rgba(239,68,68,0.5)] transition-all duration-500 text-xs sm:text-sm font-poppins border border-gray-600 border-opacity-50 mt-3"
-              >
-                Cancel Order
-              </button>
-            )}
-            {error && (
-              <p className="text-center text-xs sm:text-sm text-red-500 mt-3 font-poppins">{error}</p>
-            )}
-            {success && (
-              <p className="text-center text-xs sm:text-sm text-green-500 mt-3 font-poppins">{success}</p>
-            )}
-            {orderStatus && (
-              <div className="mt-4 bg-[#f0f8ff17] backdrop-blur-lg p-3 sm:p-4 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)]">
-                <h3 className="text-base sm:text-lg font-semibold text-white font-orbitron mb-3">Open Order</h3>
-                <p className="text-xs sm:text-sm text-gray-200 font-poppins">
-                  Coin: <span className="font-semibold">{orderStatus.symbol}</span>
-                </p>
-                <p className="text-xs sm:text-sm text-gray-200 font-poppins">
-                  Order Type: <span className="font-semibold">{orderStatus.orderType.toUpperCase()}</span>
-                </p>
-                <p className="text-xs sm:text-sm text-gray-200 font-poppins">
-                  Status: <span className="font-semibold">{orderStatus.status.toUpperCase()}</span>
-                </p>
-                <p className="text-xs sm:text-sm text-gray-200 font-poppins">
-                  Buy Price: <span className="font-semibold">${orderStatus.buyPrice.toFixed(2)}</span>
-                </p>
-                <p className="text-xs sm:text-sm text-gray-200 font-poppins">
-                  Quantity: <span className="font-semibold">{orderStatus.quantity.toFixed(4)} {orderStatus.symbol}</span>
-                </p>
-                {orderStatus.takeProfit && (
-                  <p className="text-xs sm:text-sm text-gray-200 font-poppins">
-                    Take Profit: <span className="font-semibold text-green-500">${orderStatus.takeProfit.toFixed(2)}</span>
-                  </p>
-                )}
-                {orderStatus.stopLoss && (
-                  <p className="text-xs sm:text-sm text-gray-200 font-poppins">
-                    Stop Loss: <span className="font-semibold text-red-500">${orderStatus.stopLoss.toFixed(2)}</span>
-                  </p>
-                )}
-                <p className="text-xs sm:text-sm text-gray-200 font-poppins">
-                  Current Price: <span className="font-semibold">${currentPrices[selectedCoin]?.toFixed(2) || 'Loading...'}</span>
-                </p>
-              </div>
-            )}
-          </div>
-          {/* Chart */}
-          <div className="bg-[#f0f8ff17] backdrop-blur-lg p-4 sm:p-6 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 transform transition-all duration-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.5)] lg:col-span-2">
-            <h2 className="text-lg sm:text-xl font-semibold text-white font-orbitron mb-3">
-              Price Chart ({coins.find((c) => c.id === selectedCoin)?.symbol}/USD)
-            </h2>
-            <Chart options={chartOptions} series={chartSeries} type="area" height="300" className="w-full" />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+          <OrderForm
+            selectedCoin={selectedCoin}
+            setSelectedCoin={setSelectedCoin}
+            orderType={orderType}
+            setOrderType={setOrderType}
+            tradeType={tradeType}
+            setTradeType={setTradeType}
+            buyPrice={buyPrice}
+            setBuyPrice={setBuyPrice}
+            amountInUSD={amountInUSD}
+            setAmountInUSD={setAmountInUSD}
+            leverage={leverage}
+            setLeverage={setLeverage}
+            takeProfit={takeProfit}
+            setTakeProfit={setTakeProfit}
+            stopLoss={stopLoss}
+            setStopLoss={setStopLoss}
+            currentPrices={currentPrices}
+            propBalance={mainBalance}
+            handleBuy={handleBuy}
+            handleCancelOrder={handleCancelOrder}
+            orderStatus={orderStatus}
+            userEmail={userEmail}
+            error={error}
+            success={success}
+            loading={loading}
+            COINS={COINS}
+            MIN_AMOUNT_USD={MIN_AMOUNT_USD}
+            MIN_LEVERAGE={MIN_LEVERAGE}
+            MAX_LEVERAGE={MAX_LEVERAGE}
+            WALLET_ADDRESS={WALLET_ADDRESS}
+          />
+          <PriceChart
+            selectedCoin={selectedCoin}
+            currentPrices={currentPrices}
+            chartData={chartData}
+            orderStatus={orderStatus}
+            takeProfit={takeProfit}
+            stopLoss={stopLoss}
+            tradeType={tradeType}
+            generateMockChartData={generateMockChartData}
+            COINS={COINS}
+            fetchChartData={fetchChartData}
+          />
         </div>
+        {orders.length > 0 && (
+          <div className="mt-4 bg-[#f0f8ff17] backdrop-blur-lg p-3 sm:p-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 animate-fadeIn">
+            <h2 className="text-base sm:text-lg font-semibold text-white font-vazirmatn mb-2 flex items-center">
+              <FaExchangeAlt className="mr-1" /> Open Orders
+            </h2>
+            <div className="space-y-2">
+              {sortOrders(orders).map((order) => (
+                <div key={order.id} className="bg-[#f0f8ff05] p-2 rounded-md border border-gray-600 border-opacity-50 hover:bg-[#f0f8ff10] transition-all duration-300">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-xs sm:text-sm text-gray-200 font-vazirmatn">Coin: <span className="font-semibold">{order.symbol}</span></p>
+                      <p className="text-xs sm:text-sm text-gray-200 font-vazirmatn">Type: <span className="font-semibold">{order.tradeType === 'long' ? 'Long' : 'Short'}</span></p>
+                      <p className="text-xs sm:text-sm text-gray-200 font-vazirmatn">Order: <span className="font-semibold">{order.orderType}</span></p>
+                      <p className="text-xs sm:text-sm text-gray-200 font-vazirmatn">Leverage: <span className="font-semibold">{order.leverage}x</span></p>
+                      <p className="text-xs sm:text-sm text-gray-200 font-vazirmatn">Status: <span className="font-semibold">{order.status}</span></p>
+                      <p className="text-xs sm:text-sm text-gray-200 font-vazirmatn">Price: <span className="font-semibold">${order.buyPrice.toFixed(2)}</span></p>
+                    </div>
+                    <button
+                      onClick={async () => {
+                        try {
+                          await updateDoc(doc(db, 'orders', order.id), { status: 'canceled', canceledAt: new Date().toISOString() });
+                          await updateUserBalance(mainBalance + order.amountInUSD / order.leverage);
+                          showAlert('success', 'Canceled', `${order.symbol} order canceled.`);
+                        } catch (err) {
+                          showAlert('error', 'Cancel Error', err.message);
+                        }
+                      }}
+                      className="bg-gradient-to-r from-red-700 to-red-900 text-white text-xs sm:text-sm px-2 py-1 rounded-md hover:shadow-[0_0_10px_rgba(239,68,68,0.5)] transition-all duration-300"
+                    >
+                      <FaTimesCircle className="inline mr-1" /> Cancel
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {historyOrders.length > 0 && (
+          <div className="mt-4 bg-[#f0f8ff17] backdrop-blur-lg p-3 sm:p-4 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] border border-gray-600 border-opacity-50 animate-fadeIn">
+            <h2 className="text-base sm:text-lg font-semibold text-white font-vazirmatn mb-2 flex items-center">
+              <FaHistory className="mr-1" /> Order History
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs sm:text-sm text-gray-200 font-vazirmatn">
+                <thead>
+                  <tr className="bg-[#f0f8ff05]">
+                    <th className="p-1 text-left">Coin</th>
+                    <th className="p-1 text-left">Type</th>
+                    <th className="p-1 text-left">Order</th>
+                    <th className="p-1 text-left">Leverage</th>
+                    <th className="p-1 text-left">Status</th>
+                    <th className="p-1 text-left">Price</th>
+                    <th className="p-1 text-left">Quantity</th>
+                    <th className="p-1 text-left">Amount</th>
+                    <th className="p-1 text-left">Profit/Loss</th>
+                    <th className="p-1 text-left">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sortOrders(historyOrders).map((order) => (
+                    <tr key={order.id} className="border-b border-gray-600 border-opacity-50 hover:bg-[#f0f8ff10] transition-all duration-300">
+                      <td className="p-1">{order.symbol}</td>
+                      <td className="p-1">{order.tradeType === 'long' ? 'Long' : 'Short'}</td>
+                      <td className="p-1">{order.orderType}</td>
+                      <td className="p-1">{order.leverage}x</td>
+                      <td className="p-1">{order.status}</td>
+                      <td className="p-1">${order.buyPrice.toFixed(2)}</td>
+                      <td className="p-1">{order.quantity.toFixed(4)} {order.symbol}</td>
+                      <td className="p-1">${order.amountInUSD.toFixed(2)}</td>
+                      <td className="p-1">{order.profitLoss ? <span className={order.profitLoss >= 0 ? 'text-green-500' : 'text-red-500'}>{order.profitLoss >= 0 ? '+' : '-'}${Math.abs(order.profitLoss).toFixed(2)}</span> : 'N/A'}</td>
+                      <td className="p-1">{new Date(order.createdAt).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
       <style jsx>{`
-        .stars {
-          background: transparent;
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          overflow: hidden;
-        }
-        .stars::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: radial-gradient(2px 2px at 20px 30px, #fff 1px, transparent 0),
-                      radial-gradient(2px 2px at 40px 70px, #fff 1px, transparent 0),
-                      radial-gradient(2px 2px at 50px 160px, #ddd 1px, transparent 0),
-                      radial-gradient(2px 2px at 90px 40px, #fff 1px, transparent 0),
-                      radial-gradient(2px 2px at 130px 80px, #fff 1px, transparent 0),
-                      radial-gradient(2px 2px at 160px 120px, #ddd 1px, transparent 0);
-          background-size: 250px 250px;
-          animation: twinkle 10s infinite linear;
-          opacity: 0.3;
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.15; }
-        }
-        @media (max-width: 1024px) {
-          .grid {
-            grid-template-columns: 1fr;
-          }
-        }
-        input::placeholder, select::placeholder {
-          color: #D1D5DB !important;
-          opacity: 1;
-        }
-        input::-webkit-input-placeholder, select::-webkit-input-placeholder {
-          color: #D1D5DB !important;
-        }
-        input::-moz-placeholder, select::-moz-placeholder {
-          color: #D1D5DB !important;
-        }
-        input:-ms-input-placeholder, select:-ms-input-placeholder {
-          color: #D1D5DB !important;
-        }
-        select, input, button {
-          min-height: 44px;
-        }
+        .stars::before { animation: twinkle 8s infinite linear; opacity: 0.2; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.1; } }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 1024px) { .grid { grid-template-columns: 1fr; } }
       `}</style>
     </div>
   );
