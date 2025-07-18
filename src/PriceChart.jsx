@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { AgFinancialCharts } from 'ag-charts-react';
 import { Modal, Box, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { FaCog, FaExpand, FaCompress } from 'react-icons/fa';
+import { ref, get } from 'firebase/database';
+import { rtdb } from './firebase';
 import 'ag-charts-enterprise';
 
 // Memoized Settings Modal Content
@@ -78,15 +80,11 @@ const PriceChart = ({ selectedCoin, currentPrices, chartData, orderStatus, takeP
   const [downCandleColor, setDownCandleColor] = useState('#EF4444');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [userAnnotations, setUserAnnotations] = useState([]);
-  const [timeframe, setTimeframe] = useState('1h'); // Default timeframe
+  const [timeframe, setTimeframe] = useState('1h');
 
-  // Memoized symbol
   const symbol = useMemo(() => COINS.find((c) => c.id === selectedCoin)?.symbol || 'BTC', [COINS, selectedCoin]);
-
-  // Memoized current price
   const currentPrice = useMemo(() => currentPrices[selectedCoin], [currentPrices, selectedCoin]);
 
-  // Track price changes with debouncing
   useEffect(() => {
     const debounce = setTimeout(() => {
       if (currentPrice && prevPrice !== null) {
@@ -97,14 +95,10 @@ const PriceChart = ({ selectedCoin, currentPrices, chartData, orderStatus, takeP
     return () => clearTimeout(debounce);
   }, [currentPrice, prevPrice]);
 
-  // Fetch chart data when timeframe changes
   useEffect(() => {
-    if (fetchChartData) {
-      fetchChartData(selectedCoin, timeframe);
-    }
+    fetchChartData(selectedCoin, timeframe);
   }, [fetchChartData, selectedCoin, timeframe]);
 
-  // Handle fullscreen toggle
   const toggleFullscreen = useCallback(() => {
     if (!chartContainerRef.current) return;
     if (!document.fullscreenElement) {
@@ -114,14 +108,12 @@ const PriceChart = ({ selectedCoin, currentPrices, chartData, orderStatus, takeP
     }
   }, []);
 
-  // Adjust chart height in fullscreen
   useEffect(() => {
     const handleFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
 
-  // Memoized chart options with timeframe-based tick intervals
   const chartOptions = useMemo(() => {
     const now = Date.now();
     const defaultAnnotations = [
@@ -146,7 +138,6 @@ const PriceChart = ({ selectedCoin, currentPrices, chartData, orderStatus, takeP
 
     const combinedAnnotations = [...defaultAnnotations, ...userAnnotations];
 
-    // Define tick intervals based on timeframe
     const timeframeIntervals = {
       '1m': { interval: { unit: 'minute', interval: 1 }, nice: true },
       '2m': { interval: { unit: 'minute', interval: 2 }, nice: true },
@@ -226,7 +217,6 @@ const PriceChart = ({ selectedCoin, currentPrices, chartData, orderStatus, takeP
     };
   }, [chartData, chartBackground, upCandleColor, downCandleColor, currentPrice, selectedCoin, orderStatus, takeProfit, stopLoss, generateMockChartData, isFullscreen, userAnnotations, timeframe]);
 
-  // Handle settings modal close
   const handleCloseSettings = useCallback(() => setOpenSettings(false), []);
 
   return (

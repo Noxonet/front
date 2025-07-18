@@ -22,6 +22,7 @@ import { IoMdChatboxes } from 'react-icons/io';
 import { IoDocuments } from 'react-icons/io5';
 import { GrDocumentText } from 'react-icons/gr';
 import LeaderboardPage from './LeaderBoardPage';
+import ListToken from './ListToken';
 
 function LandingPage() {
   return (
@@ -505,6 +506,7 @@ function Drawer({ isOpen, toggleDrawer, isLoggedIn, handleLogout }) {
               // { to: "/withdraw", label: "Withdraw" },
               { to: "/trade", label: "Trade" },
               { to: "/prop", label: "Prop" },
+              { to: '/list', label: 'list' },
             ].map((item) => (
               <Link
                 key={item.to}
@@ -687,9 +689,10 @@ function App() {
                 { to: '/trade', label: 'Trade' },
                 // { to: '/prop', label: 'Prop' },
                 { to: '/raffle', label: 'raffle' },
+                { to: '/list', label: 'list' },
               ].map((item) => (
                 <NavLink
-                  key={item.to}
+                key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
                     `text-xs sm:text-sm font-medium transition-all duration-500 font-poppins ${
@@ -756,6 +759,7 @@ function App() {
           <Route path="/prop" element={<PropPurchase />} />
           <Route path="/raffle" element={<LeaderboardPage />} />
           <Route path="/bots" element={<BotActivationPage />} />
+          <Route path="/list" element={<ListToken />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
